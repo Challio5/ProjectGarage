@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+JavaFX-Version: 2.1
+JavaFX-Preloader-Class: inlogpreloader.InlogPreloader
+JavaFX-Application-Class: garage.Garage
+JavaFX-Class-Path: lib/FirstPreloader.jar
+Main-Class: nl/eti1b5/controller/garage

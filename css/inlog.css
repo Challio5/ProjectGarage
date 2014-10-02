@@ -1,0 +1,18 @@
+@CHARSET "UTF-8";
+
+.start {
+	-fx-alignment: center;
+	-fx-background-color: linear-gradient(lightgray, gray);
+	-fx-padding: 10;
+}
+
+.login {
+	-fx-background-color: linear-gradient(orange, orangered);
+	-fx-background-radius: 20;
+	-fx-border-color: white;
+	-fx-border-radius: 20;
+	-fx-hgap: 40;
+	-fx-vgap: 20;
+	-fx-padding: 10;
+	-fx-alignment: center;
+}

@@ -1,0 +1,5 @@
+@CHARSET "UTF-8";
+
+.menu {
+	-fx-background-color: linear-gradient(lightgray, gray); 
+}
