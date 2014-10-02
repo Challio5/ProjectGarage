@@ -43,4 +43,12 @@ public class InlogNode extends GridPane {
 		this.add(passwordlabel, 0, 1);
 		this.add(password, 1, 1);
 	}
+	
+	public TextField getName(){
+		return name;
+	}
+	
+	public TextField getPassword(){
+		return password;
+	}
 }

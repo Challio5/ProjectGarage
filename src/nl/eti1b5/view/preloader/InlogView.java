@@ -36,7 +36,7 @@ public class InlogView extends VBox{
 		this.setSpacing(50);
 		
 		job = new ComboBox<>();
-		job.getItems().addAll("Monteur", "Sectretaresse");
+		job.getItems().addAll("Monteur", "Secretaresse");
 		
 		inlog = new InlogNode();
 		Reflection reflection = new Reflection();
@@ -53,5 +53,13 @@ public class InlogView extends VBox{
 	 */
 	public void setSubmitListener(EventHandler<ActionEvent> event) {
 		submit.setOnAction(event);
+	}
+	
+	public InlogNode getInlogNode(){
+		return inlog;
+	}
+	
+	public ComboBox<String> getJob(){
+		return job;
 	}
 }

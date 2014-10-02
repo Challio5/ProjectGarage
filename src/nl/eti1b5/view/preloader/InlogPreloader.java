@@ -1,10 +1,12 @@
 package nl.eti1b5.view.preloader;
 
+import nl.eti1b5.controller.InlogControl;
 import nl.eti1b5.view.MainLoader;
 import javafx.application.Preloader;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import nl.eti1b5.view.reparatiesoverzicht.*;
 
 /**
  * GUI klasse, preloader
@@ -33,11 +35,31 @@ public class InlogPreloader extends Preloader {
 		
 		// Actionlistener voor een druk op submit knop
 		start.setSubmitListener((ActionEvent e) -> {
+			if(start.getJob().getValue() == null){
+				app.showJobFout();
+			} else if (start.getInlogNode().getName().getText().equals("")){
+				app.showPassNaam();
+			} else if (start.getInlogNode().getPassword().getText().equals("")){
+				app.showPassNaam();
+			} else if(start.getInlogNode().getPassword().getText().equals("Jow") && start.getInlogNode().getName().getText().equals("Jow")){
 			// App is null op het moment deze nog niet uitgeladen is
-			if(app != null) {
-				// Hide de preloader en showt het hoofdprogramma
-				stage.hide();
-				app.getStage().show();
+				if(start.getJob().getValue() == null){
+					app.showJobFout();
+				} else if(start.getJob().getValue().equals("Monteur")){
+					if(app != null) {
+						// Hide de preloader en showt het hoofdprogramma
+						stage.hide();
+						app.showMonteur();
+					}
+				} else if(start.getJob().getValue().equals("Secretaresse")){
+					if(app != null) {
+						// Hide de preloader en showt het hoofdprogramma
+						stage.hide();
+						app.showReparatie();
+					}
+				}
+			} else {
+				app.showPassNaam();
 			}
 		});
 		

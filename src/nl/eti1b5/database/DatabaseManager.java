@@ -14,7 +14,7 @@ public class DatabaseManager {
 	
 	private DatabaseManager() throws IOException, SQLException {
 		Properties databaseProperties = new Properties();
-		InputStream stream = this.getClass().getResourceAsStream("./rob.properties");
+		InputStream stream = this.getClass().getResourceAsStream("./props.properties");
 		databaseProperties.load(stream);
 		
 		String driver = databaseProperties.getProperty("drivers");
