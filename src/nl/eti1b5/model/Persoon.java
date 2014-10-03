@@ -1,48 +1,67 @@
 package nl.eti1b5.model;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 public class Persoon {
 
-	private String naam;
-	private String plaats;
-	private String adres;
-	private String telNr;
+	private StringProperty naam;
+	private StringProperty plaats;
+	private StringProperty adres;
+	private StringProperty telNr;
 
 	public Persoon(String naam, String plaats, String adres, String telNr) {
-		this.naam = naam;
-		this.plaats = plaats;
-		this.adres = adres;
-		this.telNr = telNr;
+		this.naam = new SimpleStringProperty(naam);
+		this.plaats = new SimpleStringProperty(plaats);
+		this.adres = new SimpleStringProperty(adres);
+		this.telNr = new SimpleStringProperty(telNr);
 	}
 
 	public String getNaam() {
-		return naam;
-	}
-
-	public void setNaam(String naam) {
-		this.naam = naam;
+		return naam.get();
 	}
 
 	public String getPlaats() {
+		return plaats.get();
+	}
+	
+	public String getAdres() {
+		return adres.get();
+	}
+	
+	public String getTelNr() {
+		return telNr.get();
+	}
+	
+	public void setNaam(String naam) {
+		this.naam.set(naam);
+	}
+	
+	public void setPlaats(String plaats) {
+		this.plaats.set(plaats);
+	}
+	
+	public void setAdres(String adres) {
+		this.adres.set(adres);
+	}
+	
+	public void setTelNr(String telNr) {
+		this.telNr.set(telNr);
+	}
+	
+	public StringProperty naamProperty() {
+		return naam;
+	}
+	
+	public StringProperty plaatsProperty() {
 		return plaats;
 	}
 
-	public void setPlaats(String plaats) {
-		this.plaats = plaats;
-	}
-
-	public String getAdres() {
+	public StringProperty adresProperty() {
 		return adres;
 	}
-
-	public void setAdres(String adres) {
-		this.adres = adres;
-	}
-
-	public String getTelNr() {
+	
+	public StringProperty telNrProperty() {
 		return telNr;
-	}
-
-	public void setTelNr(String telNr) {
-		this.telNr = telNr;
 	}
 }

@@ -21,7 +21,8 @@ public class DatabaseManager {
 		String url = databaseProperties.getProperty("url");
 		String user = databaseProperties.getProperty("username");
 		String password = databaseProperties.getProperty("password");
-		
+
+		System.setProperty("jdbc.driver", driver);
 		connection = DriverManager.getConnection(url, user, password);
 	}
 	

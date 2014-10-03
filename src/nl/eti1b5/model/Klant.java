@@ -1,30 +1,43 @@
 package nl.eti1b5.model;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 public class Klant extends Persoon {
 
-	private int klantnr;
-	private String rekeningNr;
+	private IntegerProperty klantNr;
+	private StringProperty rekeningNr;
 
 	public Klant(String naam, String plaats, String adres, String telNr,
-			int klantnr, String rekeningNr) {
+			int klantNr, String rekeningNr) {
 		super(naam, plaats, adres, telNr);
-		this.klantnr = klantnr;
-		this.rekeningNr = rekeningNr;
+		this.klantNr = new SimpleIntegerProperty(klantNr);
+		this.rekeningNr = new SimpleStringProperty(rekeningNr);
 	}
 
 	public int getKlantnr() {
-		return klantnr;
-	}
-
-	public void setKlantnr(int klantnr) {
-		this.klantnr = klantnr;
+		return klantNr.get();
 	}
 
 	public String getRekeningNr() {
-		return rekeningNr;
+		return rekeningNr.get();
+	}
+
+	public void setKlantnr(int klantnr) {
+		this.klantNr.set(klantnr);
 	}
 
 	public void setRekeningNr(String rekeningNr) {
-		this.rekeningNr = rekeningNr;
+		this.rekeningNr.set(rekeningNr);
+	}
+	
+	public IntegerProperty klantNrProperty() {
+		return klantNr;
+	}
+	
+	public StringProperty rekeningNrProperty() {
+		return rekeningNr;
 	}
 }
