@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS AutoKlant(
 );
 
 /* Koppelt meerdere materialen aan een reparatie */
-CREATE TABLE IF NOT EXISTS ReparatieVoorraad(Reparatienr int not null,
+CREATE TABLE IF NOT EXISTS ReparatieVoorraad(
 	Reparatienr int not null,
 	Materiaalnr int not null, 
 	PRIMARY KEY (Reparatienr, Materiaalnr), 
