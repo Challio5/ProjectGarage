@@ -1,3 +1,4 @@
+
 CREATE DATABASE IF NOT EXISTS Garage;
 
 USE Garage;
@@ -58,8 +59,8 @@ CREATE TABLE IF NOT EXISTS Reparaties(
 	Werknemernr int not null, 
 	Kenteken varchar(8), 
 	Reparatie varchar(30), 
-	Beginttijd date, 
-	Eindtijd date,
+	Beginttijd datetime, 
+	Eindtijd datetime,
 	Materiaalnr int,
 	Status varchar(10),
 	PRIMARY KEY(Reparatienr), 
@@ -87,10 +88,11 @@ CREATE TABLE IF NOT EXISTS AutoKlant(
 );
 
 /* Koppelt meerdere materialen aan een reparatie */
-CREATE TABLE IF NOT EXISTS ReparatieVoorraad(Reparatienr int not null,
+CREATE TABLE IF NOT EXISTS ReparatieVoorraad(
 	Reparatienr int not null,
 	Materiaalnr int not null, 
 	PRIMARY KEY (Reparatienr, Materiaalnr), 
 	FOREIGN KEY (Reparatienr) REFERENCES Reparaties(Reparatienr), 
 	FOREIGN KEY (Materiaalnr) REFERENCES Voorraad(Materiaalnr)
 );
+
