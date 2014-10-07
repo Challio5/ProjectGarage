@@ -61,16 +61,19 @@ public class InlogControl implements EventHandler{
 		}
 	}
 	
-
+	//foutmelding wanneer er geen job gekozen is
 	public void showJobFout() {
 		inlogView.getFoutMelding().setText("U heeft geen job gekozen");
 	}
 	
+	//foutmelding wanneer verkeerde inlog gegevens worden ingevuld
 	public void showPassNaam(){
 		inlogView.getFoutMelding().setText("U heeft een incorrecte \nusername/password combinatie ingevuld!\nu heeft nog " + (3-counter) + " kansen!");
+		//counter voor het aantal kansen van inloggen
 		counter++;
 	}
-
+	
+	//monteur scherm wanneer als monteur correct ingelogd
 	public void showMonteur() {
 		Scene scene = new Scene(new MonteurView());
 		
@@ -83,6 +86,7 @@ public class InlogControl implements EventHandler{
 		app.getStage().show();
 	}
 	
+	//reparatie scherm wanneer correct ingelogd
 	public void showReparatie(){
 
 		Scene scene = new Scene(new ReparatieView());
