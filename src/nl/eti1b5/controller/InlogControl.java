@@ -26,6 +26,15 @@ public class InlogControl implements EventHandler{
 		counter = 1;
 	}
 	
+	
+	/**
+	 * methode handle
+	 * gaat na of de counter aftelt.
+	 * wanneer er geen job is ingevuld komt hiervan een melding.
+	 * wanneer er geen of foutieve inlog gegevens worden toegevoegd komt hiervan een melding.
+	 * wanneer de inlog gegevens correct zijn wordt het desbetreffende scherm geopent passend bij de job.
+	 **/
+	
 	@Override
 	public void handle(Event arg0) {
 		if(counter < 3){
