@@ -26,10 +26,34 @@ public class DatabaseManager {
 		connection = DriverManager.getConnection(url, user, password);
 	}
 	
-	public static DatabaseManager getInstance() throws IOException, SQLException {
+	public static DatabaseManager getInstance() {
 		if(manager == null) {
-			manager = new DatabaseManager();
+			try {
+				manager = new DatabaseManager();
+			} catch (IOException e) {
+				System.err.println("Kan de juiste properties niet laden");
+				e.printStackTrace();
+			} catch (SQLException e) {
+				System.err.println("De gebruikersnaam, wachtwoord of ");
+				e.printStackTrace();
+			}
 		}
 		return manager;
+	}
+	
+	public Connection getConnection() {
+		return connection;
+	}
+	
+	public void close() {
+		if(manager != null) {
+			try {
+				connection.close();
+				manager = null;
+			} catch (SQLException e) {
+				System.err.println("Kan de verbinding niet sluiten");
+				e.printStackTrace();
+			}
+		}
 	}
 }
