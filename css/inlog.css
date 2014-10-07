@@ -16,3 +16,9 @@
 	-fx-padding: 10;
 	-fx-alignment: center;
 }
+
+#Foutmelding {
+	-fx-text-fill: #FF0000;
+	-fx-font-weight: bold;
+	-fx-font-size: 15;
+}

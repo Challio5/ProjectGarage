@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.effect.Reflection;
 import javafx.scene.layout.VBox;
 
@@ -26,6 +27,9 @@ public class InlogView extends VBox{
 	// Knop voor het submitten van de inloggevens
 	private Button submit;
 	
+	// Label voor het weergeven van een foutmelding
+	private Label foutMelding;
+	
 	/**
 	 * Constructor voor het initialiseren en toevoegen van de verschillende onderdelen
 	 * Voegt de class-selector '.start' toe voor indentificatie met de stylesheet
@@ -44,7 +48,10 @@ public class InlogView extends VBox{
 		
 		submit = new Button("Submit");
 		
-		this.getChildren().addAll(job, inlog, submit);
+		foutMelding = new Label();
+		foutMelding.setId("Foutmelding");
+		
+		this.getChildren().addAll(job, inlog, submit, foutMelding);
 	}
 	
 	/**
@@ -61,5 +68,9 @@ public class InlogView extends VBox{
 	
 	public ComboBox<String> getJob(){
 		return job;
+	}
+	
+	public Label getFoutMelding(){
+		return foutMelding;
 	}
 }

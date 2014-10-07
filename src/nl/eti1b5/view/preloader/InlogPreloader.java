@@ -23,6 +23,15 @@ public class InlogPreloader extends Preloader {
 	// Het hoofdprogramma
 	private MainLoader app;
 	
+	//De Stage
+	private Stage stage;
+	
+	//InlogController
+	private InlogControl inlogControl;
+	
+	//Preloader view
+	private InlogView start;
+	
 	/**
 	 * Start methode, wordt aangeroepen door de mainmethode voor het starten van de preloader
 	 * Voegt buttonlistener toe voor sluiten van de preloader en starten van het hoofdprogramma
@@ -30,38 +39,10 @@ public class InlogPreloader extends Preloader {
 	 */
 	@Override
 	public void start(Stage stage) throws Exception {
-		// Preloader view
-		InlogView start = new InlogView();
+		this.stage = stage;
 		
-		// Actionlistener voor een druk op submit knop
-		start.setSubmitListener((ActionEvent e) -> {
-			if(start.getJob().getValue() == null){
-				app.showJobFout();
-			} else if (start.getInlogNode().getName().getText().equals("")){
-				app.showPassNaam();
-			} else if (start.getInlogNode().getPassword().getText().equals("")){
-				app.showPassNaam();
-			} else if(start.getInlogNode().getPassword().getText().equals("Jow") && start.getInlogNode().getName().getText().equals("Jow")){
-			// App is null op het moment deze nog niet uitgeladen is
-				if(start.getJob().getValue() == null){
-					app.showJobFout();
-				} else if(start.getJob().getValue().equals("Monteur")){
-					if(app != null) {
-						// Hide de preloader en showt het hoofdprogramma
-						stage.hide();
-						app.showMonteur();
-					}
-				} else if(start.getJob().getValue().equals("Secretaresse")){
-					if(app != null) {
-						// Hide de preloader en showt het hoofdprogramma
-						stage.hide();
-						app.showReparatie();
-					}
-				}
-			} else {
-				app.showPassNaam();
-			}
-		});
+		// Preloader view
+		start = new InlogView();
 		
 		// Preloader scene
 		Scene scene = new Scene(start);
@@ -87,6 +68,17 @@ public class InlogPreloader extends Preloader {
 		// Voldoet op het moment het hoofdprogramma startklaar is
 		if(notification.getType() == StateChangeNotification.Type.BEFORE_START) {
 			app = ((MainLoader) notification.getApplication());
+			// Actionlistener voor een druk op submit knop
+			inlogControl = new InlogControl(this, app);
+			start.setSubmitListener(inlogControl);
 		}
+	}
+	
+	public Stage getStage(){
+		return stage;
+	}
+	
+	public InlogView getInlogView(){
+		return start;
 	}
 }

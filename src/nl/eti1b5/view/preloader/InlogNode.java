@@ -51,4 +51,10 @@ public class InlogNode extends GridPane {
 	public TextField getPassword(){
 		return password;
 	}
+	
+	public void setLock(){
+		name.setDisable(true);
+		password.setDisable(true);
+	}
+	
 }
