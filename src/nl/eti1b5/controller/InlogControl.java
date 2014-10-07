@@ -23,7 +23,7 @@ public class InlogControl implements EventHandler{
 		this.inlogPre = inlogPre;
 		this.app = app;
 		inlogView = inlogPre.getInlogView();
-		counter = 0;
+		counter = 1;
 	}
 	
 	@Override
@@ -57,6 +57,7 @@ public class InlogControl implements EventHandler{
 			}
 		} else {
 			inlogView.getInlogNode().setLock();
+			inlogView.getFoutMelding().setText("U heeft een incorrecte \nusername/password combinatie ingevuld!\nu heeft nog " + (3-counter) + " kansen!");
 		}
 	}
 	
@@ -66,7 +67,7 @@ public class InlogControl implements EventHandler{
 	}
 	
 	public void showPassNaam(){
-		inlogView.getFoutMelding().setText("U heeft een incorrecte username/password combinatie ingevuld");
+		inlogView.getFoutMelding().setText("U heeft een incorrecte \nusername/password combinatie ingevuld!\nu heeft nog " + (3-counter) + " kansen!");
 		counter++;
 	}
 
