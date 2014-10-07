@@ -12,7 +12,8 @@ insert into klanten
 values
 ("Laurens", "Brinkstraat 37", "7468CZ", "Enter"),
 ("Henk", "Dorpstraat 23", "7324IK", "Rijssen"),
-("Annie", "Bornebroekseweg 1", "8234OK", "Almelo");
+("Annie", "Bornebroekseweg 1", "8234OK", "Almelo"),
+("Martijn", "Oldenzaalsestraat 32", "2343KE", "Enschede"); 
 
 insert into auto
 (kenteken, merk, type, verzekeringnr)
@@ -20,7 +21,8 @@ values
 ("12-31-AB", "Renault", "Megane", 23),
 ("34-KB-23", "Porsche", "Cayenne", 10),
 ("1-KDD-13", "Range Rover", "Sport", 42),
-("10-ID-32", "Volvo", "XC90", 32);
+("10-ID-32", "Volvo", "XC90", 32),
+("12-IKK-21", "Porsche", "Panamera", 324);
 
 insert into autoklant
 (klantnr, kenteken)
@@ -38,8 +40,7 @@ values
 (2, 10001, 102, 1);
 
 insert into reparaties
-(klantnr, werknemernr, kenteken, reparatie, begintijd, eindtijd, matreriaalnr, status)
+(klantnr, werknemernr, kenteken, reparatie, begintijd, eindtijd, status)
 values
-(10000, 100, "12-31-AB", "Banden", 2014-10-07 13:33:00, 2014-10-07 15:33:00, 
+(10000, 100, "12-31-AB", "Banden", 2014-10-07 13:33:00, 2014-10-07 15:33:00, "bezig");
 
- format: YYYY-MM-DD HH:MM:SS

@@ -61,12 +61,10 @@ CREATE TABLE IF NOT EXISTS Reparaties(
 	Reparatie varchar(30), 
 	Beginttijd datetime, 
 	Eindtijd datetime,
-	Materiaalnr int,
 	Status varchar(10),
 	PRIMARY KEY(Reparatienr), 
 	FOREIGN KEY (Klantnr) REFERENCES Klanten(Klantnr), 
-	FOREIGN KEY (Werknemernr) REFERENCES Monteurs(Werknemernr), 
-	FOREIGN KEY (Materiaalnr) REFERENCES Voorraad(Materiaalnr)
+	FOREIGN KEY (Werknemernr) REFERENCES Monteurs(Werknemernr)
 );
 
 /* Tabel voor de gegevens van een auto */
