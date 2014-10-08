@@ -2,36 +2,34 @@ package nl.eti1b5.model;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 public class Voorraad {
 
-	private IntegerProperty naam;
 	private IntegerProperty materiaalnr;
+	private StringProperty naam;
 	private DoubleProperty prijs;
 	private IntegerProperty aantal;
-	private ObjectProperty<Reparatie> reparatie;
 
-	public Voorraad(int naam, int materiaalnr, double prijs, int aantal,
-			Reparatie reparatie) {
-		this.naam = new SimpleIntegerProperty(naam);
+	public Voorraad(int materiaalnr, String naam, double prijs, int aantal) {
+		this.naam = new SimpleStringProperty(naam);
 		this.materiaalnr = new SimpleIntegerProperty(materiaalnr);
 		this.prijs = new SimpleDoubleProperty(prijs);
 		this.aantal = new SimpleIntegerProperty(aantal);
-		this.reparatie = new SimpleObjectProperty<>(reparatie);
 	}
 
-	public int getNaam() {
-		return naam.get();
-	}
-
+	// Getters
 	public int getMateriaalnr() {
 		return materiaalnr.get();
 	}
 
+	public String getNaam() {
+		return naam.get();
+	}
+	
 	public double getPrijs() {
 		return prijs.get();
 	}
@@ -40,18 +38,15 @@ public class Voorraad {
 		return aantal.get();
 	}
 
-	public Reparatie getReparatie() {
-		return reparatie.get();
-	}
-
-	public void setNaam(int naam) {
-		this.naam.set(naam);
-	}
-
+	// Setters
 	public void setMateriaalnr(int materiaalnr) {
 		this.materiaalnr.set(materiaalnr);
 	}
-
+	
+	public void setNaam(String naam) {
+		this.naam.set(naam);
+	}
+	
 	public void setPrijs(double prijs) {
 		this.prijs.set(prijs);
 	}
@@ -60,16 +55,13 @@ public class Voorraad {
 		this.aantal.set(aantal);
 	}
 
-	public void setReparatie(Reparatie reparatie) {
-		this.reparatie.set(reparatie);
-	}
-	
-	public IntegerProperty naamProperty() {
-		return naam;
-	}
-	
+	// Properties
 	public IntegerProperty materiaalNrProperty() {
 		return materiaalnr;
+	}
+	
+	public StringProperty naamProperty() {
+		return naam;
 	}
 	
 	public DoubleProperty prijsProperty() {
@@ -78,9 +70,5 @@ public class Voorraad {
 	
 	public IntegerProperty aantalProperty() {
 		return aantal;
-	}
-	
-	public ObjectProperty<Reparatie> reparatieProperty() {
-		return reparatie;
 	}
 }

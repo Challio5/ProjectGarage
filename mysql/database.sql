@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS Klanten (
 
 ALTER TABLE Klanten auto_increment = 10000;
 
-/* Tabel voor de gegevens van een monteurg */
+/* Tabel voor de gegevens van een monteur */
 CREATE TABLE IF NOT EXISTS Monteurs(
 	Werknemernr int not null auto_increment, 
 	Naam varchar(30), 
