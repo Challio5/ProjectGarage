@@ -1,7 +1,11 @@
 package nl.eti1b5.controller;
 
+import java.util.ArrayList;
+
 import com.sun.javafx.application.LauncherImpl;
 
+import nl.eti1b5.database.dao.ReparatieDao;
+import nl.eti1b5.model.Reparatie;
 import nl.eti1b5.view.MainLoader;
 import nl.eti1b5.view.preloader.InlogPreloader;
 
@@ -22,5 +26,12 @@ public class Garage {
 	 */
 	public static void main(String[] args) {
 		LauncherImpl.launchApplication(MainLoader.class, InlogPreloader.class, args);
+		
+		/* Database Test */
+		ReparatieDao dao = new ReparatieDao();
+		ArrayList<Reparatie> lijst = dao.getReparaties();
+		for(Reparatie reparatie : lijst) {
+			System.out.println(reparatie);
+		}
 	}
 }

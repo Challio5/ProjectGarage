@@ -27,7 +27,7 @@ public class ReparatieDao {
 		
 		// De te execturen sql querys
 		try {
-			// De query die alle gegevens uit de tabel reparatie haalt
+			// Query die alle gegevens uit de tabel reparatie haalt
 			String reparatieQuery = "select * from reparatie";
 			PreparedStatement reparatieStatement = connection.prepareStatement(reparatieQuery);
 			ResultSet reparatieSet = reparatieStatement.executeQuery();
@@ -40,13 +40,13 @@ public class ReparatieDao {
 				int werknemerNummer = reparatieSet.getInt("Werknemernr");
 				String kenteken = reparatieSet.getString("Kenteken");
 				String reparatie = reparatieSet.getString("Reparatie");
-				Date beginTijd = reparatieSet.getDate("Beginttijd");
+				Date beginTijd = reparatieSet.getDate("Begintijd");
 				Date eindTijd = reparatieSet.getDate("Eindtijd"); 
 				String status = reparatieSet.getString("Status");
 	
-				// Gaat per reparatie op basis van het reparatienummer in de koppeltabel kijken naar reparatienummers
+				// Query die alle materiaalnummer uit de koppeltabel haalt
 				String materiaalNummersQuery = "select Materiaalnr from ReparatieVoorraad"
-						+ "where Reparatienr = ?";
+						+ " where Reparatienr = ?";
 				PreparedStatement materiaalNummersStatement = connection.prepareStatement(materiaalNummersQuery);
 				
 				materiaalNummersStatement.setInt(1, reparatieNummer);
@@ -59,11 +59,11 @@ public class ReparatieDao {
 					materiaalNummersLijst.add(materiaalNummer);
 				}
 				
-				// Voor alle materiaalnummers worden de bijbehorende gegevens opgevraagd
+				// Query die aan het de hand van het materiaalnummer materialen uit de tabel haalt
 				ArrayList<Voorraad> materialenLijst = new ArrayList<>();
 				for(int materiaalnummer : materiaalNummersLijst) {
-					String materialenQuery = "select * from ReparatieVoorraad"
-							+ "where Materiaalnr = ?";
+					String materialenQuery = "select * from Voorraad"
+							+ " where Materiaalnr = ?";
 					PreparedStatement materialenStatement = connection.prepareStatement(materialenQuery);
 					
 					materialenStatement.setInt(1, materiaalnummer);

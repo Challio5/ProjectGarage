@@ -64,14 +64,14 @@ public class DatabaseManager {
 	 */
 	public synchronized void createConnection() throws IOException, SQLException {
 		Properties databaseProperties = new Properties();
-		InputStream stream = this.getClass().getResourceAsStream("./props.properties");
+		InputStream stream = this.getClass().getClassLoader().getResourceAsStream("props.properties");
 		databaseProperties.load(stream);
 		
-		String driver = databaseProperties.getProperty("drivers");
-		String url = databaseProperties.getProperty("url");
-		String user = databaseProperties.getProperty("username");
-		String password = databaseProperties.getProperty("password");
-
+		String driver = databaseProperties.getProperty("jdbc.drivers");
+		String url = databaseProperties.getProperty("jdbc.url");
+		String user = databaseProperties.getProperty("jdbc.username");
+		String password = databaseProperties.getProperty("jdbc.password");
+		
 		System.setProperty("jdbc.driver", driver);
 		connection = DriverManager.getConnection(url, user, password);
 	}

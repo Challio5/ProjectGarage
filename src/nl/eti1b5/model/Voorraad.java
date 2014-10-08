@@ -71,4 +71,10 @@ public class Voorraad {
 	public IntegerProperty aantalProperty() {
 		return aantal;
 	}
+
+	@Override
+	public String toString() {
+		return "Voorraad [materiaalnr=" + materiaalnr.get() + ", naam=" + naam.get()
+				+ ", prijs=" + prijs.get() + ", aantal=" + aantal.get() + "]";
+	}
 }

@@ -142,4 +142,19 @@ public class Reparatie {
 	public StringProperty statusProperty() {
 		return this.status;
 	}
+
+	@Override
+	public String toString() {
+		String materialenLijst = "";
+		for(Voorraad materiaal : this.materialenLijst) {
+			materialenLijst += materiaal;
+			materialenLijst += ", ";
+		}
+		return "Reparatie [reparatieNummer=" + reparatieNummer.get()
+				+ ", klantNummer=" + klantNummer.get() + ", werknemerNummer="
+				+ werknemerNummer.get() + ", kenteken=" + kenteken.get() + ", reparatie="
+				+ reparatie.get() + ", beginTijd=" + beginTijd.get() + ", eindTijd="
+				+ eindTijd.get() + ", materialenLijst=" + materialenLijst
+				+ ", status=" + status.get() + "]";
+	}
 }

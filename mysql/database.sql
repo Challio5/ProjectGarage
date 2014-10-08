@@ -1,10 +1,15 @@
+/* 
+ * Meerdere begin/eind tijden per reparatie
+ * Meerdere reparaties per factuur
+ */
 
-CREATE DATABASE IF NOT EXISTS Garage;
+DROP DATABASE IF EXISTS Garage;
+CREATE DATABASE Garage;
 
 USE Garage;
 
 /* Tabel voor de gegevens van een klant */
-CREATE TABLE IF NOT EXISTS Klanten (
+CREATE TABLE IF NOT EXISTS Klant (
 	Klantnr int not null auto_increment, 	
 	Naam varchar(30), 
 	Adres varchar(30), 
@@ -13,10 +18,10 @@ CREATE TABLE IF NOT EXISTS Klanten (
 	PRIMARY KEY (Klantnr)
 );
 
-ALTER TABLE Klanten auto_increment = 10000;
+ALTER TABLE Klant auto_increment = 10000;
 
 /* Tabel voor de gegevens van een monteur */
-CREATE TABLE IF NOT EXISTS Monteurs(
+CREATE TABLE IF NOT EXISTS Monteur(
 	Werknemernr int not null auto_increment, 
 	Naam varchar(30), 
 	Adres varchar(30),
@@ -27,21 +32,21 @@ CREATE TABLE IF NOT EXISTS Monteurs(
 	PRIMARY KEY (Werknemernr)
 );
 
-ALTER TABLE Monteurs auto_increment = 100;
+ALTER TABLE Monteur auto_increment = 100;
 
 /* Tabel voor de gegevens van een factuur */
-CREATE TABLE IF NOT EXISTS Facturen(			
+CREATE TABLE IF NOT EXISTS Factuur(			
 	Factuurnr int not null auto_increment, 
 	Reparatienr int not null, 
 	Klantnr int not null, 
 	Werknemernr int not null, 
-	Status boolean,
+	Status varchar(30),
 	PRIMARY KEY (Factuurnr, Reparatienr), 
-	FOREIGN KEY (Klantnr) REFERENCES Klanten(Klantnr), 
-	FOREIGN KEY (Werknemernr) REFERENCES Monteurs(Werknemernr)
+	FOREIGN KEY (Klantnr) REFERENCES Klant(Klantnr), 
+	FOREIGN KEY (Werknemernr) REFERENCES Monteur(Werknemernr)
 );
 
-ALTER TABLE Facturen auto_increment = 100;
+ALTER TABLE Factuur auto_increment = 100;
 
 /* Tabel voor de gegevens van de materialen */
 CREATE TABLE IF NOT EXISTS Voorraad(
@@ -53,25 +58,25 @@ CREATE TABLE IF NOT EXISTS Voorraad(
 );
 
 /* Tabel voor de gegevens van een reparatie */
-CREATE TABLE IF NOT EXISTS Reparaties(
+CREATE TABLE IF NOT EXISTS Reparatie(
 	Reparatienr int not null auto_increment, 
 	Klantnr int not null, 
 	Werknemernr int not null, 
 	Kenteken varchar(8), 
 	Reparatie varchar(30), 
-	Beginttijd datetime, 
+	Begintijd datetime, 
 	Eindtijd datetime,
 	Status varchar(10),
 	PRIMARY KEY(Reparatienr), 
-	FOREIGN KEY (Klantnr) REFERENCES Klanten(Klantnr), 
-	FOREIGN KEY (Werknemernr) REFERENCES Monteurs(Werknemernr)
+	FOREIGN KEY (Klantnr) REFERENCES Klant(Klantnr), 
+	FOREIGN KEY (Werknemernr) REFERENCES Monteur(Werknemernr)
 );
 
 /* Tabel voor de gegevens van een auto */
 CREATE TABLE IF NOT EXISTS Auto(
 	Kenteken varchar(8), 
 	Merk varchar(20), 
-	Type varchar(20), 
+	Model varchar(20), 
 	Verzekeringnr int, 
 	PRIMARY KEY (Kenteken)
 );
@@ -81,7 +86,7 @@ CREATE TABLE IF NOT EXISTS AutoKlant(
 	Klantnr int not null, 
 	Kenteken varchar(8), 
 	PRIMARY KEY (Klantnr, Kenteken), 
-	FOREIGN KEY (Klantnr) REFERENCES Klanten(Klantnr), 
+	FOREIGN KEY (Klantnr) REFERENCES Klant(Klantnr), 
 	FOREIGN KEY (Kenteken) REFERENCES Auto(Kenteken)
 );
 
@@ -90,7 +95,7 @@ CREATE TABLE IF NOT EXISTS ReparatieVoorraad(
 	Reparatienr int not null,
 	Materiaalnr int not null, 
 	PRIMARY KEY (Reparatienr, Materiaalnr), 
-	FOREIGN KEY (Reparatienr) REFERENCES Reparaties(Reparatienr), 
+	FOREIGN KEY (Reparatienr) REFERENCES Reparatie(Reparatienr), 
 	FOREIGN KEY (Materiaalnr) REFERENCES Voorraad(Materiaalnr)
 );
 

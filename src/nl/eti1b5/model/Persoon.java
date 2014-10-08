@@ -64,4 +64,10 @@ public class Persoon {
 	public StringProperty telNrProperty() {
 		return telNr;
 	}
+
+	@Override
+	public String toString() {
+		return "Persoon [naam=" + naam.get() + ", plaats=" + plaats.get() + ", adres="
+				+ adres.get() + ", telNr=" + telNr.get() + "]";
+	}
 }

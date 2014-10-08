@@ -68,4 +68,11 @@ public class Gebruiker extends Persoon {
 	public IntegerProperty werknemerNrProperty() {
 		return werknemerNr;
 	}
+
+	@Override
+	public String toString() {
+		return "Gebruiker [rechten=" + rechten.get() + ", wachtwoord=" + wachtwoord.get()
+				+ ", functie=" + functie.get() + ", werknemerNr=" + werknemerNr.get() + 
+				super.toString() + "]";
+	}
 }

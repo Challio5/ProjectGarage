@@ -40,4 +40,10 @@ public class Klant extends Persoon {
 	public StringProperty rekeningNrProperty() {
 		return rekeningNr;
 	}
+
+	@Override
+	public String toString() {
+		return "Klant [klantNr=" + klantNr + ", rekeningNr=" + rekeningNr
+				+ ", toString()=" + super.toString() + "]";
+	}
 }
