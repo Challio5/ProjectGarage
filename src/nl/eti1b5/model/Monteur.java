@@ -8,9 +8,9 @@ public class Monteur extends Gebruiker {
 	private StringProperty specialiteit;
 	private StringProperty beschikbaarheid;
 
-	public Monteur(String naam, String woonplaats, String adres, String postcode, String telNr,
-				   String wachtwoord, int werknemerNr, String specialiteit, String beschikbaarheid) {
-		super(naam, woonplaats, adres, postcode, telNr, wachtwoord, werknemerNr);
+	public Monteur(String naam, String plaats, String adres, String postcode, String telNr,
+				   int rechten, String wachtwoord, String functie, int werknemerNr, String specialiteit, String beschikbaarheid) {
+		super(naam, plaats, adres, postcode, telNr, rechten, wachtwoord, functie, werknemerNr);
 		
 		this.specialiteit = new SimpleStringProperty(specialiteit);
 		this.beschikbaarheid = new SimpleStringProperty(beschikbaarheid);
@@ -42,8 +42,6 @@ public class Monteur extends Gebruiker {
 	
 	@Override
 	public String toString() {
-		return "Gebruiker [naam=" + getNaam() + ", woonplaats=" + getWoonplaats() + ", adres=" + getAdres() + ", postcode=" + getPostcode()
-						   + ", telNr=" + getTelNr() + ", wachtwoord=" + getWachtwoord() + ", werknemerNr=" + getWerknemerNr()
-						   + ", specialiteit=" + specialiteit.get() + ", beschikbaarheid=" + beschikbaarheid.get() + "]";
+		return "Gebruiker [specialiteit=" + specialiteit.get() + ", beschikbaarheid=" + beschikbaarheid.get() + "]";
 	}
 }

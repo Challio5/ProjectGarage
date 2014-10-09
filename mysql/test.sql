@@ -1,13 +1,13 @@
 use garage;
 
 insert into monteur
-(naam, adres, postcode, woonplaats, TelNr, Wachtwoord, specialiteit, beschikbaarheid)
+(naam, adres, postcode, woonplaats, specialiteit, beschikbaarheid)
 values 
-("Henk", "Hoofdstraat 1", "7468CZ", "Enter", "06-12345678", "Henk123", "Banden", "M1"),
-("Sjaak", "Dorpstraat 1", "7423HJ", "Rijssen","06-87654321", "Sjaak45", "Carroserie", "M1"),
-("Jan", "Stationsstraat 1", "7323IK", "Rotterdam", "06-18273645", "JanJan", "Motor", "M2"),
-("Tom", "Enterweg 10", "3453JI", "Bornebroek", "06-12387645", "Tom94", "Motor", "M2"),
-("Rob", "Rijssenseweg 11", "2393JI", "Nijverdal", "06-09128365", "Moyboy88", "Carroserie", "V3");
+("Henk", "Hoofdstraat 1", "7468CZ", "Enter", "Banden", "M1"),
+("Sjaak", "Dorpstraat 1", "7423HJ", "Rijssen", "Carroserie", "M1"),
+("Jan", "Stationsstraat 1", "7323IK", "Rotterdam", "Motor", "M2"),
+("Tom", "Enterweg 10", "3453JI", "Bornebroek", "Motor", "M2"),
+("Rob", "Rijssenseweg 11", "2393JI", "Nijverdal", "Carroserie", "V3");
 
 insert into klant
 (naam, adres, postcode, woonplaats)

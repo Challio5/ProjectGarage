@@ -9,7 +9,7 @@ public class Secretaresse extends Gebruiker {
 
 	public Secretaresse(String naam, String plaats, String adres, String postcode, String telNr,
 				   int rechten, String wachtwoord, String functie, int werknemerNr, int secretaresseNr) {
-		super(naam, plaats, adres, postcode, telNr, wachtwoord, werknemerNr);
+		super(naam, plaats, adres, postcode, telNr, rechten, wachtwoord, functie, werknemerNr);
 		
 		this.secretaresseNr = new SimpleIntegerProperty(secretaresseNr);
 	}

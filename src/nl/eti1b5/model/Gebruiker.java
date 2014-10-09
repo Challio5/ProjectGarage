@@ -7,34 +7,62 @@ import javafx.beans.property.StringProperty;
 
 public class Gebruiker extends Persoon {
 
+	private IntegerProperty rechten;
 	private StringProperty wachtwoord;
+	private StringProperty functie;
 	private IntegerProperty werknemerNr;
 
 	public Gebruiker(String naam, String plaats, String adres, String postcode, String telNr,
-					 String wachtwoord, int werknemerNr) {
+					 int rechten, String wachtwoord, String functie, int werknemerNr) {
 		super(naam, plaats, adres, postcode, telNr);
+		this.rechten = new SimpleIntegerProperty(rechten);
 		this.wachtwoord = new SimpleStringProperty(wachtwoord);
+		this.functie = new SimpleStringProperty(functie);
 		this.werknemerNr = new SimpleIntegerProperty(werknemerNr);
+	}
+
+	public int getRechten() {
+		return rechten.get();
 	}
 
 	public String getWachtwoord() {
 		return wachtwoord.get();
 	}
 
+	public String getFunctie() {
+		return functie.get();
+	}
+
 	public int getWerknemerNr() {
 		return werknemerNr.get();
+	}
+
+	public void setRechten(int rechten) {
+		this.rechten.set(rechten);
 	}
 
 	public void setWachtwoord(String wachtwoord) {
 		this.wachtwoord.set(wachtwoord);
 	}
 
+	public void setFunctie(String functie) {
+		this.functie.set(functie);
+	}
+
 	public void setWerknemerNr(int werknemerNr) {
 		this.werknemerNr.set(werknemerNr);
 	}
 	
+	public IntegerProperty rechtenProperty() {
+		return rechten;
+	}
+	
 	public StringProperty wachtwoordProperty() {
 		return wachtwoord;
+	}
+
+	public StringProperty functieProperty() {
+		return functie;
 	}
 	
 	public IntegerProperty werknemerNrProperty() {
@@ -43,8 +71,8 @@ public class Gebruiker extends Persoon {
 
 	@Override
 	public String toString() {
-		return "Gebruiker [wachtwoord=" + wachtwoord.get()
-				+ ", werknemerNr=" + werknemerNr.get() + 
+		return "Gebruiker [rechten=" + rechten.get() + ", wachtwoord=" + wachtwoord.get()
+				+ ", functie=" + functie.get() + ", werknemerNr=" + werknemerNr.get() + 
 				super.toString() + "]";
 	}
 }
