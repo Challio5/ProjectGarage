@@ -6,14 +6,14 @@ import javafx.beans.property.StringProperty;
 public class Persoon {
 
 	private StringProperty naam;
-	private StringProperty plaats;
+	private StringProperty woonplaats;
 	private StringProperty adres;
 	private StringProperty postcode;
 	private StringProperty telNr;
 
-	public Persoon(String naam, String plaats, String adres, String postcode, String telNr) {
+	public Persoon(String naam, String woonplaats, String adres, String postcode, String telNr) {
 		this.naam = new SimpleStringProperty(naam);
-		this.plaats = new SimpleStringProperty(plaats);
+		this.woonplaats = new SimpleStringProperty(woonplaats);
 		this.adres = new SimpleStringProperty(adres);
 		this.postcode = new SimpleStringProperty(postcode);
 		this.telNr = new SimpleStringProperty(telNr);
@@ -23,8 +23,8 @@ public class Persoon {
 		return naam.get();
 	}
 
-	public String getPlaats() {
-		return plaats.get();
+	public String getWoonplaats() {
+		return woonplaats.get();
 	}
 	
 	public String getAdres() {
@@ -43,8 +43,8 @@ public class Persoon {
 		this.naam.set(naam);
 	}
 	
-	public void setPlaats(String plaats) {
-		this.plaats.set(plaats);
+	public void setwoonplaats(String woonplaats) {
+		this.woonplaats.set(woonplaats);
 	}
 	
 	public void setAdres(String adres) {
@@ -63,8 +63,8 @@ public class Persoon {
 		return naam;
 	}
 	
-	public StringProperty plaatsProperty() {
-		return plaats;
+	public StringProperty woonplaatsProperty() {
+		return woonplaats;
 	}
 
 	public StringProperty adresProperty() {
@@ -81,7 +81,7 @@ public class Persoon {
 
 	@Override
 	public String toString() {
-		return "Persoon [naam=" + naam.get() + ", plaats=" + plaats.get() + ", adres="
+		return "Persoon [naam=" + naam.get() + ", woonplaats=" + woonplaats.get() + ", adres="
 				+ adres.get() + ", postcode=" + postcode.get() + ", telNr=" + telNr.get() + "]";
 	}
 }
