@@ -5,14 +5,12 @@ import nl.eti1b5.view.monteursoverzicht.MonteurView;
 import nl.eti1b5.view.preloader.InlogPreloader;
 import nl.eti1b5.view.preloader.InlogView;
 import nl.eti1b5.view.reparatiesoverzicht.ReparatieView;
-import javafx.event.Event;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
-public class InlogControl implements EventHandler{
+
+public class InlogControl implements EventHandler<ActionEvent>{
 	
 	private MainLoader app;
 	private InlogPreloader inlogPre;
@@ -36,7 +34,7 @@ public class InlogControl implements EventHandler{
 	 **/
 	
 	@Override
-	public void handle(Event arg0) {
+	public void handle(ActionEvent arg0) {
 		if(counter < 3){
 			if(inlogView.getJob().getValue() == null){
 				showJobFout();
@@ -44,7 +42,7 @@ public class InlogControl implements EventHandler{
 				showPassNaam();
 			} else if (inlogView.getInlogNode().getPassword().getText().equals("")){
 				showPassNaam();
-			} else if(inlogView.getInlogNode().getPassword().getText().equals("Jow") && inlogPre.getInlogView().getInlogNode().getName().getText().equals("Jow")){
+			} else if(inlogView.getInlogNode().getPassword().getText().equals(" ") && inlogPre.getInlogView().getInlogNode().getName().getText().equals(" ")){
 			// App is null op het moment deze nog niet uitgeladen is
 				if(inlogView.getJob().getValue() == null){
 					showJobFout();
