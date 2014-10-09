@@ -42,10 +42,10 @@ values
 (2, 10001, 102, 1);
 
 insert into reparatie
-(klantnr, werknemernr, kenteken, reparatie, begintijd, eindtijd, status)
+(klantnr, werknemernr, kenteken, reparatie, duur, status)
 values
-(10000, 100, "12-31-AB", "Banden", '2014-10-07 13:33:00', '2014-10-07 15:33:00', "bezig"),
-(10002, 103, "10-ID-32", "Grote Beurt", '2014-10-10 09:01:00', '2014-10-07 11:55:00', "klaar");
+(10000, 100, "12-31-AB", "Banden", 3.15, "bezig"),
+(10002, 103, "10-ID-32", "Grote Beurt", 2.50, "klaar");
 
 insert into voorraad
 (naam, prijs, aantal)
@@ -61,4 +61,12 @@ values
 (1, 1),
 (1, 3),
 (1, 4);
+
+insert into factuurreparatie
+(factuurnr, reparatienr)
+values
+(100, 1),
+(100, 2),
+(101, 1),
+(102, 2);
 

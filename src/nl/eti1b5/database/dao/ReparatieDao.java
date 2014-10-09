@@ -1,7 +1,6 @@
 package nl.eti1b5.database.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -40,8 +39,7 @@ public class ReparatieDao {
 				int werknemerNummer = reparatieSet.getInt("Werknemernr");
 				String kenteken = reparatieSet.getString("Kenteken");
 				String reparatie = reparatieSet.getString("Reparatie");
-				Date beginTijd = reparatieSet.getDate("Begintijd");
-				Date eindTijd = reparatieSet.getDate("Eindtijd"); 
+				double duur = reparatieSet.getDouble("Duur");
 				String status = reparatieSet.getString("Status");
 	
 				// Query die alle materiaalnummer uit de koppeltabel haalt
@@ -81,7 +79,7 @@ public class ReparatieDao {
 				}
 				
 				reparatieLijst.add(new Reparatie(reparatieNummer, klantNummer, werknemerNummer,
-						kenteken, reparatie, beginTijd, eindTijd, materialenLijst, status));
+						kenteken, reparatie, duur, materialenLijst, status));
 			}
 		} catch (SQLException e) {
 			System.err.println("Kan het statement niet uitvoeren");

@@ -1,12 +1,11 @@
 package nl.eti1b5.model;
 
-import java.sql.Date;
 import java.util.ArrayList;
 
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -17,21 +16,19 @@ public class Reparatie {
 	private IntegerProperty werknemerNummer;
 	private StringProperty kenteken;
 	private StringProperty reparatie;
-	private ObjectProperty<Date> beginTijd;
-	private ObjectProperty<Date> eindTijd;
+	private DoubleProperty duur;
 	private ArrayList<Voorraad> materialenLijst;
 	private StringProperty status;
 
 	public Reparatie(int reparatieNummer, int klantNummer, int werknemerNummer, String kenteken, 
-			String reparatie, Date beginTijd, Date eindTijd, ArrayList<Voorraad> materialenLijst, 
+			String reparatie, double duur, ArrayList<Voorraad> materialenLijst, 
 			String status) {
 		this.reparatieNummer = new SimpleIntegerProperty(reparatieNummer);
 		this.klantNummer = new SimpleIntegerProperty(klantNummer);
 		this.werknemerNummer = new SimpleIntegerProperty(werknemerNummer);
 		this.kenteken = new SimpleStringProperty(kenteken);
 		this.reparatie = new SimpleStringProperty(reparatie);
-		this.beginTijd = new SimpleObjectProperty<>(beginTijd);
-		this.eindTijd = new SimpleObjectProperty<>(eindTijd);
+		this.duur = new SimpleDoubleProperty(duur);
 		this.materialenLijst = materialenLijst;
 		this.status = new SimpleStringProperty(status);
 	}
@@ -57,12 +54,8 @@ public class Reparatie {
 		return reparatie.get();
 	}
 	
-	public Date getBeginTijd() {
-		return beginTijd.get();
-	}
-	
-	public Date getEindTijd() {
-		return eindTijd.get();
+	public double getDuur() {
+		return duur.get();
 	}
 	
 	public ArrayList<Voorraad> getMaterialenLijst() {
@@ -94,12 +87,8 @@ public class Reparatie {
 		this.reparatie.set(reparatie);
 	}
 	
-	public void setBeginTijd(Date beginTijd) {
-		this.setBeginTijd(beginTijd);
-	}
-	
-	public void setEindTijd(Date eindTijd) {
-		this.eindTijd.set(eindTijd);
+	public void setDuur(double duur) {
+		this.duur.set(duur);
 	}
 	
 	public void setMaterialenLijst(ArrayList<Voorraad> materialenLijst) {
@@ -131,12 +120,8 @@ public class Reparatie {
 		return this.reparatie;
 	}
 	
-	public ObjectProperty<Date> beginTijdProperty() {
-		return this.beginTijd;
-	}
-	
-	public ObjectProperty<Date> eindTijdProperty() {
-		return this.eindTijd;
+	public DoubleProperty duurProperty() {
+		return this.duur;
 	}
 	
 	public StringProperty statusProperty() {
@@ -153,8 +138,7 @@ public class Reparatie {
 		return "Reparatie [reparatieNummer=" + reparatieNummer.get()
 				+ ", klantNummer=" + klantNummer.get() + ", werknemerNummer="
 				+ werknemerNummer.get() + ", kenteken=" + kenteken.get() + ", reparatie="
-				+ reparatie.get() + ", beginTijd=" + beginTijd.get() + ", eindTijd="
-				+ eindTijd.get() + ", materialenLijst=" + materialenLijst
-				+ ", status=" + status.get() + "]";
+				+ reparatie.get() + ", duur=" + duur.get() + ", materialenLijst=" 
+				+ materialenLijst + ", status=" + status.get() + "]";
 	}
 }

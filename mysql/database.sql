@@ -1,8 +1,3 @@
-/* 
- * Meerdere begin/eind tijden per reparatie
- * Meerdere reparaties per factuur
- */
-
 DROP DATABASE IF EXISTS Garage;
 CREATE DATABASE Garage;
 
@@ -64,8 +59,7 @@ CREATE TABLE IF NOT EXISTS Reparatie(
 	Werknemernr int not null, 
 	Kenteken varchar(8), 
 	Reparatie varchar(30), 
-	Begintijd datetime, 
-	Eindtijd datetime,
+	Duur double,
 	Status varchar(10),
 	PRIMARY KEY(Reparatienr), 
 	FOREIGN KEY (Klantnr) REFERENCES Klant(Klantnr), 
@@ -97,5 +91,14 @@ CREATE TABLE IF NOT EXISTS ReparatieVoorraad(
 	PRIMARY KEY (Reparatienr, Materiaalnr), 
 	FOREIGN KEY (Reparatienr) REFERENCES Reparatie(Reparatienr), 
 	FOREIGN KEY (Materiaalnr) REFERENCES Voorraad(Materiaalnr)
+);
+
+/* Koppelt meerdere reparaties aan een factuur */
+CREATE TABLE IF NOT EXISTS FactuurReparatie(
+	Factuurnr int not null,
+	Reparatienr int not null,
+	PRIMARY KEY (Factuurnr, Reparatienr),
+	FOREIGN KEY (Factuurnr) REFERENCES Factuur(Factuurnr),
+	FOREIGN KEY (Reparatienr) REFERENCES Reparatie(Reparatienr)
 );
 
