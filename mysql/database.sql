@@ -21,6 +21,8 @@ CREATE TABLE IF NOT EXISTS Monteur(
 	Naam varchar(30), 
 	Adres varchar(30),
 	Postcode varchar(6),
+    Telnr varchar(11),
+    Wachtwoord varchar(16),
 	Woonplaats varchar(30),  
 	Specialiteit varchar(30), 
 	Beschikbaarheid varchar(3),    				
