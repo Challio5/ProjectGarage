@@ -12,9 +12,9 @@ public class Gebruiker extends Persoon {
 	private StringProperty functie;
 	private IntegerProperty werknemerNr;
 
-	public Gebruiker(String naam, String plaats, String adres, String telNr,
-			int rechten, String wachtwoord, String functie, int werknemerNr) {
-		super(naam, plaats, adres, telNr);
+	public Gebruiker(String naam, String plaats, String adres, String postcode, String telNr,
+					 int rechten, String wachtwoord, String functie, int werknemerNr) {
+		super(naam, plaats, adres, postcode, telNr);
 		this.rechten = new SimpleIntegerProperty(rechten);
 		this.wachtwoord = new SimpleStringProperty(wachtwoord);
 		this.functie = new SimpleStringProperty(functie);

@@ -8,12 +8,14 @@ public class Persoon {
 	private StringProperty naam;
 	private StringProperty plaats;
 	private StringProperty adres;
+	private StringProperty postcode;
 	private StringProperty telNr;
 
-	public Persoon(String naam, String plaats, String adres, String telNr) {
+	public Persoon(String naam, String plaats, String adres, String postcode, String telNr) {
 		this.naam = new SimpleStringProperty(naam);
 		this.plaats = new SimpleStringProperty(plaats);
 		this.adres = new SimpleStringProperty(adres);
+		this.postcode = new SimpleStringProperty(postcode);
 		this.telNr = new SimpleStringProperty(telNr);
 	}
 
@@ -27,6 +29,10 @@ public class Persoon {
 	
 	public String getAdres() {
 		return adres.get();
+	}
+	
+	public String getPostcode() {
+		return postcode.get();
 	}
 	
 	public String getTelNr() {
@@ -45,6 +51,10 @@ public class Persoon {
 		this.adres.set(adres);
 	}
 	
+	public void setPostcode(String postcode){
+		this.postcode.set(postcode);
+	}
+	
 	public void setTelNr(String telNr) {
 		this.telNr.set(telNr);
 	}
@@ -61,6 +71,10 @@ public class Persoon {
 		return adres;
 	}
 	
+	public StringProperty postcodeProperty() {
+		return postcode;
+	}
+	
 	public StringProperty telNrProperty() {
 		return telNr;
 	}
@@ -68,6 +82,6 @@ public class Persoon {
 	@Override
 	public String toString() {
 		return "Persoon [naam=" + naam.get() + ", plaats=" + plaats.get() + ", adres="
-				+ adres.get() + ", telNr=" + telNr.get() + "]";
+				+ adres.get() + ", postcode=" + postcode.get() + ", telNr=" + telNr.get() + "]";
 	}
 }
