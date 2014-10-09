@@ -29,8 +29,6 @@ public class Garage {
 	 * @param args String array met commandline argumenten
 	 */
 	public static void main(String[] args) {
-		LauncherImpl.launchApplication(MainLoader.class, InlogPreloader.class, args);
-		
 		/* Database Test */
 		ReparatieDao dao = new ReparatieDao();
 		ArrayList<Reparatie> lijst = dao.getReparaties();
@@ -50,5 +48,7 @@ public class Garage {
 			System.out.println(voorraad);
 		}
 		
+		// Opent de applicatie
+		LauncherImpl.launchApplication(MainLoader.class, InlogPreloader.class, args);
 	}
 }

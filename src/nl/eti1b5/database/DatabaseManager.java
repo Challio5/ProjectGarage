@@ -83,6 +83,7 @@ public class DatabaseManager {
 		if(connection != null) {
 			try {
 				connection.close();
+				connection = null;
 			} catch (SQLException e) {
 				System.err.println("Kan de verbinding niet sluiten");
 				e.printStackTrace();
