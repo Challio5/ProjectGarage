@@ -1,7 +1,12 @@
 package nl.eti1b5.view.reparatiesoverzicht;
 
+import nl.eti1b5.database.dao.AutoDao;
+import nl.eti1b5.model.Auto;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 
 public class ReparatieNode extends TableView{
@@ -19,11 +24,15 @@ public class ReparatieNode extends TableView{
 		soort.setMinWidth(150);
 		kenteken = new TableColumn("Kenteken:");
 		kenteken.setMinWidth(150);
+		kenteken.setCellValueFactory(new PropertyValueFactory<Auto,String>("kenteken"));
 		omschrijving = new TableColumn("Omschrijving");
 		omschrijving.setMinWidth(150);
 		onderdelen = new TableColumn("Onderdelen");
 		onderdelen.setMinWidth(150);
 		
+		AutoDao auto = new AutoDao();
+		ObservableList<Auto> oListAuto = FXCollections.observableArrayList(auto.getAutos());
+		this.setItems(oListAuto);
 		getColumns().addAll(reparatieNummer, soort, kenteken, omschrijving, onderdelen);
 		
 

@@ -1,5 +1,6 @@
 package nl.eti1b5.view;
 
+import nl.eti1b5.controller.ViewControl;
 import nl.eti1b5.view.monteursoverzicht.MonteurView;
 import nl.eti1b5.view.reparatiesoverzicht.ReparatieView;
 import javafx.application.Application;
@@ -23,6 +24,7 @@ public class MainLoader extends Application {
 	
 	// De stage
 	private Stage stage;
+	private ViewControl viewControl;
 	
 	/**
 	 * Start methode wordt aangeroepen door de mainmethode voor het starten van het hoofdprogramma
@@ -30,6 +32,7 @@ public class MainLoader extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 		this.stage = stage;
+		viewControl = new ViewControl(this);
 	}
 
 	/**

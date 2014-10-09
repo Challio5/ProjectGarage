@@ -2,6 +2,9 @@ package nl.eti1b5.controller;
 
 import java.util.ArrayList;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import com.sun.javafx.application.LauncherImpl;
 
 import nl.eti1b5.database.dao.AutoDao;
@@ -58,5 +61,6 @@ public class Garage {
 		
 		// Opent de applicatie
 		LauncherImpl.launchApplication(MainLoader.class, InlogPreloader.class, args);
+		
 	}
 }
