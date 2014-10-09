@@ -12,7 +12,7 @@ public class Auto {
 	private StringProperty kenteken;
 	private IntegerProperty verzekeringsnummer;
 
-	public Auto(String merk, String model, String kenteken, int verzekeringsnummer) {
+	public Auto(String kenteken, String merk, String model, int verzekeringsnummer) {
 		this.merk = new SimpleStringProperty(merk);
 		this.model = new SimpleStringProperty(model);
 		this.kenteken = new SimpleStringProperty(kenteken);

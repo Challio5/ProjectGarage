@@ -4,8 +4,12 @@ import java.util.ArrayList;
 
 import com.sun.javafx.application.LauncherImpl;
 
+import nl.eti1b5.database.dao.AutoDao;
 import nl.eti1b5.database.dao.ReparatieDao;
+import nl.eti1b5.database.dao.VoorraadDao;
+import nl.eti1b5.model.Auto;
 import nl.eti1b5.model.Reparatie;
+import nl.eti1b5.model.Voorraad;
 import nl.eti1b5.view.MainLoader;
 import nl.eti1b5.view.preloader.InlogPreloader;
 
@@ -33,5 +37,18 @@ public class Garage {
 		for(Reparatie reparatie : lijst) {
 			System.out.println(reparatie);
 		}
+		
+		AutoDao autoDao = new AutoDao();
+		ArrayList<Auto> autoLijst = autoDao.getAutos();
+		for(Auto auto : autoLijst) {
+			System.out.println(auto);
+		}
+		
+		VoorraadDao voorraadDao = new VoorraadDao();
+		ArrayList<Voorraad> voorraadLijst = voorraadDao.getVoorraad();
+		for(Voorraad voorraad : voorraadLijst) {
+			System.out.println(voorraad);
+		}
+		
 	}
 }
