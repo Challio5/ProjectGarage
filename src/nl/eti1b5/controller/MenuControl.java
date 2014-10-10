@@ -1,11 +1,5 @@
 package nl.eti1b5.controller;
 
-import nl.eti1b5.view.MainLoader;
-import nl.eti1b5.view.preloader.InlogPreloader;
-
-import com.sun.javafx.application.LauncherImpl;
-
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 

@@ -1,14 +1,8 @@
 package nl.eti1b5.view;
 
-import nl.eti1b5.controller.ViewControl;
-import nl.eti1b5.view.monteursoverzicht.MonteurView;
-import nl.eti1b5.view.reparatiesoverzicht.ReparatieView;
 import javafx.application.Application;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import nl.eti1b5.controller.ViewControl;
 
 /**
  * GUI klasse, hoofdprogramma

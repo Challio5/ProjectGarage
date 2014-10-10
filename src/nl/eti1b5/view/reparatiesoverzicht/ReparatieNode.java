@@ -1,12 +1,12 @@
 package nl.eti1b5.view.reparatiesoverzicht;
 
-import nl.eti1b5.database.dao.AutoDao;
-import nl.eti1b5.model.Auto;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import nl.eti1b5.database.dao.AutoDao;
+import nl.eti1b5.model.Auto;
 
 
 public class ReparatieNode extends TableView{

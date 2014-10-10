@@ -1,8 +1,8 @@
 package nl.eti1b5.view.monteursoverzicht;
 
-import nl.eti1b5.model.Persoon;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import nl.eti1b5.model.Persoon;
 
 
 public class MonteurNode extends TableView<Persoon>{

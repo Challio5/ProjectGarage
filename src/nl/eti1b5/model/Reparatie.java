@@ -130,15 +130,12 @@ public class Reparatie {
 
 	@Override
 	public String toString() {
-		String materialenLijst = "";
-		for(Voorraad materiaal : this.materialenLijst) {
-			materialenLijst += materiaal;
-			materialenLijst += ", ";
-		}
+		String materialenString = "";
+		for(Voorraad materiaal : materialenLijst) materialenString += materiaal + ", ";
 		return "Reparatie [reparatieNummer=" + reparatieNummer.get()
 				+ ", klantNummer=" + klantNummer.get() + ", werknemerNummer="
 				+ werknemerNummer.get() + ", kenteken=" + kenteken.get() + ", reparatie="
 				+ reparatie.get() + ", duur=" + duur.get() + ", materialenLijst=" 
-				+ materialenLijst + ", status=" + status.get() + "]";
+				+ materialenString + ", status=" + status.get() + "]";
 	}
 }

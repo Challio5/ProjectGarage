@@ -1,11 +1,7 @@
 package test.nl.eti1b5.database;
 
-import static org.junit.Assert.*;
-
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
-
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 import nl.eti1b5.database.DatabaseManager;
 
 import org.junit.After;
@@ -16,8 +12,6 @@ import org.junit.Test;
 
 public class DatabaseManagerTest {
 
-	private DatabaseManager manager;
-	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
@@ -28,7 +22,6 @@ public class DatabaseManagerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		manager = DatabaseManager.getInstance();
 	}
 
 	@After
@@ -43,20 +36,17 @@ public class DatabaseManagerTest {
 
 	@Test
 	public void testGetConnection() {
-		Connection connection = manager.getConnection();
-		assertNotNull(connection);
+		fail("Not yet implemented");
 	}
 
 	@Test
-	public void testCreateConnection() throws IOException, SQLException {
-		manager.createConnection();
+	public void testCreateConnection() {
+		fail("Not yet implemented");
 	}
 
 	@Test
-	public void testCloseConnection() throws IOException, SQLException {
-		manager.createConnection();
-		manager.closeConnection();
-		assertNull(manager.getConnection());
+	public void testCloseConnection() {
+		fail("Not yet implemented");
 	}
 
 }

@@ -2,11 +2,6 @@ package nl.eti1b5.controller;
 
 import java.util.ArrayList;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
-import com.sun.javafx.application.LauncherImpl;
-
 import nl.eti1b5.database.dao.AutoDao;
 import nl.eti1b5.database.dao.MonteurDao;
 import nl.eti1b5.database.dao.ReparatieDao;
@@ -17,6 +12,8 @@ import nl.eti1b5.model.Reparatie;
 import nl.eti1b5.model.Voorraad;
 import nl.eti1b5.view.MainLoader;
 import nl.eti1b5.view.preloader.InlogPreloader;
+
+import com.sun.javafx.application.LauncherImpl;
 
 /**
  * Controller voor interactie tussen het model en de views

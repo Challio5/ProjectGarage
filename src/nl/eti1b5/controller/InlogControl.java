@@ -1,13 +1,13 @@
 package nl.eti1b5.controller;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
 import nl.eti1b5.view.MainLoader;
 import nl.eti1b5.view.monteursoverzicht.MonteurView;
 import nl.eti1b5.view.preloader.InlogPreloader;
 import nl.eti1b5.view.preloader.InlogView;
 import nl.eti1b5.view.reparatiesoverzicht.ReparatieView;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
 
 
 public class InlogControl implements EventHandler<ActionEvent>{

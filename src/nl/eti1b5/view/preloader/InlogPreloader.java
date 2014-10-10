@@ -1,12 +1,10 @@
 package nl.eti1b5.view.preloader;
 
-import nl.eti1b5.controller.InlogControl;
-import nl.eti1b5.view.MainLoader;
 import javafx.application.Preloader;
-import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import nl.eti1b5.view.reparatiesoverzicht.*;
+import nl.eti1b5.controller.InlogControl;
+import nl.eti1b5.view.MainLoader;
 
 /**
  * GUI klasse, preloader

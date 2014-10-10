@@ -1,7 +1,7 @@
 package nl.eti1b5.view.monteursoverzicht;
 
-import nl.eti1b5.view.MenuNode;
 import javafx.scene.layout.BorderPane;
+import nl.eti1b5.view.MenuNode;
 
 public class MonteurView extends BorderPane{
 	

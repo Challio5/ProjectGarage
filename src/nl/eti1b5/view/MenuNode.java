@@ -1,12 +1,9 @@
 package nl.eti1b5.view;
 
-import nl.eti1b5.controller.InlogControl;
-import nl.eti1b5.controller.MenuControl;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import nl.eti1b5.controller.MenuControl;
 
 public class MenuNode extends MenuBar {
 	

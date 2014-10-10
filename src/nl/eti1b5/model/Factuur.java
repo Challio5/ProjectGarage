@@ -1,5 +1,7 @@
 package nl.eti1b5.model;
 
+import java.util.ArrayList;
+
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -12,6 +14,7 @@ public class Factuur {
 	private IntegerProperty reparatieNr;
 	private IntegerProperty werknemerNr;
 	private StringProperty status;
+	private ArrayList<Reparatie> reparatieLijst;
 
 	public Factuur(int factuurNr, int klantNr, int reparatieNr, int werknemerNr, String status) {
 		this.factuurNr = new SimpleIntegerProperty(factuurNr);
@@ -19,6 +22,7 @@ public class Factuur {
 		this.reparatieNr = new SimpleIntegerProperty(reparatieNr);
 		this.werknemerNr = new SimpleIntegerProperty(werknemerNr);
 		this.status = new SimpleStringProperty(status);
+		reparatieLijst = new ArrayList<>();
 	}
 
 	// Getters
@@ -40,6 +44,10 @@ public class Factuur {
 	
 	public String getStatus() {
 		return status.get();
+	}
+	
+	public ArrayList<Reparatie> getReparatieLijst() {
+		return reparatieLijst;
 	}
 
 	// Setters
@@ -63,6 +71,10 @@ public class Factuur {
 		this.status.set(status);
 	}
 
+	public void setReparatieLijst(ArrayList<Reparatie> reparatielijst) {
+		this.reparatieLijst = reparatielijst;
+	}
+	
 	// Properties
 	public IntegerProperty factuurNrProperty() {
 		return factuurNr;
@@ -86,8 +98,10 @@ public class Factuur {
 
 	@Override
 	public String toString() {
+		String reparatieString = "";
+		for(Reparatie reparatie : reparatieLijst) reparatieString += reparatie + ", ";
 		return "Factuur [factuurNr=" + factuurNr + ", klantNr=" + klantNr
 				+ ", reparatieNr=" + reparatieNr + ", werknemerNr="
-				+ werknemerNr + ", status=" + status + "]";
+				+ werknemerNr + ", status=" + status + ", reparatieLijst=" + reparatieString + "]";
 	}
 }
