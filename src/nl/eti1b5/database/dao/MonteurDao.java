@@ -41,11 +41,23 @@ public class MonteurDao {
 				String telNr = monteurSet.getString("Telnr");
 				String wachtwoord = monteurSet.getString("Wachtwoord");
 				String specialiteit = monteurSet.getString("Specialiteit");
-				String beschikbaarheid = monteurSet.getString("Beschikbaarheid");
-	
 				
-				monteurLijst.add(new Monteur(naam, woonplaats, adres, postcode, telNr,
-								 wachtwoord, werknemerNummer, specialiteit, beschikbaarheid));
+				ArrayList<String> beschikbaarheidsLijst = new ArrayList<>();
+				
+				// Query die de bijbehorende beschikbaarheid uit de koppetabel haalt
+				String beschikbaarheidQuery = "select beschikbaarheid from monteurbeschikbaarheid"
+						+ " where werknemernr = ?";
+				PreparedStatement beschikbaarheidStatement = connection.prepareStatement(beschikbaarheidQuery);
+				beschikbaarheidStatement.setInt(1, werknemerNummer);
+				ResultSet beschikbaarheidSet = beschikbaarheidStatement.executeQuery();
+				
+				while(beschikbaarheidSet.next()) {
+					String beschikbaarheid = beschikbaarheidSet.getString("beschikbaarheid");
+					beschikbaarheidsLijst.add(beschikbaarheid);
+				}
+				
+				monteurLijst.add(new Monteur(werknemerNummer, naam, woonplaats, adres, postcode, telNr,
+								 wachtwoord, specialiteit, beschikbaarheidsLijst));
 			}
 		} catch (SQLException e) {
 			System.err.println("Kan het statement niet uitvoeren");

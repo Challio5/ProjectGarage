@@ -1,5 +1,22 @@
 use garage;
 
+insert into klant
+(naam, adres, postcode, woonplaats, telnr)
+values
+("Laurens", "Brinkstraat 37", "7468CZ", "Enter", "0548-123456"),
+("Henk", "Dorpstraat 23", "7324IK", "Rijssen", "1111-987654"),
+("Annie", "Bornebroekseweg 1", "8234OK", "Almelo", "06-42536475"),
+("Martijn", "Oldenzaalsestraat 32", "2343KE", "Enschede", "9432-674391"); 
+
+insert into auto
+(kenteken, klantnr, merk, model, verzekeringsnr)
+values
+("12-31-AB", 10000, "Renault", "Megane", 23),
+("34-KB-23", 10000, "Porsche", "Cayenne", 10),
+("1-KDD-13", 10001, "Range Rover", "Sport", 42),
+("10-ID-32", 10002, "Volvo", "XC90", 32),
+("12-IKK-2", 10003, "Porsche", "Panamera", 324);
+
 insert into monteur
 (naam, adres, postcode, woonplaats, TelNr, Wachtwoord, specialiteit, beschikbaarheid)
 values 
@@ -9,43 +26,17 @@ values
 ("Tom", "Enterweg 10", "3453JI", "Bornebroek", "06-12387645", "Tom94", "Motor", "M2"),
 ("Rob", "Rijssenseweg 11", "2393JI", "Nijverdal", "06-09128365", "Moyboy88", "Carroserie", "V3");
 
-insert into klant
-(naam, adres, postcode, woonplaats)
-values
-("Laurens", "Brinkstraat 37", "7468CZ", "Enter"),
-("Henk", "Dorpstraat 23", "7324IK", "Rijssen"),
-("Annie", "Bornebroekseweg 1", "8234OK", "Almelo"),
-("Martijn", "Oldenzaalsestraat 32", "2343KE", "Enschede"); 
-
-insert into auto
-(kenteken, merk, model, verzekeringnr)
-values
-("12-31-AB", "Renault", "Megane", 23),
-("34-KB-23", "Porsche", "Cayenne", 10),
-("1-KDD-13", "Range Rover", "Sport", 42),
-("10-ID-32", "Volvo", "XC90", 32),
-("12-IKK-2", "Porsche", "Panamera", 324);
-
-insert into autoklant
-(klantnr, kenteken)
-values
-(10000, "12-31-AB"),
-(10001, "34-KB-23"),
-(10001, "1-KDD-13"),
-(10002, "10-ID-32");
-
-insert into factuur
-(reparatienr, klantnr, werknemernr, status)
-values
-(0, 10000, 100, 0),
-(1, 10001, 101, 1),
-(2, 10001, 102, 1);
-
 insert into reparatie
-(klantnr, werknemernr, kenteken, reparatie, duur, status)
+(kenteken, omschrijving, begintijd, eindtijd, reparatiestatus, betaalstatus)
 values
-(10000, 100, "12-31-AB", "Banden", 3.15, "bezig"),
-(10002, 103, "10-ID-32", "Grote Beurt", 2.50, "klaar");
+("12-31-AB", "Banden", '2014-10-30 10:55:12', '2014-10-30 15:05:12', false, false),
+("10-ID-32", "Grote Beurt", '2014-10-03 13:46:44', '2014-10-03 15:23:01', true, false),
+("12-IKK-2", "Carroserie", '2014-10-01 14:22:38', '2014-10-01 17:00:12', true, true);
+
+insert into planning
+(begintijd, eindtijd, werknemernr, reparatienr)
+values
+('2014-01-03 12:00:12', '2014-10-03 12:59:11', 100, 100);
 
 insert into voorraad
 (naam, prijs, aantal)
@@ -58,15 +49,18 @@ values
 insert into reparatievoorraad
 (reparatienr, materiaalnr)
 values
-(1, 1),
-(1, 3),
-(1, 4);
+(100, 1000),
+(100, 1002),
+(100, 1003);
 
-insert into factuurreparatie
-(factuurnr, reparatienr)
+insert into monteurbeschikbaarheid
+(werknemernr, beschikbaarheid)
 values
-(100, 1),
-(100, 2),
-(101, 1),
-(102, 2);
-
+(100, "Ma1"),
+(100, "Di3"),
+(100, "Do3"),
+(101, "Di2"),
+(101, "Vr3"),
+(102, "Ma3"),
+(102, "Wo3"),
+(102, "Vr1");

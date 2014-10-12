@@ -5,6 +5,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import nl.eti1b5.view.MainLoader;
 import nl.eti1b5.view.monteursoverzicht.MonteurView;
+import nl.eti1b5.view.planscherm.PlanningsView;
 import nl.eti1b5.view.preloader.InlogPreloader;
 import nl.eti1b5.view.preloader.InlogView;
 import nl.eti1b5.view.reparatiesoverzicht.ReparatieView;
@@ -56,7 +57,8 @@ public class InlogControl implements EventHandler<ActionEvent>{
 					if(app != null) {
 						// Hide de preloader en showt het hoofdprogramma
 						inlogPre.getStage().hide();
-						showReparatie();
+						//showReparatie();
+						showPlanning();
 					}
 				}
 			} else {
@@ -105,6 +107,19 @@ public class InlogControl implements EventHandler<ActionEvent>{
 		app.getStage().setScene(scene);
 		app.getStage().setTitle("Reparatie");
 		app.getStage().show();
+	}
+	
+	//plan scherm wanneer correct ingelogd
+	public void showPlanning(){
+
+		Scene scene = new Scene(new PlanningsView());
 		
+		// Stylesheet
+		String stylesheet = this.getClass().getResource("/menu.css").toString();
+		scene.getStylesheets().add(stylesheet);
+		
+		app.getStage().setScene(scene);
+		app.getStage().setTitle("Planning");
+		app.getStage().show();
 	}
 }

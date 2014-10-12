@@ -1,12 +1,14 @@
 package nl.eti1b5.database.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import nl.eti1b5.database.DatabaseManager;
+import nl.eti1b5.model.Omschrijving;
 import nl.eti1b5.model.Reparatie;
 import nl.eti1b5.model.Voorraad;
 
@@ -35,12 +37,12 @@ public class ReparatieDao {
 			while(reparatieSet.next()) {
 				// De gegevens van een rij
 				int reparatieNummer = reparatieSet.getInt("Reparatienr");
-				int klantNummer = reparatieSet.getInt("Klantnr");
-				int werknemerNummer = reparatieSet.getInt("Werknemernr");
 				String kenteken = reparatieSet.getString("Kenteken");
-				String reparatie = reparatieSet.getString("Reparatie");
-				double duur = reparatieSet.getDouble("Duur");
-				String status = reparatieSet.getString("Status");
+				String omschrijving = reparatieSet.getString("Omschrijving"); 
+				Date begintijd = reparatieSet.getDate("Begintijd");
+				Date eindtijd = reparatieSet.getDate("EindTijd");
+				boolean reparatiestatus = reparatieSet.getBoolean("Reparatiestatus");
+				boolean betaalstatus = reparatieSet.getBoolean("Betaalstatus");
 	
 				// Query die alle materiaalnummer uit de koppeltabel haalt
 				String materiaalNummersQuery = "select Materiaalnr from ReparatieVoorraad"
@@ -78,8 +80,7 @@ public class ReparatieDao {
 					}
 				}
 				
-				reparatieLijst.add(new Reparatie(reparatieNummer, klantNummer, werknemerNummer,
-						kenteken, reparatie, duur, materialenLijst, status));
+				reparatieLijst.add(new Reparatie(reparatieNummer, kenteken, new Omschrijving(omschrijving, 0.0), begintijd, eindtijd, reparatiestatus, betaalstatus, materialenLijst));
 			}
 		} catch (SQLException e) {
 			System.err.println("Kan het statement niet uitvoeren");

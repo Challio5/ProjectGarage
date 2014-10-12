@@ -36,12 +36,13 @@ public class AutoDao {
 				while(autoSet.next()) {
 					// De gegevens van een rij
 					String kenteken = autoSet.getString("kenteken");
+					int klantnummer = autoSet.getInt("klantnr");
 					String merk = autoSet.getString("merk");
 					String model = autoSet.getString("model");
 					int verzekeringsNummer = autoSet.getInt("verzekeringnr");
 			
 					
-					autoLijst.add(new Auto(kenteken, merk, model, verzekeringsNummer));
+					autoLijst.add(new Auto(kenteken, klantnummer, merk, model, verzekeringsNummer));
 				}
 			} catch (SQLException e) {
 				System.err.println("Kan het statement niet uitvoeren");

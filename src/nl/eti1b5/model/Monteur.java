@@ -1,49 +1,49 @@
 package nl.eti1b5.model;
 
+import java.util.ArrayList;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class Monteur extends Gebruiker {
 
 	private StringProperty specialiteit;
-	private StringProperty beschikbaarheid;
+	private ArrayList<String> beschikbaarheidsLijst;
 
-	public Monteur(String naam, String woonplaats, String adres, String postcode, String telNr,
-				   String wachtwoord, int werknemerNr, String specialiteit, String beschikbaarheid) {
-		super(naam, woonplaats, adres, postcode, telNr, wachtwoord, werknemerNr);
+	public Monteur(int werknemerNr, String naam, String woonplaats, String adres, String postcode, String telNr,
+				   String wachtwoord, String specialiteit, ArrayList<String> beschikbaarheid) {
+		super(werknemerNr, naam, woonplaats, adres, postcode, telNr, wachtwoord);
 		
 		this.specialiteit = new SimpleStringProperty(specialiteit);
-		this.beschikbaarheid = new SimpleStringProperty(beschikbaarheid);
+		this.beschikbaarheidsLijst = new ArrayList<>();
 	}
 
 	public String getSpecialiteit() {
 		return specialiteit.get();
 	}
 	
-	public String getBeschikbaarheid() {
-		return beschikbaarheid.get();
+	public ArrayList<String> getBeschikbaarheid() {
+		return beschikbaarheidsLijst;
 	}
 	
 	public void setSpecialiteit(String specialiteit) {
 		this.specialiteit.set(specialiteit);
 	}
 	
-	public void setBeschikbaarheid(String beschikbaarheid) {
-		this.beschikbaarheid.set(beschikbaarheid);
+	public void setBeschikbaarheid(ArrayList<String> beschikbaarheid) {
+		this.beschikbaarheidsLijst = beschikbaarheid;
 	}
 	
 	public StringProperty specialiteitProperty() {
 		return specialiteit;
 	}
 	
-	public StringProperty beschikbaarheidProperty() {
-		return beschikbaarheid;
-	}
-	
 	@Override
 	public String toString() {
+		String beschikbaarheidsString = "";
+		for(String beschikbaarheid : beschikbaarheidsLijst) beschikbaarheidsString += beschikbaarheid + ", ";
 		return "Gebruiker [naam=" + getNaam() + ", woonplaats=" + getWoonplaats() + ", adres=" + getAdres() + ", postcode=" + getPostcode()
 						   + ", telNr=" + getTelNr() + ", wachtwoord=" + getWachtwoord() + ", werknemerNr=" + getWerknemerNr()
-						   + ", specialiteit=" + specialiteit.get() + ", beschikbaarheid=" + beschikbaarheid.get() + "]";
+						   + ", specialiteit=" + specialiteit.get() + ", beschikbaarheid=" + beschikbaarheidsString + "]";
 	}
 }

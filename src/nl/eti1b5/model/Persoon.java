@@ -6,9 +6,9 @@ import javafx.beans.property.StringProperty;
 public class Persoon {
 
 	private StringProperty naam;
-	private StringProperty woonplaats;
 	private StringProperty adres;
 	private StringProperty postcode;
+	private StringProperty woonplaats;
 	private StringProperty telNr;
 
 	public Persoon(String naam, String woonplaats, String adres, String postcode, String telNr) {

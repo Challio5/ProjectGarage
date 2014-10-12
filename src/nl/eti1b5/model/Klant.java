@@ -10,8 +10,8 @@ public class Klant extends Persoon {
 	private IntegerProperty klantNr;
 	private ArrayList<Auto> autoLijst;
 
-	public Klant(String naam, String plaats, String adres, String postcode, String telNr, int klantNr) {
-		super(naam, plaats, adres, postcode, telNr);
+	public Klant(int klantNr, String naam, String adres, String postcode, String plaats, String telNr) {
+		super(naam, adres, postcode, plaats, telNr);
 		
 		this.klantNr = new SimpleIntegerProperty(klantNr);
 		this.autoLijst = new ArrayList<>();

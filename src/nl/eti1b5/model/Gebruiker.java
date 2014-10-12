@@ -10,11 +10,11 @@ public class Gebruiker extends Persoon {
 	private StringProperty wachtwoord;
 	private IntegerProperty werknemerNr;
 
-	public Gebruiker(String naam, String plaats, String adres, String postcode, String telNr,
-					 String wachtwoord, int werknemerNr) {
+	public Gebruiker(int werknemerNr, String naam, String plaats, String adres, String postcode, String telNr,
+					 String wachtwoord) {
 		super(naam, plaats, adres, postcode, telNr);
-		this.wachtwoord = new SimpleStringProperty(wachtwoord);
 		this.werknemerNr = new SimpleIntegerProperty(werknemerNr);
+		this.wachtwoord = new SimpleStringProperty(wachtwoord);
 	}
 
 	public String getWachtwoord() {
