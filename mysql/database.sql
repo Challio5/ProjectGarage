@@ -46,7 +46,7 @@ ALTER TABLE Monteur auto_increment = 100;
 /* Tabel voor de gegevens van een reparatie */
 CREATE TABLE IF NOT EXISTS Reparatie(
 	Reparatienr int not null auto_increment, 
-	Kenteken varchar(8) not null, 									/* Linkt ook naar klant */			
+	Kenteken varchar(8) not null, 										
 	Omschrijving varchar(30),
 	Begintijd datetime,
 	Eindtijd datetime,

@@ -11,11 +11,11 @@ public class Monteur extends Gebruiker {
 	private ArrayList<String> beschikbaarheidsLijst;
 
 	public Monteur(int werknemerNr, String naam, String woonplaats, String adres, String postcode, String telNr,
-				   String wachtwoord, String specialiteit, ArrayList<String> beschikbaarheid) {
+				   String wachtwoord, String specialiteit, ArrayList<String> beschikbaarheidsLijst) {
 		super(werknemerNr, naam, woonplaats, adres, postcode, telNr, wachtwoord);
 		
 		this.specialiteit = new SimpleStringProperty(specialiteit);
-		this.beschikbaarheidsLijst = new ArrayList<>();
+		this.beschikbaarheidsLijst = beschikbaarheidsLijst;
 	}
 
 	public String getSpecialiteit() {

@@ -39,7 +39,7 @@ public class AutoDao {
 					int klantnummer = autoSet.getInt("klantnr");
 					String merk = autoSet.getString("merk");
 					String model = autoSet.getString("model");
-					int verzekeringsNummer = autoSet.getInt("verzekeringnr");
+					int verzekeringsNummer = autoSet.getInt("verzekeringsnr");
 			
 					
 					autoLijst.add(new Auto(kenteken, klantnummer, merk, model, verzekeringsNummer));
