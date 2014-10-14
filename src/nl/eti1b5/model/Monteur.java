@@ -9,13 +9,15 @@ public class Monteur extends Gebruiker {
 
 	private StringProperty specialiteit;
 	private ArrayList<String> beschikbaarheidsLijst;
+	private ArrayList<Integer> reparatieNummers;
 
 	public Monteur(int werknemerNr, String naam, String woonplaats, String adres, String postcode, String telNr,
-				   String wachtwoord, String specialiteit, ArrayList<String> beschikbaarheidsLijst) {
+				   String wachtwoord, String specialiteit, ArrayList<String> beschikbaarheidsLijst, ArrayList<Integer> Reparaties) {
 		super(werknemerNr, naam, woonplaats, adres, postcode, telNr, wachtwoord);
 		
 		this.specialiteit = new SimpleStringProperty(specialiteit);
 		this.beschikbaarheidsLijst = beschikbaarheidsLijst;
+		this.reparatieNummers = Reparaties;
 	}
 
 	public String getSpecialiteit() {
@@ -42,8 +44,11 @@ public class Monteur extends Gebruiker {
 	public String toString() {
 		String beschikbaarheidsString = "";
 		for(String beschikbaarheid : beschikbaarheidsLijst) beschikbaarheidsString += beschikbaarheid + ", ";
+		String reparatieString = "";
+		for(int reparatie : reparatieNummers)
+			reparatieString += reparatie + ", ";
 		return "Gebruiker [naam=" + getNaam() + ", woonplaats=" + getWoonplaats() + ", adres=" + getAdres() + ", postcode=" + getPostcode()
 						   + ", telNr=" + getTelNr() + ", wachtwoord=" + getWachtwoord() + ", werknemerNr=" + getWerknemerNr()
-						   + ", specialiteit=" + specialiteit.get() + ", beschikbaarheid=" + beschikbaarheidsString + "]";
+						   + ", specialiteit=" + specialiteit.get() + ", beschikbaarheid=" + beschikbaarheidsString + ", Reparaties="+ reparatieString+ "]";
 	}
 }

@@ -56,8 +56,22 @@ public class MonteurDao {
 					beschikbaarheidsLijst.add(beschikbaarheid);
 				}
 				
+				ArrayList<Integer> ReparatieLijst = new ArrayList<>();
+				
+				// Query die de bijbehorende reparaties uit de koppetabel haalt
+				String ReparatiesQuery = "select Reparatienr from Planning"
+						+ " where werknemernr = ?";
+				PreparedStatement ReparatieStatement = connection.prepareStatement(ReparatiesQuery);
+				ReparatieStatement.setInt(1, werknemerNummer);
+				ResultSet ReparatieSet = ReparatieStatement.executeQuery();
+				
+				while(ReparatieSet.next()) {
+					int Reparatie = Integer.parseInt(ReparatieSet.getString("Reparatienr"));
+					ReparatieLijst.add(Reparatie);
+				}
+				
 				monteurLijst.add(new Monteur(werknemerNummer, naam, woonplaats, adres, postcode, telNr,
-								 wachtwoord, specialiteit, beschikbaarheidsLijst));
+								 wachtwoord, specialiteit, beschikbaarheidsLijst, ReparatieLijst));
 			}
 		} catch (SQLException e) {
 			System.err.println("Kan het statement niet uitvoeren");
