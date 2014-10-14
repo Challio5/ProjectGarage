@@ -1,10 +1,14 @@
 package nl.eti1b5.controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import nl.eti1b5.database.dao.MonteurDao;
+import nl.eti1b5.model.Monteur;
 import nl.eti1b5.view.MainLoader;
-import nl.eti1b5.view.monteursoverzicht.MonteurView;
+import nl.eti1b5.view.monteursscherm.MonteurScherm;
 import nl.eti1b5.view.planscherm.PlanningsView;
 import nl.eti1b5.view.preloader.InlogPreloader;
 import nl.eti1b5.view.preloader.InlogView;
@@ -17,12 +21,14 @@ public class InlogControl implements EventHandler<ActionEvent>{
 	private InlogPreloader inlogPre;
 	private InlogView inlogView;
 	private int counter;
+	private MonteurDao monteurDao;
 	
 	public InlogControl(InlogPreloader inlogPre, MainLoader app){
 		this.inlogPre = inlogPre;
 		this.app = app;
 		inlogView = inlogPre.getInlogView();
 		counter = 1;
+		monteurDao = new MonteurDao();
 	}
 	
 	
@@ -36,32 +42,47 @@ public class InlogControl implements EventHandler<ActionEvent>{
 	
 	@Override
 	public void handle(ActionEvent arg0) {
+		ObservableList<Monteur> oListMonteurs = FXCollections.observableArrayList(monteurDao.getMonteurs());
+		Boolean ingevuld = true;
+		Boolean gevonden = false;
+		String job = inlogView.getJob().getValue();
+		String naam = inlogView.getInlogNode().getName().getText();
+		String wachtwoord = inlogView.getInlogNode().getPassword().getText();
 		if(counter < 3){
-			if(inlogView.getJob().getValue() == null){
+			if(job == null){
 				showJobFout();
-			} else if (inlogView.getInlogNode().getName().getText().equals("")){
+				ingevuld = false;
+			} else if (naam.equals("")){
 				showPassNaam();
-			} else if (inlogView.getInlogNode().getPassword().getText().equals("")){
+				ingevuld = false;
+			} else if (wachtwoord.equals("")){
 				showPassNaam();
-			} else if(inlogView.getInlogNode().getPassword().getText().equals(" ") && inlogPre.getInlogView().getInlogNode().getName().getText().equals(" ")){
-			// App is null op het moment deze nog niet uitgeladen is
-				if(inlogView.getJob().getValue() == null){
-					showJobFout();
-				} else if(inlogView.getJob().getValue().equals("Monteur")){
-					if(app != null) {
-						// Hide de preloader en showt het hoofdprogramma
-						inlogPre.getStage().hide();
-						showMonteur();
-					}
-				} else if(inlogView.getJob().getValue().equals("Secretaresse")){
-					if(app != null) {
-						// Hide de preloader en showt het hoofdprogramma
-						inlogPre.getStage().hide();
-						//showReparatie();
-						showPlanning();
+				ingevuld = false;
+			} 
+			
+			if(ingevuld){
+				for(Monteur monteur : oListMonteurs ){
+					if(naam.equals(monteur.getNaam()) && wachtwoord.equals(monteur.getWachtwoord())){
+						// App is null op het moment deze nog niet uitgeladen is
+						 if(inlogView.getJob().getValue().equals("Monteur")){
+							if(app != null) {
+								// Hide de preloader en showt het hoofdprogramma
+								inlogPre.getStage().hide();
+								showMonteur();
+							}
+						} else if(inlogView.getJob().getValue().equals("Secretaresse")){
+							if(app != null) {
+								// Hide de preloader en showt het hoofdprogramma
+								inlogPre.getStage().hide();
+								showPlanning();
+							}
+						}
+						app.setIngelogd(monteur);
+						gevonden = true;
 					}
 				}
-			} else {
+			}
+			if(!gevonden){
 				showPassNaam();
 			}
 		} else {
@@ -84,7 +105,9 @@ public class InlogControl implements EventHandler<ActionEvent>{
 	
 	//monteur scherm wanneer als monteur correct ingelogd
 	public void showMonteur() {
-		Scene scene = new Scene(new MonteurView());
+		MonteurScherm monteurScherm = new MonteurScherm();
+		ViewControl view = new ViewControl(monteurScherm, app);
+		Scene scene = new Scene(monteurScherm);
 		
 		// Stylesheet
 		String stylesheet = this.getClass().getResource("/menu.css").toString();

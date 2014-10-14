@@ -3,6 +3,7 @@ package nl.eti1b5.view;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import nl.eti1b5.controller.ViewControl;
+import nl.eti1b5.model.Monteur;
 
 /**
  * GUI klasse, hoofdprogramma
@@ -18,6 +19,7 @@ public class MainLoader extends Application {
 	
 	// De stage
 	private Stage stage;
+	private Monteur ingelogdeWerknemer;
 	private ViewControl viewControl;
 	
 	/**
@@ -26,7 +28,6 @@ public class MainLoader extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 		this.stage = stage;
-		viewControl = new ViewControl(this);
 	}
 
 	/**
@@ -35,5 +36,13 @@ public class MainLoader extends Application {
 	 */
 	public Stage getStage() {
 		return stage;
+	}
+
+	public void setIngelogd(Monteur monteur) {
+		ingelogdeWerknemer = monteur;		
+	}
+	
+	public Monteur getIngelogd(){
+		return ingelogdeWerknemer;
 	}
 }
