@@ -17,6 +17,10 @@ public class VoorraadDao {
 		manager = DatabaseManager.getInstance();
 	}
 	
+	public VoorraadDao(DatabaseManager manager) {
+		this.manager = manager;
+	}
+	
 	public ArrayList<Voorraad> getVoorraad() {
 		// Lijst met de resultaten van de query
 		ArrayList<Voorraad> voorraadLijst = new ArrayList<>();

@@ -2,6 +2,7 @@ package nl.eti1b5.model;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.List;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
@@ -21,7 +22,7 @@ public class Reparatie {
 	private ObjectProperty<Date> eindTijd;
 	private BooleanProperty reparatieStatus;
 	private BooleanProperty betaalStatus;
-	private ArrayList<Voorraad> materialenLijst;
+	private List<Voorraad> materialenLijst;
 
 	public Reparatie(int reparatieNummer, String kenteken, 
 			Omschrijving omschrijving, Date beginTijd, Date eindTijd,
@@ -66,7 +67,7 @@ public class Reparatie {
 		return betaalStatus.get();
 	}
 	
-	public ArrayList<Voorraad> getMaterialenLijst() {
+	public List<Voorraad> getMaterialenLijst() {
 		return materialenLijst;
 	}
 	

@@ -2,22 +2,20 @@ package nl.eti1b5.model;
 
 import java.sql.Date;
 
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
 public class Planning {
 	private ObjectProperty<Date> beginTijd;
 	private ObjectProperty<Date> eindTijd;
-	private IntegerProperty werknemernr;
-	private IntegerProperty reparatienr;
+	private ObjectProperty<Monteur> werknemer;
+	private ObjectProperty<Reparatie> reparatie;
 	
-	public Planning(Date beginTijd, Date eindTijd, int werknemernr, int reparatienr) {
+	public Planning(Date beginTijd, Date eindTijd, Monteur werknemer, Reparatie reparatie) {
 		this.beginTijd = new SimpleObjectProperty<>(beginTijd);
 		this.eindTijd = new SimpleObjectProperty<>(eindTijd);
-		this.werknemernr = new SimpleIntegerProperty(werknemernr);
-		this.reparatienr = new SimpleIntegerProperty(reparatienr);
+		this.werknemer = new SimpleObjectProperty<>(werknemer);
+		this.reparatie = new SimpleObjectProperty<>(reparatie);
 	}
 
 	// Getters
@@ -29,29 +27,29 @@ public class Planning {
 		return eindTijd.get();
 	}
 
-	public int getWerknemernr() {
-		return werknemernr.get();
+	public Monteur getWerknemer() {
+		return werknemer.get();
 	}
 
-	public int getReparatienr() {
-		return reparatienr.get();
+	public Reparatie getReparatie() {
+		return reparatie.get();
 	}
 
 	// Setters
 	public void setBeginTijd(Date beginTijd) {
-		this.beginTijd = new SimpleObjectProperty<>(beginTijd);
+		this.beginTijd.set(beginTijd);
 	}
 
 	public void setEindTijd(Date eindTijd) {
-		this.eindTijd = new SimpleObjectProperty<>(eindTijd);
+		this.eindTijd.set(eindTijd);
 	}
 
-	public void setWerknemernr(int werknemernr) {
-		this.werknemernr = new SimpleIntegerProperty(werknemernr);
+	public void setWerknemer(Monteur werknemer) {
+		this.werknemer.set(werknemer);
 	}
 
-	public void setReparatienr(int reparatienr) {
-		this.reparatienr = new SimpleIntegerProperty(reparatienr);
+	public void setReparatie(Reparatie reparatie) {
+		this.reparatie.set(reparatie);
 	}
 
 	// Properties
@@ -63,11 +61,17 @@ public class Planning {
 		return eindTijd;
 	}
 
-	public IntegerProperty getWerknemernrProperty() {
-		return werknemernr;
+	public ObjectProperty<Monteur> getWerknemerProperty() {
+		return werknemer;
 	}
 
-	public IntegerProperty getReparatienrProperty() {
-		return reparatienr;
+	public ObjectProperty<Reparatie> getReparatieProperty() {
+		return reparatie;
+	}
+
+	@Override
+	public String toString() {
+		return "Planning [beginTijd=" + beginTijd.get() + ", eindTijd=" + eindTijd.get()
+				+ ", werknemer=" + werknemer.get() + ", reparatie=" + reparatie.get() + "]";
 	}
 }

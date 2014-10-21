@@ -16,6 +16,10 @@ public class MonteurDao {
 		manager = DatabaseManager.getInstance();
 	}
 	
+	public MonteurDao(DatabaseManager manager) {
+		this.manager = manager;
+	}
+	
 	public ArrayList<Monteur> getMonteurs() {
 		// Lijst met de resultaten van de query
 		ArrayList<Monteur> monteurLijst = new ArrayList<>();
@@ -83,5 +87,45 @@ public class MonteurDao {
 		
 		// Geeft de lijst met monteurs terug
 		return monteurLijst;
+	}
+	
+	public Monteur getMonteur(int werknemernr) {
+		Monteur monteur = null;
+		
+		// De connectie met de database op
+		Connection connection = manager.getConnection();
+		
+		// De te execturen sql querys
+		try {
+			// Query die alle gegevens uit de tabel reparatie haalt
+			String monteurQuery = "select * from monteur where werknemernr = ?";
+			PreparedStatement monteurStatement = connection.prepareStatement(monteurQuery);
+			monteurStatement.setInt(1, werknemernr);
+			
+			ResultSet monteurSet = monteurStatement.executeQuery();
+			
+			// Zolang er nog gegevens in de tabel staan
+			while(monteurSet.next()) {
+				// De gegevens van een rij
+				int werknemerNummer = monteurSet.getInt("Werknemernr");
+				String naam = monteurSet.getString("Naam");
+				String adres = monteurSet.getString("Adres");
+				String postcode = monteurSet.getString("Postcode");
+				String woonplaats = monteurSet.getString("Woonplaats");
+				String telNr = monteurSet.getString("Telnr");
+				String wachtwoord = monteurSet.getString("Wachtwoord");
+				String specialiteit = monteurSet.getString("Specialiteit");
+				
+				ArrayList<String> beschikbaarheidsLijst = new ArrayList<>();
+				ArrayList<Integer> reparatieLijst = new ArrayList<>();
+				
+				monteur = new Monteur(werknemerNummer, naam, woonplaats, adres, postcode, telNr,
+						 wachtwoord, specialiteit, beschikbaarheidsLijst, reparatieLijst);
+			}
+		} catch (SQLException e) {
+			System.err.println("Kan het statement niet uitvoeren");
+			e.printStackTrace();
+		}
+		return monteur;
 	}
 }

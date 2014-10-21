@@ -1,6 +1,7 @@
 package nl.eti1b5.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -8,8 +9,8 @@ import javafx.beans.property.StringProperty;
 public class Monteur extends Gebruiker {
 
 	private StringProperty specialiteit;
-	private ArrayList<String> beschikbaarheidsLijst;
-	private ArrayList<Integer> reparatieNummers;
+	private List<String> beschikbaarheidsLijst;
+	private List<Integer> reparatieNummers;
 
 	public Monteur(int werknemerNr, String naam, String woonplaats, String adres, String postcode, String telNr,
 				   String wachtwoord, String specialiteit, ArrayList<String> beschikbaarheidsLijst, ArrayList<Integer> Reparaties) {
@@ -24,7 +25,7 @@ public class Monteur extends Gebruiker {
 		return specialiteit.get();
 	}
 	
-	public ArrayList<String> getBeschikbaarheid() {
+	public List<String> getBeschikbaarheid() {
 		return beschikbaarheidsLijst;
 	}
 	

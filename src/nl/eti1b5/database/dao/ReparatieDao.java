@@ -19,6 +19,10 @@ public class ReparatieDao {
 		manager = DatabaseManager.getInstance();
 	}
 	
+	public ReparatieDao(DatabaseManager manager) {
+		this.manager = manager;
+	}
+	
 	public ArrayList<Reparatie> getReparaties() {
 		// Lijst met de resultaten van de query
 		ArrayList<Reparatie> reparatieLijst = new ArrayList<>();
@@ -169,6 +173,40 @@ public class ReparatieDao {
 		return reparatieLijst;
 	}
 
-	
-	
+	public Reparatie getReparatie(int reparatienr) {
+		Reparatie reparatie = null;
+		
+		// De connectie met de database op
+		Connection connection = manager.getConnection();
+		
+		// De te execturen sql querys
+		try {
+			// Query die alle gegevens uit de tabel reparatie haalt
+			String reparatieQuery = "select * from reparatie where reparatienr = ?";
+			PreparedStatement reparatieStatement = connection.prepareStatement(reparatieQuery);
+			reparatieStatement.setInt(1, reparatienr);
+			
+			ResultSet reparatieSet = reparatieStatement.executeQuery();
+			
+			// Zolang er nog gegevens in de tabel staan
+			while(reparatieSet.next()) {
+				// De gegevens van een rij
+				int reparatieNummer = reparatieSet.getInt("Reparatienr");
+				String kenteken = reparatieSet.getString("Kenteken");
+				String omschrijving = reparatieSet.getString("Omschrijving"); 
+				Date begintijd = reparatieSet.getDate("Begintijd");
+				Date eindtijd = reparatieSet.getDate("EindTijd");
+				boolean reparatiestatus = reparatieSet.getBoolean("Reparatiestatus");
+				boolean betaalstatus = reparatieSet.getBoolean("Betaalstatus");
+				
+				ArrayList<Voorraad> materialenLijst = new ArrayList<>();
+				
+				reparatie = new Reparatie(reparatieNummer, kenteken, new Omschrijving(omschrijving, 0.0), begintijd, eindtijd, reparatiestatus, betaalstatus, materialenLijst);
+			}
+		} catch (SQLException e) {
+			System.err.println("Kan het statement niet uitvoeren");
+			e.printStackTrace();
+		}
+		return reparatie;
+	}
 }
