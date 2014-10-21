@@ -48,19 +48,17 @@ public class InlogControl implements EventHandler<ActionEvent>{
 		String job = inlogView.getJob().getValue();
 		String naam = inlogView.getInlogNode().getName().getText();
 		String wachtwoord = inlogView.getInlogNode().getPassword().getText();
-		if(counter < 3){
-			if(job == null){
-				showJobFout();
-				ingevuld = false;
-			} else if (naam.equals("")){
+		if(job == null){
+			showJobFout();
+			ingevuld = false;
+		} else if(counter < 3){
+			if (naam.equals("")){
 				showPassNaam();
 				ingevuld = false;
 			} else if (wachtwoord.equals("")){
 				showPassNaam();
 				ingevuld = false;
-			} 
-			
-			if(ingevuld){
+			} else if(ingevuld){
 				for(Monteur monteur : oListMonteurs ){
 					if(naam.equals(monteur.getNaam()) && wachtwoord.equals(monteur.getWachtwoord())){
 						// App is null op het moment deze nog niet uitgeladen is
@@ -82,7 +80,7 @@ public class InlogControl implements EventHandler<ActionEvent>{
 					}
 				}
 			}
-			if(!gevonden){
+			if(!gevonden && ingevuld){
 				showPassNaam();
 			}
 		} else {
@@ -106,7 +104,7 @@ public class InlogControl implements EventHandler<ActionEvent>{
 	//monteur scherm wanneer als monteur correct ingelogd
 	public void showMonteur() {
 		MonteurScherm monteurScherm = new MonteurScherm();
-		ViewControl view = new ViewControl(monteurScherm, app);
+		MonteurViewControl view = new MonteurViewControl(monteurScherm, app);
 		Scene scene = new Scene(monteurScherm);
 		
 		// Stylesheet

@@ -2,7 +2,7 @@ package nl.eti1b5.view;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import nl.eti1b5.controller.ViewControl;
+import nl.eti1b5.controller.MonteurViewControl;
 import nl.eti1b5.model.Monteur;
 
 /**
@@ -20,7 +20,7 @@ public class MainLoader extends Application {
 	// De stage
 	private Stage stage;
 	private Monteur ingelogdeWerknemer;
-	private ViewControl viewControl;
+	private MonteurViewControl viewControl;
 	
 	/**
 	 * Start methode wordt aangeroepen door de mainmethode voor het starten van het hoofdprogramma

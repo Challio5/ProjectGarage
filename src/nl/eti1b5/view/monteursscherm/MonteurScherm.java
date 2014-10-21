@@ -2,7 +2,9 @@ package nl.eti1b5.view.monteursscherm;
 
 import nl.eti1b5.view.MenuNode;
 import javafx.beans.value.ChangeListener;
+import javafx.event.EventHandler;
 import javafx.scene.control.CheckBox;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 
 public class MonteurScherm extends BorderPane{
@@ -28,7 +30,12 @@ public class MonteurScherm extends BorderPane{
 		checkBox.selectedProperty().addListener(Listener);
 	}
 	
+	public void addMouseHandler(EventHandler<MouseEvent> handler){
+		reparatieNode.setOnMouseClicked(handler);
+	}
+	
 	public ReparatieNode getReparatieNode(){
 		return reparatieNode;
 	}
+
 }
