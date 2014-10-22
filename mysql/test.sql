@@ -18,13 +18,13 @@ values
 ("12-IKK-2", 10003, "Porsche", "Panamera", 324);
 
 insert into monteur
-(naam, adres, postcode, woonplaats, TelNr, Wachtwoord, specialiteit, beschikbaarheid)
+(naam, adres, postcode, woonplaats, TelNr, Wachtwoord, specialiteit)
 values 
-("Henk", "Hoofdstraat 1", "7468CZ", "Enter", "06-12345678", "Henk123", "Banden", "M1"),
-("Sjaak", "Dorpstraat 1", "7423HJ", "Rijssen","06-87654321", "Sjaak45", "Carroserie", "M1"),
-("Jan", "Stationsstraat 1", "7323IK", "Rotterdam", "06-18273645", "JanJan", "Motor", "M2"),
-("Tom", "Enterweg 10", "3453JI", "Bornebroek", "06-12387645", "Tom94", "Motor", "M2"),
-("Rob", "Rijssenseweg 11", "2393JI", "Nijverdal", "06-09128365", "Moyboy88", "Carroserie", "V3");
+("Henk", "Hoofdstraat 1", "7468CZ", "Enter", "06-12345678", "Henk123", "Banden"),
+("Sjaak", "Dorpstraat 1", "7423HJ", "Rijssen","06-87654321", "Sjaak45", "Carroserie"),
+("Jan", "Stationsstraat 1", "7323IK", "Rotterdam", "06-18273645", "JanJan", "Motor"),
+("Tom", "Enterweg 10", "3453JI", "Bornebroek", "06-12387645", "Tom94", "Motor"),
+("Rob", "Rijssenseweg 11", "2393JI", "Nijverdal", "06-09128365", "Moyboy88", "Carroserie");
 
 insert into reparatie
 (kenteken, omschrijving, begintijd, eindtijd, reparatiestatus, betaalstatus)
@@ -36,7 +36,9 @@ values
 insert into planning
 (begintijd, eindtijd, werknemernr, reparatienr)
 values
-('2014-01-03 12:00:12', '2014-10-03 12:59:11', 100, 100);
+('2014-10-22 12:00:12', '2014-10-03 12:59:11', 100, 100),
+('2014-10-23 12:00:12', '2014-10-03 12:59:11', 101, 101),
+('2014-10-26 12:00:12', '2014-10-03 12:59:11', 103, 102);
 
 insert into voorraad
 (naam, prijs, aantal)
@@ -56,11 +58,11 @@ values
 insert into monteurbeschikbaarheid
 (werknemernr, beschikbaarheid)
 values
-(100, "Ma1"),
-(100, "Di3"),
-(100, "Do3"),
-(101, "Di2"),
-(101, "Vr3"),
-(102, "Ma3"),
-(102, "Wo3"),
-(102, "Vr1");
+(100, "MO1"),
+(100, "TU3"),
+(100, "TH3"),
+(101, "TU2"),
+(101, "FR3"),
+(102, "MO3"),
+(102, "WE3"),
+(102, "FR1");

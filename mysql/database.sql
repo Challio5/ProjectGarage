@@ -36,8 +36,7 @@ CREATE TABLE IF NOT EXISTS Monteur(
 	Woonplaats varchar(30), 
     Telnr varchar(11),
     Wachtwoord varchar(16),
-	Specialiteit varchar(30), 
-	Beschikbaarheid varchar(3),    				
+	Specialiteit varchar(30),    				
 	PRIMARY KEY (Werknemernr)
 );
 
