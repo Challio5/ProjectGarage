@@ -62,7 +62,7 @@ public class PlanningsView extends GridPane{
 		
 		// Listener voor het selecteren van een reparatie in de combobox
 		reparatieSelectie.getSelectionModel().selectedItemProperty().addListener((reparatie, oldValue, newValue) -> {
-			double tijd = newValue.getTijd();
+			double tijd = newValue.getDuur();
 			//dao.getPlanning()
 		}); 
 		

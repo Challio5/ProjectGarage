@@ -9,13 +9,29 @@ import java.util.ArrayList;
 import nl.eti1b5.database.DatabaseManager;
 import nl.eti1b5.model.Monteur;
 
+/**
+ * Data access object wat de monteurs tabel beheert in de database
+ * Haalt de gegevens van een monteur op en schrijft ze weg naar de database
+ * 
+ * @author Projectgroep ETI2b3 2014-2015 kwartiel 1
+ * @since 22 okt. 2014
+ */
+
 public class MonteurDao {
+	// Databasemanager met de connectie naar de database
 	private DatabaseManager manager;
 	
+	/**
+	 * Constructor voor het ophalen van de singleton instantie van de databasemanager
+	 */
 	public MonteurDao() {
 		manager = DatabaseManager.getInstance();
 	}
 	
+	/**
+	 * Constructor voor het meegegeven van de singleton instantie van de databasemanager
+	 * @param manager Singleton instantie van de databasemanager
+	 */
 	public MonteurDao(DatabaseManager manager) {
 		this.manager = manager;
 	}

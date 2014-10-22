@@ -11,14 +11,13 @@ import java.util.Properties;
  * Singleton klasse die de connectie met de database beheert
  * Creëert instantie van zichzelf die op te vragen is met de bijbehorende methode
  * 
- * @author Rob Bonhof
+ * @author Projectgroep ETI2b3 2014-2015 kwartiel 1
  * @since 7 okt. 2014
  */
 
 public class DatabaseManager {
 	
-	// DatabaseManager met eigen bijbehorende connectie
-	private static DatabaseManager manager;
+	// De connectie met de database
 	private Connection connection;
 	
 	/**
@@ -28,21 +27,18 @@ public class DatabaseManager {
 	
 	/**
 	 * Methode om de eigen instantie van de klasse op te vragen
-	 * Op het moment er nog geen referentie is naar de databasemanager wordt deze aangemaakt
+	 * Haalt de instantie op van de geneste holder klasse
 	 * @return Referentie naar de databasemanager
 	 */
-	public synchronized static DatabaseManager getInstance() {
-		if(manager == null) {
-			manager = new DatabaseManager();
-		}
-		return manager;
+	public static DatabaseManager getInstance() {
+		return DatabaseManagerHolder.INSTANCE;
 	}
 	
 	/**
 	 * Getter voor het opvragen van de connectie naar de datbase
 	 * @return De connectie met de database
 	 */
-	public synchronized Connection getConnection() {
+	public Connection getConnection() {
 		if(connection == null) {
 			try {
 				createConnection();
@@ -62,7 +58,7 @@ public class DatabaseManager {
 	 * @throws IOException De propertyfile kan niet geopend worden
 	 * @throws SQLException De verbinding met de database kan niet tot stand komen
 	 */
-	public synchronized void createConnection() throws IOException, SQLException {
+	public void createConnection() throws IOException, SQLException {
 		Properties databaseProperties = new Properties();
 		InputStream stream = this.getClass().getClassLoader().getResourceAsStream("props.properties");
 		databaseProperties.load(stream);
@@ -79,7 +75,7 @@ public class DatabaseManager {
 	/**
 	 * Sluit de verbinding met de database
 	 */
-	public synchronized void closeConnection() {
+	public void closeConnection() {
 		if(connection != null) {
 			try {
 				connection.close();
@@ -90,4 +86,15 @@ public class DatabaseManager {
 			}
 		}
 	}
+	
+	/**
+	 * Geneste holder klasse, schermt de instantie van de databasemanager af van de buitenwereld
+	 * Wordt gebruikt om de enige beschikbare instantie van de databasemanager mee op te halen
+	 * 
+	 * @author Projectgroep ETI2b3 2014-2015 kwartiel 1
+	 * @since 22 okt. 2014
+	 */
+    private static class DatabaseManagerHolder {
+        private static final DatabaseManager INSTANCE = new DatabaseManager();
+    }
 }

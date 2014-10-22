@@ -12,13 +12,29 @@ import nl.eti1b5.model.Omschrijving;
 import nl.eti1b5.model.Reparatie;
 import nl.eti1b5.model.Voorraad;
 
+/**
+ * Data access object wat de reparatie tabel beheert in de database
+ * Haalt de gegevens van een reparatie op en schrijft ze weg naar de database
+ * 
+ * @author Projectgroep ETI2b3 2014-2015 kwartiel 1
+ * @since 22 okt. 2014
+ */
+
 public class ReparatieDao {
+	// Databasemanager met de connectie naar de database
 	private DatabaseManager manager;
 	
+	/**
+	 * Constructor voor het ophalen van de singleton instantie van de databasemanager
+	 */
 	public ReparatieDao() {
 		manager = DatabaseManager.getInstance();
 	}
 	
+	/**
+	 * Constructor voor het meegegeven van de singleton instantie van de databasemanager
+	 * @param manager Singleton instantie van de databasemanager
+	 */
 	public ReparatieDao(DatabaseManager manager) {
 		this.manager = manager;
 	}
