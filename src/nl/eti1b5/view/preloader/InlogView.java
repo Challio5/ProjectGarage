@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.effect.Reflection;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 
 /**
@@ -60,6 +61,10 @@ public class InlogView extends VBox{
 	 */
 	public void setSubmitListener(EventHandler<ActionEvent> event) {
 		submit.setOnAction(event);
+	}
+	
+	public void setEnterListener(EventHandler<KeyEvent> event) {
+		this.setOnKeyPressed(event);
 	}
 	
 	public InlogNode getInlogNode(){

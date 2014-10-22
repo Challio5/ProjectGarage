@@ -74,4 +74,43 @@ public class PlanningDao {
 		
 		return planningsLijst;
 	}
+	
+	/**
+	 * Methode voor het opvragen van een geplande reparatie op basis van de tijd
+	 * @param beginTijd De tijd waarop de reparaties gepland zijn
+	 * @return De volledige planning van de garage
+	 */
+	public ArrayList<Planning> getPlanning(Date beginTijd) {
+		ArrayList<Planning> planningsLijst = new ArrayList<>();
+		Connection connection = manager.getConnection();
+		
+		String planningsQuery = "select * from planning where begintijd = ?";
+		
+		try {
+			PreparedStatement planningsStatement = connection.prepareStatement(planningsQuery);
+			planningsStatement.setDate(1, beginTijd);
+			ResultSet planningsSet = planningsStatement.executeQuery();
+			
+			while(planningsSet.next()) {
+				// Gegevens van planning
+				Date begintijd = planningsSet.getDate("begintijd");
+				Date eindtijd = planningsSet.getDate("eindtijd");
+				int werknemernr = planningsSet.getInt("werknemernr");
+				int reparatienr = planningsSet.getInt("reparatienr");
+				
+				// Gebruikt andere daos voor de gegevens
+				MonteurDao monteurDao = new MonteurDao(manager);
+				Monteur monteur = monteurDao.getMonteur(werknemernr);
+				ReparatieDao reparatieDao = new ReparatieDao(manager);
+				Reparatie reparatie = reparatieDao.getReparatie(reparatienr);
+				
+				planningsLijst.add(new Planning(begintijd, eindtijd, monteur, reparatie));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return planningsLijst;
+	}
+	
 }

@@ -24,9 +24,6 @@ public class InlogPreloader extends Preloader {
 	//De Stage
 	private Stage stage;
 	
-	//InlogController
-	private InlogControl inlogControl;
-	
 	//Preloader view
 	private InlogView start;
 	
@@ -66,9 +63,8 @@ public class InlogPreloader extends Preloader {
 		// Voldoet op het moment het hoofdprogramma startklaar is
 		if(notification.getType() == StateChangeNotification.Type.BEFORE_START) {
 			app = ((MainLoader) notification.getApplication());
-			// Actionlistener voor een druk op submit knop
-			inlogControl = new InlogControl(this, app);
-			start.setSubmitListener(inlogControl);
+			// Controller voor de actionlisteners
+			new InlogControl(this, app);
 		}
 	}
 	
