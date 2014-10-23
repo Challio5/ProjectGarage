@@ -5,10 +5,13 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 import nl.eti1b5.database.DatabaseManager;
 import nl.eti1b5.model.Omschrijving;
+import nl.eti1b5.model.Planning;
 import nl.eti1b5.model.Reparatie;
 import nl.eti1b5.model.Voorraad;
 
@@ -99,8 +102,8 @@ public class ReparatieDao {
 						materialenLijst.add(new Voorraad(materiaalNummer, naam, prijs, aantal));
 					}
 				}
-				
-				reparatieLijst.add(new Reparatie(reparatieNummer, kenteken, new Omschrijving(omschrijving, 0.0), begintijd, eindtijd, reparatiestatus, betaalstatus, materialenLijst));
+				Time test = Time.valueOf(LocalTime.now());
+				reparatieLijst.add(new Reparatie(reparatieNummer, kenteken, new Omschrijving(omschrijving, test), begintijd, eindtijd, reparatiestatus, betaalstatus, materialenLijst));
 			}
 		} catch (SQLException e) {
 			System.err.println("Kan het statement niet uitvoeren");
@@ -174,8 +177,8 @@ public class ReparatieDao {
 						materialenLijst.add(new Voorraad(materiaalNummer, naam, prijs, aantal));
 					}
 				}
-				
-				reparatieLijst.add(new Reparatie(reparatieNummer, kenteken, new Omschrijving(omschrijving, 0.0), begintijd, eindtijd, reparatiestatus, betaalstatus, materialenLijst));
+				Time test = Time.valueOf(LocalTime.now());
+				reparatieLijst.add(new Reparatie(reparatieNummer, kenteken, new Omschrijving(omschrijving, test), begintijd, eindtijd, reparatiestatus, betaalstatus, materialenLijst));
 			}
 		} catch (SQLException e) {
 			System.err.println("Kan het statement niet uitvoeren");
@@ -217,12 +220,45 @@ public class ReparatieDao {
 				
 				ArrayList<Voorraad> materialenLijst = new ArrayList<>();
 				
-				reparatie = new Reparatie(reparatieNummer, kenteken, new Omschrijving(omschrijving, 0.0), begintijd, eindtijd, reparatiestatus, betaalstatus, materialenLijst);
+				Time test = Time.valueOf(LocalTime.now());
+				reparatie = new Reparatie(reparatieNummer, kenteken, new Omschrijving(omschrijving, test), begintijd, eindtijd, reparatiestatus, betaalstatus, materialenLijst);
 			}
 		} catch (SQLException e) {
 			System.err.println("Kan het statement niet uitvoeren");
 			e.printStackTrace();
 		}
 		return reparatie;
+	}
+	
+	/**
+	 * Methode voor het wegschrijven van een planningsobject naar de database
+	 * @param reparatie Het weg te schrijven planningsobject
+	 */
+	public void addReparatie(Reparatie reparatie) {
+		// Zet de verbinding op met de database
+		Connection connection = manager.getConnection();
+		
+		// De sql string met de juiste waarden voor de database
+		String insertString = "insert into reparatie " 
+				+ "(kenteken, omschrijving) "
+				+ "values "
+				+ "(?, ?)";
+		
+		try {
+			// Het statement met de juiste sql string
+			PreparedStatement insertStatement = connection.prepareStatement(insertString);
+			
+			// Meldt de attributen van de planning aan bij het statement
+			insertStatement.setString(1, reparatie.getKenteken());
+			insertStatement.setString(2, reparatie.getOmschrijving().getNaam());
+			
+			// Voert het statement uit
+			insertStatement.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		// Sluit de verbinding met de database
+		manager.closeConnection();	
 	}
 }

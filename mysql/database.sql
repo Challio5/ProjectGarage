@@ -49,8 +49,8 @@ CREATE TABLE IF NOT EXISTS Reparatie(
 	Omschrijving varchar(30),
 	Begintijd datetime,
 	Eindtijd datetime,
-	Reparatiestatus boolean,
-	Betaalstatus boolean,										
+	Reparatiestatus boolean default false,
+	Betaalstatus boolean default false,										
 	PRIMARY KEY (Reparatienr), 
 	FOREIGN KEY (Kenteken) REFERENCES Auto(Kenteken) 				/* Meerdere reparaties voor een auto */
 );
@@ -78,6 +78,14 @@ CREATE TABLE IF NOT EXISTS Voorraad(
 );
 
 ALTER TABLE Voorraad auto_increment = 1000;
+
+/* Tabel voor de gegevens van een reparatieomschrijving */
+CREATE TABLE IF NOT EXISTS Omschrijving(
+	Omschrijvingsnr int not null auto_increment,
+	Naam varchar(30),
+	Duur time,
+	PRIMARY KEY (Omschrijvingsnr)
+);
 
 /* 
  * Koppelt meerdere materialen aan een reparatie 

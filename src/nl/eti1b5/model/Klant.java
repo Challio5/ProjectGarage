@@ -38,11 +38,11 @@ public class Klant extends Persoon {
 	 * @param plaats De woonplaats van de klant
 	 * @param telNr Het telefoonnummer van de klant
 	 */
-	public Klant(int klantNr, String naam, String adres, String postcode, String plaats, String telNr) {
+	public Klant(int klantNr, String naam, String adres, String postcode, String plaats, String telNr, ArrayList<Auto> autoLijst) {
 		super(naam, adres, postcode, plaats, telNr);
 		
 		this.klantNr = new SimpleIntegerProperty(klantNr);
-		this.autoLijst = new ArrayList<>();
+		this.autoLijst = autoLijst;
 	}
 
 	/**

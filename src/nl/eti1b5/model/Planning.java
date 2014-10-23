@@ -1,6 +1,6 @@
 package nl.eti1b5.model;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -16,8 +16,8 @@ import javafx.beans.property.SimpleObjectProperty;
  */
 
 public class Planning {
-	private ObjectProperty<Date> beginTijd;
-	private ObjectProperty<Date> eindTijd;
+	private ObjectProperty<Timestamp> beginTijd;
+	private ObjectProperty<Timestamp> eindTijd;
 	private ObjectProperty<Monteur> werknemer;
 	private ObjectProperty<Reparatie> reparatie;
 	
@@ -34,7 +34,7 @@ public class Planning {
 	 * @param werknemer De monteur voor de geplande reparatie
 	 * @param reparatie De gekoppelde reparatie aan de planning
 	 */
-	public Planning(Date beginTijd, Date eindTijd, Monteur werknemer, Reparatie reparatie) {
+	public Planning(Timestamp beginTijd, Timestamp eindTijd, Monteur werknemer, Reparatie reparatie) {
 		this.beginTijd = new SimpleObjectProperty<>(beginTijd);
 		this.eindTijd = new SimpleObjectProperty<>(eindTijd);
 		this.werknemer = new SimpleObjectProperty<>(werknemer);
@@ -45,7 +45,7 @@ public class Planning {
 	 * Getter voor het opvragen van de begintijd van de planning
 	 * @return De begintijd van de planning
 	 */
-	public Date getBeginTijd() {
+	public Timestamp getBeginTijd() {
 		return beginTijd.get();
 	}
 
@@ -53,7 +53,7 @@ public class Planning {
 	 * Getter voor het opvragen van de eindtijd van de planning
 	 * @return De eindtijd van de planning
 	 */
-	public Date getEindTijd() {
+	public Timestamp getEindTijd() {
 		return eindTijd.get();
 	}
 
@@ -77,7 +77,7 @@ public class Planning {
 	 * Setter voor het aanpassen van de begintijd van de planning
 	 * @param beginTijd De begintijd van de planning
 	 */
-	public void setBeginTijd(Date beginTijd) {
+	public void setBeginTijd(Timestamp beginTijd) {
 		this.beginTijd.set(beginTijd);
 	}
 
@@ -85,7 +85,7 @@ public class Planning {
 	 * Setter voor het aanpassen van de eindtijd van de planning
 	 * @param eindTijd De eindtijd van de planning
 	 */
-	public void setEindTijd(Date eindTijd) {
+	public void setEindTijd(Timestamp eindTijd) {
 		this.eindTijd.set(eindTijd);
 	}
 
@@ -109,7 +109,7 @@ public class Planning {
 	 * Property die de begintijdgegevens bevat
 	 * @return Property met de begintijdgegevens
 	 */
-	public ObjectProperty<Date> getBeginTijdProperty() {
+	public ObjectProperty<Timestamp> getBeginTijdProperty() {
 		return beginTijd;
 	}
 
@@ -117,7 +117,7 @@ public class Planning {
 	 * Property die de eindtijdgegevens bevat
 	 * @return Property met de eindtijdgegevens
 	 */
-	public ObjectProperty<Date> getEindTijdProperty() {
+	public ObjectProperty<Timestamp> getEindTijdProperty() {
 		return eindTijd;
 	}
 

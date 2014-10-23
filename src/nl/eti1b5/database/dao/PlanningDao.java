@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import nl.eti1b5.database.DatabaseManager;
@@ -55,8 +56,8 @@ public class PlanningDao {
 			
 			while(planningsSet.next()) {
 				// Gegevens van planning
-				Date begintijd = planningsSet.getDate("begintijd");
-				Date eindtijd = planningsSet.getDate("eindtijd");
+				Timestamp begintijd = planningsSet.getTimestamp("begintijd");
+				Timestamp eindtijd = planningsSet.getTimestamp("eindtijd");
 				int werknemernr = planningsSet.getInt("werknemernr");
 				int reparatienr = planningsSet.getInt("reparatienr");
 				
@@ -71,6 +72,8 @@ public class PlanningDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+		manager.closeConnection();
 		
 		return planningsLijst;
 	}
@@ -93,8 +96,8 @@ public class PlanningDao {
 			
 			while(planningsSet.next()) {
 				// Gegevens van planning
-				Date begintijd = planningsSet.getDate("begintijd");
-				Date eindtijd = planningsSet.getDate("eindtijd");
+				Timestamp begintijd = planningsSet.getTimestamp("begintijd");
+				Timestamp eindtijd = planningsSet.getTimestamp("eindtijd");
 				int werknemernr = planningsSet.getInt("werknemernr");
 				int reparatienr = planningsSet.getInt("reparatienr");
 				
@@ -110,7 +113,42 @@ public class PlanningDao {
 			e.printStackTrace();
 		}
 		
+		manager.closeConnection();
+		
 		return planningsLijst;
 	}
 	
+	/**
+	 * Methode voor het wegschrijven van een planningsobject naar de database
+	 * @param planning Het weg te schrijven planningsobject
+	 */
+	public void addPlanning(Planning planning) {
+		// Zet de verbinding op met de database
+		Connection connection = manager.getConnection();
+		
+		// De sql string met de juiste waarden voor de database
+		String insertString = "insert into planning "
+				+ "(begintijd, eindtijd, werknemernr, reparatienr) "
+				+ "values"
+				+ "(?, ?, ?, ?)";
+		
+		try {
+			// Het statement met de juiste sql string
+			PreparedStatement insertStatement = connection.prepareStatement(insertString);
+			
+			// Meldt de attributen van de planning aan bij het statement
+			insertStatement.setTimestamp(1, planning.getBeginTijd());
+			insertStatement.setTimestamp(2, planning.getEindTijd());
+			insertStatement.setInt(3, planning.getWerknemer().getWerknemerNr());
+			insertStatement.setInt(4, planning.getReparatie().getReparatieNummer());
+			
+			// Voert het statement uit
+			insertStatement.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		// Sluit de verbinding met de database
+		manager.closeConnection();	
+	}
 }

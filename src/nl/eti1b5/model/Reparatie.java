@@ -170,6 +170,22 @@ public class Reparatie {
 	}
 	
 	/**
+	 * Setter voor het aanpassen van de reparatiestatus van de reparatie
+	 * @param eindTijd De reparatiestatus van de reparatie
+	 */
+	public void setReparatieStatus(boolean reparatieStatus) {
+		this.reparatieStatus.set(reparatieStatus);
+	}
+	
+	/**
+	 * Setter voor het aanpassen van de betaalstatus van de reparatie
+	 * @param eindTijd De betaalstatus van de reparatie
+	 */
+	public void setBetaalStatus(boolean betaalStatus) {
+		this.betaalStatus.set(betaalStatus);
+	}
+	
+	/**
 	 * Setter voor het aanpassen van de lijst met materialen van de reparatie
 	 * @param materialenLijst De lijst met materialen van de reparatie
 	 */

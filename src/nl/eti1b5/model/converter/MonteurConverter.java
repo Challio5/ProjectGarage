@@ -1,8 +1,9 @@
-package nl.eti1b5.model;
+package nl.eti1b5.model.converter;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import nl.eti1b5.model.Monteur;
 import javafx.util.StringConverter;
 
 public class MonteurConverter extends StringConverter<Monteur> {
@@ -10,8 +11,8 @@ public class MonteurConverter extends StringConverter<Monteur> {
 	private Map<String, Monteur> monteurMap = new HashMap<>();
 	
 	@Override
-	public Monteur fromString(String string) {
-		return monteurMap.get(string);
+	public Monteur fromString(String naam) {
+		return monteurMap.get(naam);
 	}
 
 	@Override
@@ -19,5 +20,5 @@ public class MonteurConverter extends StringConverter<Monteur> {
 		monteurMap.put(monteur.getNaam(), monteur);
 		return monteur.getNaam();
 	}
-	
+
 }
