@@ -11,11 +11,11 @@ import nl.eti1b5.database.dao.MonteurDao;
 import nl.eti1b5.model.Monteur;
 import nl.eti1b5.model.Secretaresse;
 import nl.eti1b5.view.MainLoader;
-import nl.eti1b5.view.monteursscherm.MonteurScherm;
-import nl.eti1b5.view.planscherm.PlanningsView;
+import nl.eti1b5.view.monteur.monteursscherm.MonteurScherm;
 import nl.eti1b5.view.preloader.InlogPreloader;
 import nl.eti1b5.view.preloader.InlogView;
-import nl.eti1b5.view.reparatiesoverzicht.ReparatieView;
+import nl.eti1b5.view.secretaresse.planscherm.PlanningsView;
+import nl.eti1b5.view.secretaresse.reparatiesoverzicht.ReparatieView;
 
 
 public class InlogControl {

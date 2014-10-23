@@ -1,4 +1,4 @@
-package nl.eti1b5.view.monteursscherm;
+package nl.eti1b5.view.monteur.monteursscherm;
 
 import java.util.ArrayList;
 

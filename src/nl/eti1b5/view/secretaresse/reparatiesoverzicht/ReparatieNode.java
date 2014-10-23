@@ -1,4 +1,4 @@
-package nl.eti1b5.view.reparatiesoverzicht;
+package nl.eti1b5.view.secretaresse.reparatiesoverzicht;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

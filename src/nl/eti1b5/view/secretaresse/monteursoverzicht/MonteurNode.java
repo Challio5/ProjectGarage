@@ -1,4 +1,4 @@
-package nl.eti1b5.view.monteursoverzicht;
+package nl.eti1b5.view.secretaresse.monteursoverzicht;
 
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;

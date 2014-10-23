@@ -1,6 +1,5 @@
-package nl.eti1b5.view.planscherm;
+package nl.eti1b5.view.secretaresse.planscherm;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -14,8 +13,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import nl.eti1b5.database.dao.MonteurDao;
 import nl.eti1b5.database.dao.PlanningDao;
-import nl.eti1b5.database.dao.ReparatieDao;
 import nl.eti1b5.model.Monteur;
+import nl.eti1b5.model.MonteurConverter;
 import nl.eti1b5.model.Omschrijving;
 import nl.eti1b5.model.Planning;
 
@@ -80,6 +79,7 @@ public class PlanningsView extends GridPane{
 		
 		monteurLabel = new Label("Monteur");
 		monteurKiezer = new ComboBox<>();
+		monteurKiezer.setConverter(new MonteurConverter());
 		ArrayList<Monteur> monteurs = monteurDao.getMonteurs();
 		for(Monteur monteur : monteurs) {
 			monteurKiezer.getItems().add(monteur);
