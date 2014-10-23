@@ -1,4 +1,4 @@
-package nl.eti1b5.view.monteur.monteursscherm;
+package nl.eti1b5.view.monteur.reparatiescherm;
 
 import nl.eti1b5.view.MenuNode;
 import javafx.beans.value.ChangeListener;

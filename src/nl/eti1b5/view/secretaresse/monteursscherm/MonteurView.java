@@ -1,4 +1,4 @@
-package nl.eti1b5.view.secretaresse.monteursoverzicht;
+package nl.eti1b5.view.secretaresse.monteursscherm;
 
 import javafx.scene.layout.BorderPane;
 import nl.eti1b5.view.MenuNode;

@@ -11,11 +11,11 @@ import nl.eti1b5.database.dao.MonteurDao;
 import nl.eti1b5.model.Monteur;
 import nl.eti1b5.model.Secretaresse;
 import nl.eti1b5.view.MainLoader;
-import nl.eti1b5.view.monteur.monteursscherm.MonteurScherm;
+import nl.eti1b5.view.monteur.reparatiescherm.MonteurScherm;
 import nl.eti1b5.view.preloader.InlogPreloader;
 import nl.eti1b5.view.preloader.InlogView;
-import nl.eti1b5.view.secretaresse.planscherm.PlanningsView;
-import nl.eti1b5.view.secretaresse.reparatiesoverzicht.ReparatieView;
+import nl.eti1b5.view.secretaresse.planningsscherm.AddKlantScherm;
+import nl.eti1b5.view.secretaresse.reparatiescherm.ReparatieView;
 
 
 public class InlogControl {
@@ -214,7 +214,7 @@ public class InlogControl {
 	//plan scherm wanneer correct ingelogd
 	public void showPlanning(){
 
-		Scene scene = new Scene(new PlanningsView());
+		Scene scene = new Scene(new AddKlantScherm());
 		
 		// Stylesheet
 		String stylesheet = this.getClass().getResource("/menu.css").toString();

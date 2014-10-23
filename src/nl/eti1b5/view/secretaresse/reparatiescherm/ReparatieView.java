@@ -1,4 +1,4 @@
-package nl.eti1b5.view.secretaresse.reparatiesoverzicht;
+package nl.eti1b5.view.secretaresse.reparatiescherm;
 
 import javafx.scene.layout.BorderPane;
 import nl.eti1b5.view.MenuNode;

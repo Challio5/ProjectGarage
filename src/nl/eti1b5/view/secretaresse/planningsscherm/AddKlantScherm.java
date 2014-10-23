@@ -1,4 +1,4 @@
-package nl.eti1b5.view.secretaresse.planscherm;
+package nl.eti1b5.view.secretaresse.planningsscherm;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ import nl.eti1b5.model.MonteurConverter;
 import nl.eti1b5.model.Omschrijving;
 import nl.eti1b5.model.Planning;
 
-public class PlanningsView extends GridPane{
+public class AddKlantScherm extends GridPane{
 	private PlanningDao planningDao;
 	private MonteurDao monteurDao;
 	
@@ -39,7 +39,7 @@ public class PlanningsView extends GridPane{
 	
 	private Button submit;
 	
-	public PlanningsView() {
+	public AddKlantScherm() {
 		planningDao = new PlanningDao();
 		monteurDao = new MonteurDao();
 		

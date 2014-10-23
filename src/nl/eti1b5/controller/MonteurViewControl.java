@@ -18,9 +18,9 @@ import nl.eti1b5.database.dao.VoorraadDao;
 import nl.eti1b5.model.Reparatie;
 import nl.eti1b5.model.Voorraad;
 import nl.eti1b5.view.MainLoader;
-import nl.eti1b5.view.monteur.monteursscherm.MonteurScherm;
-import nl.eti1b5.view.monteur.monteursscherm.ReparatieNode;
-import nl.eti1b5.view.monteur.monteursscherm.ReparatiePopup;
+import nl.eti1b5.view.monteur.reparatiescherm.MonteurScherm;
+import nl.eti1b5.view.monteur.reparatiescherm.ReparatieNode;
+import nl.eti1b5.view.monteur.reparatiescherm.ReparatiePopup;
 
 public class MonteurViewControl implements ChangeListener<Boolean>, EventHandler<MouseEvent>{
 	
