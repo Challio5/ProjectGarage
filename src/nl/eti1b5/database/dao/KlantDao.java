@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import nl.eti1b5.database.DatabaseManager;
 import nl.eti1b5.model.Auto;
 import nl.eti1b5.model.Klant;
-import nl.eti1b5.model.Monteur;
 
 public class KlantDao {
 	

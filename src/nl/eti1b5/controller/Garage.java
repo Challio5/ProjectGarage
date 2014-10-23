@@ -3,15 +3,15 @@ package nl.eti1b5.controller;
 import java.util.ArrayList;
 
 import nl.eti1b5.database.dao.AutoDao;
+import nl.eti1b5.database.dao.MateriaalDao;
 import nl.eti1b5.database.dao.MonteurDao;
 import nl.eti1b5.database.dao.PlanningDao;
 import nl.eti1b5.database.dao.ReparatieDao;
-import nl.eti1b5.database.dao.MateriaalDao;
 import nl.eti1b5.model.Auto;
+import nl.eti1b5.model.Materiaal;
 import nl.eti1b5.model.Monteur;
 import nl.eti1b5.model.Planning;
 import nl.eti1b5.model.Reparatie;
-import nl.eti1b5.model.Materiaal;
 import nl.eti1b5.view.MainLoader;
 import nl.eti1b5.view.preloader.InlogPreloader;
 

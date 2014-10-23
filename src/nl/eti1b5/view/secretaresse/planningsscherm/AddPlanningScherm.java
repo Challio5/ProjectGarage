@@ -186,56 +186,7 @@ public class AddPlanningScherm extends GridPane{
 		// Submitknop voor het wegschrijven van de gegevens naar de database
 		submit = new Button("Submit");
 		
-		// Listener voor een druk op de submit knop
-		submit.setOnAction(click -> {
-			// Vraagt de datum op voor de te plannen reparatie
-			LocalDate datum = datumPicker.getValue();
-			
-			// Vraagt de tijd op voor de te plannen reparatie
-			int uren = urenKiezer.getSelectionModel().getSelectedItem();
-			int minuten = minutenKiezer.getSelectionModel().getSelectedItem();
-			LocalTime tijd = LocalTime.of(uren, minuten);
-			
-			// Voegt tijd en datum samen
-			LocalDateTime datumtijd = LocalDateTime.of(datum, tijd);
-			
-			// Berekent en zet om naar sql de begin- en eindtijd
-			Timestamp beginTijd = Timestamp.valueOf(datumtijd);
-			Timestamp eindTijd = Timestamp.valueOf(datumtijd); // Plus duur omschrijving
-			
-			// De monteur voor de geplande reparatie
-			Monteur monteur = monteurKiezer.getSelectionModel().getSelectedItem();
-			
-			// De in te plannen reparatie
-			Reparatie reparatie = new Reparatie();
-			
-			// Het kenteken van de auto van klant
-			reparatie.setKenteken("");
-			
-			// De omschrijving van de reparatie
-			if(checkOverigeReparatie.isSelected()) {
-				int urenOmschrijving = urenOmschrijvingKiezer.getSelectionModel().getSelectedItem();
-				int minutenOmschrijving = minutenOmschrijvingKiezer.getSelectionModel().getSelectedItem();
-				
-				LocalTime tijdOmschrijving = LocalTime.of(urenOmschrijving, minutenOmschrijving);
-				Time sqlTijd = Time.valueOf(tijdOmschrijving);
-				
-				// Voeg omschrijving toe aan database en 
-				//omschrijvingDao.addOmschrijving(new Omschrij)
-				reparatie.setOmschrijving(new Omschrijving(overigeReparatie.getText(), sqlTijd));
-			}
-			else {
-				reparatie.setOmschrijving(omschrijvingsKiezer.getSelectionModel().getSelectedItem());
-			}
-			
-			
-			// Voegt de reparatie toe aan de database
-			reparatieDao.addReparatie(reparatie);
-			
-			// Voegt de planning toe voor de reparatie aan de database
-			Planning planning = new Planning(beginTijd, eindTijd, monteur, reparatie);
-			planningDao.addPlanning(planning);
-		});
+		
 		
 		// Klant en autokiezer
 		this.add(klantLabel, 0, 0);
@@ -266,5 +217,71 @@ public class AddPlanningScherm extends GridPane{
 		
 		// Submitknop
 		this.add(submit, 0, 6);
+	}
+	
+	public void setSubmitListener() {
+		// Listener voor een druk op de submit knop
+		submit.setOnAction(click -> {
+			// Vraagt de datum op voor de te plannen reparatie
+			LocalDate datum = datumPicker.getValue();
+
+			// Vraagt de tijd op voor de te plannen reparatie
+			int uren = urenKiezer.getSelectionModel().getSelectedItem();
+			int minuten = minutenKiezer.getSelectionModel().getSelectedItem();
+			
+			// Vraagt de duur op van de reparatie
+			int urenOmschrijving = urenOmschrijvingKiezer
+					.getSelectionModel().getSelectedItem();
+			int minutenOmschrijving = minutenOmschrijvingKiezer
+					.getSelectionModel().getSelectedItem();
+			
+			// Berekent de begin- en eindtijd
+			LocalTime begintijd = LocalTime.of(uren, minuten);
+			LocalTime eindtijd = begintijd.plusHours(urenOmschrijving);
+			eindtijd = eindtijd.plusMinutes(minutenOmschrijving);
+
+			// Voegt tijd en datum samen
+			LocalDateTime beginDatumtijd = LocalDateTime.of(datum, begintijd);
+			LocalDateTime eindDatumtijd = LocalDateTime.of(datum, eindtijd);
+
+			// Zet om naar sql de begin- en eindtijd
+			Timestamp sqlbegintijd = Timestamp.valueOf(beginDatumtijd);
+			Timestamp sqleindtijd = Timestamp.valueOf(eindDatumtijd); 
+			
+			// De monteur voor de geplande reparatie
+			Monteur monteur = monteurKiezer.getSelectionModel()
+					.getSelectedItem();
+
+			// De in te plannen reparatie
+			Reparatie reparatie = new Reparatie();
+
+			// Het kenteken van de auto van klant
+			Auto auto = autoKiezer.getSelectionModel().getSelectedItem();
+			reparatie.setKenteken(auto.getKenteken());
+
+			// De omschrijving van de reparatie
+			if (checkOverigeReparatie.isSelected()) {
+
+				LocalTime tijdOmschrijving = LocalTime.of(urenOmschrijving,
+						minutenOmschrijving);
+				Time sqlTijd = Time.valueOf(tijdOmschrijving);
+
+				// Voeg omschrijving toe aan database en
+				// omschrijvingDao.addOmschrijving(new Omschrij)
+				reparatie.setOmschrijving(new Omschrijving(overigeReparatie
+						.getText(), sqlTijd));
+			} else {
+				reparatie.setOmschrijving(omschrijvingsKiezer
+						.getSelectionModel().getSelectedItem());
+			}
+
+			// Voegt de reparatie toe aan de database
+			reparatieDao.addReparatie(reparatie);
+
+			// Voegt de planning toe voor de reparatie aan de database
+			Planning planning = new Planning(sqlbegintijd, sqleindtijd, monteur,
+					reparatie);
+			planningDao.addPlanning(planning);
+		});
 	}
 }

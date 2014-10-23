@@ -1,10 +1,5 @@
 package nl.eti1b5.view.monteur.reparatiescherm;
 
-import java.util.ArrayList;
-
-import nl.eti1b5.model.Reparatie;
-import nl.eti1b5.model.Materiaal;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.CheckBox;
@@ -15,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import nl.eti1b5.model.Materiaal;
 
 public class ReparatiePopup extends BorderPane{
 	

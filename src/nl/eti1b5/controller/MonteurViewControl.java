@@ -1,22 +1,18 @@
 package nl.eti1b5.controller;
 
-import java.util.ArrayList;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import nl.eti1b5.database.dao.MateriaalDao;
 import nl.eti1b5.database.dao.MonteurDao;
 import nl.eti1b5.database.dao.ReparatieDao;
-import nl.eti1b5.database.dao.MateriaalDao;
-import nl.eti1b5.model.Reparatie;
 import nl.eti1b5.model.Materiaal;
+import nl.eti1b5.model.Reparatie;
 import nl.eti1b5.view.MainLoader;
 import nl.eti1b5.view.monteur.reparatiescherm.MonteurScherm;
 import nl.eti1b5.view.monteur.reparatiescherm.ReparatieNode;

@@ -3,8 +3,8 @@ package nl.eti1b5.model.converter;
 import java.util.HashMap;
 import java.util.Map;
 
-import nl.eti1b5.model.Auto;
 import javafx.util.StringConverter;
+import nl.eti1b5.model.Auto;
 
 public class AutoConverter extends StringConverter<Auto> {
 

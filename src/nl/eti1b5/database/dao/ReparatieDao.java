@@ -10,10 +10,9 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 
 import nl.eti1b5.database.DatabaseManager;
-import nl.eti1b5.model.Omschrijving;
-import nl.eti1b5.model.Planning;
-import nl.eti1b5.model.Reparatie;
 import nl.eti1b5.model.Materiaal;
+import nl.eti1b5.model.Omschrijving;
+import nl.eti1b5.model.Reparatie;
 
 /**
  * Data access object wat de reparatie tabel beheert in de database
@@ -148,7 +147,8 @@ public class ReparatieDao {
 					
 					materialenLijst.add(new Materiaal(materiaalNummer, naam, prijs, aantalgebruikt));
 				}				
-				reparatieLijst.add(new Reparatie(reparatieNummer, kenteken, new Omschrijving(omschrijving, 0.0), begintijd, eindtijd, reparatiestatus, betaalstatus, materialenLijst));
+				Time test = Time.valueOf(LocalTime.now());
+				reparatieLijst.add(new Reparatie(reparatieNummer, kenteken, new Omschrijving(omschrijving, test), begintijd, eindtijd, reparatiestatus, betaalstatus, materialenLijst));
 			}
 		} catch (SQLException e) {
 			System.err.println("Kan het statement niet uitvoeren");
@@ -294,8 +294,8 @@ public class ReparatieDao {
 					
 					materialenLijst.add(new Materiaal(materiaalNummer, naam, prijs, aantalgebruikt));
 				}
-				
-				reparatieLijst.add(new Reparatie(reparatieNummer, kenteken, new Omschrijving(omschrijving, 0.0), begintijd, eindtijd, reparatiestatus, betaalstatus, materialenLijst));
+				Time test = Time.valueOf(LocalTime.now());
+				reparatieLijst.add(new Reparatie(reparatieNummer, kenteken, new Omschrijving(omschrijving, test), begintijd, eindtijd, reparatiestatus, betaalstatus, materialenLijst));
 			}
 		} catch (SQLException e) {
 			System.err.println("Kan het statement niet uitvoeren");
@@ -355,8 +355,9 @@ public class ReparatieDao {
 					double prijs = materiaalNummerSet.getDouble("Prijs");
 					
 					materialenLijst.add(new Materiaal(materiaalNummer, naam, prijs, aantalgebruikt));
-				}				
-				reparatieLijst.add(new Reparatie(reparatieNummer, kenteken, new Omschrijving(omschrijving, 0.0), begintijd, eindtijd, reparatiestatus, betaalstatus, materialenLijst));
+				}		
+				Time test = Time.valueOf(LocalTime.now());
+				reparatieLijst.add(new Reparatie(reparatieNummer, kenteken, new Omschrijving(omschrijving, test), begintijd, eindtijd, reparatiestatus, betaalstatus, materialenLijst));
 			}
 		} catch (SQLException e) {
 			System.err.println("Kan het statement niet uitvoeren");

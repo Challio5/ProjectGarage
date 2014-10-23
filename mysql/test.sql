@@ -51,6 +51,7 @@ values
 insert into omschrijving
 (naam, duur)
 values
+("Banden", '00:30:00'),
 ("Kleine beurt", '01:00:00'),
 ("Grote beurt", '01:30:00'),
 ("Carrosserie", '00:45:00'),
