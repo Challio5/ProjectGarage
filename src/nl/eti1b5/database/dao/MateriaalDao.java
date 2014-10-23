@@ -7,24 +7,24 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import nl.eti1b5.database.DatabaseManager;
-import nl.eti1b5.model.Voorraad;
+import nl.eti1b5.model.Materiaal;
 
 /**
- * Data access object wat de voorraad tabel beheert in de database
- * Haalt de gegevens van de voorraad op en schrijft ze weg naar de database
+ * Data access object wat de materiaal tabel beheert in de database
+ * Haalt de gegevens van de materiaal op en schrijft ze weg naar de database
  * 
  * @author Projectgroep ETI2b3 2014-2015 kwartiel 1
  * @since 22 okt. 2014
  */
 
-public class VoorraadDao {
+public class MateriaalDao {
 	// Databasemanager met de connectie naar de database
 	private DatabaseManager manager;
 	
 	/**
 	 * Constructor voor het ophalen van de singleton instantie van de databasemanager
 	 */
-	public VoorraadDao() {
+	public MateriaalDao() {
 		manager = DatabaseManager.getInstance();
 	}
 	
@@ -32,33 +32,32 @@ public class VoorraadDao {
 	 * Constructor voor het meegegeven van de singleton instantie van de databasemanager
 	 * @param manager Singleton instantie van de databasemanager
 	 */
-	public VoorraadDao(DatabaseManager manager) {
+	public MateriaalDao(DatabaseManager manager) {
 		this.manager = manager;
 	}
 	
-	public ArrayList<Voorraad> getVoorraad() {
+	public ArrayList<Materiaal> getMateriaal() {
 		// Lijst met de resultaten van de query
-		ArrayList<Voorraad> voorraadLijst = new ArrayList<>();
+		ArrayList<Materiaal> materiaalLijst = new ArrayList<>();
 		
 		// De connectie met de database op
 		Connection connection = manager.getConnection();
 		
 		// De te execturen sql querys
 		try {
-			// Query die alle gegevens uit de tabel voorraad haalt
-			String voorraadQuery = "select * from voorraad";
-			PreparedStatement voorraadStatement = connection.prepareStatement(voorraadQuery);
-			ResultSet voorraadSet = voorraadStatement.executeQuery();
+			// Query die alle gegevens uit de tabel materiaal haalt
+			String materiaalQuery = "select * from materiaal";
+			PreparedStatement materiaalStatement = connection.prepareStatement(materiaalQuery);
+			ResultSet materiaalSet = materiaalStatement.executeQuery();
 			
 			// Zolang er nog gegevens in de tabel staan
-			while(voorraadSet.next()) {
+			while(materiaalSet.next()) {
 				// De gegevens van een rij
-				int materiaalnr = voorraadSet.getInt("materiaalnr");
-				String naam = voorraadSet.getString("naam");
-				double prijs = voorraadSet.getDouble("prijs");
-				int aantal = voorraadSet.getInt("aantal");
+				int materiaalnr = materiaalSet.getInt("materiaalnr");
+				String naam = materiaalSet.getString("naam");
+				double prijs = materiaalSet.getDouble("prijs");
 		
-				voorraadLijst.add(new Voorraad(materiaalnr, naam, prijs, aantal));
+				materiaalLijst.add(new Materiaal(materiaalnr, naam, prijs));
 			}
 		} catch (SQLException e) {
 			System.err.println("Kan het statement niet uitvoeren");
@@ -68,8 +67,8 @@ public class VoorraadDao {
 		// Sluit de verbinding met de database
 		manager.closeConnection();
 		
-		// Geeft de lijst met voorraad terug
-		return voorraadLijst;
+		// Geeft de lijst met materiaal terug
+		return materiaalLijst;
 	}
 }
 

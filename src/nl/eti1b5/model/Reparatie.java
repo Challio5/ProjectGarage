@@ -32,7 +32,7 @@ public class Reparatie {
 	private ObjectProperty<Date> eindTijd;
 	private BooleanProperty reparatieStatus;
 	private BooleanProperty betaalStatus;
-	private List<Voorraad> materialenLijst;
+	private List<Materiaal> materialenLijst;
 
 	/**
 	 * Default constructor voor het meegegeven van de default waarden aan attributen
@@ -54,7 +54,7 @@ public class Reparatie {
 	public Reparatie(int reparatieNummer, String kenteken, 
 			Omschrijving omschrijving, Date beginTijd, Date eindTijd,
 			boolean reparatieStatus, boolean betaalStatus,
-			ArrayList<Voorraad> materialenLijst) {
+			ArrayList<Materiaal> materialenLijst) {
 		this.reparatieNummer = new SimpleIntegerProperty(reparatieNummer);
 		this.kenteken = new SimpleStringProperty(kenteken);
 		this.omschrijving = new SimpleObjectProperty<>(omschrijving);
@@ -125,7 +125,7 @@ public class Reparatie {
 	 * Getter voor het opvragen van de lijst met materialen van de reparatie
 	 * @return De lijst met materialen van de reparatie
 	 */
-	public List<Voorraad> getMaterialenLijst() {
+	public List<Materiaal> getMaterialenLijst() {
 		return materialenLijst;
 	}
 	
@@ -189,7 +189,7 @@ public class Reparatie {
 	 * Setter voor het aanpassen van de lijst met materialen van de reparatie
 	 * @param materialenLijst De lijst met materialen van de reparatie
 	 */
-	public void setMaterialenLijst(ArrayList<Voorraad> materialenLijst) {
+	public void setMaterialenLijst(ArrayList<Materiaal> materialenLijst) {
 		this.materialenLijst = materialenLijst;
 	}
 	
@@ -256,7 +256,7 @@ public class Reparatie {
 	@Override
 	public String toString() {
 		String materialenString = "";
-		for(Voorraad materiaal : materialenLijst) materialenString += materiaal + ", ";
+		for(Materiaal materiaal : materialenLijst) materialenString += materiaal + ", ";
 		return "Reparatie [reparatieNummer=" + reparatieNummer.get() + ", kenteken="
 				+ kenteken.get() + ", omschrijving=" + omschrijving.get() + ", beginTijd="
 				+ beginTijd.get() + ", eindTijd=" + eindTijd.get() + ", reparatieStatus="

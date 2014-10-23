@@ -40,13 +40,13 @@ values
 ('2014-10-23 12:00:12', '2014-10-03 12:59:11', 101, 101),
 ('2014-10-26 12:00:12', '2014-10-03 12:59:11', 103, 102);
 
-insert into voorraad
-(naam, prijs, aantal)
+insert into materiaal
+(naam, prijs)
 values
-("Knalpijp", 100, 3),
-("Spruitstuk", 250, 5),
-("Motorolie", 10, 30),
-("Banden", 50, 25);
+("Knalpijp", 100),
+("Spruitstuk", 250),
+("Motorolie", 10),
+("Banden", 50);
 
 insert into omschrijving
 (naam, duur)
@@ -57,12 +57,17 @@ values
 ("Motor", '02:00:00'),
 ("Elektronica", '01:15:00');
 
-insert into reparatievoorraad
-(reparatienr, materiaalnr)
+insert into reparatiemateriaal
+(reparatienr, materiaalnr, aantalgebruikt)
 values
-(100, 1000),
-(100, 1002),
-(100, 1003);
+(100, 1000, 2),
+(100, 1002, 3),
+(100, 1003, 1);
+
+insert into voorraad
+ (materiaalnr, aantal)
+ values
+ (1000, 30);
 
 insert into monteurbeschikbaarheid
 (werknemernr, beschikbaarheid)
