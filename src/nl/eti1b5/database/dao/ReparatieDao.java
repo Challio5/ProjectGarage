@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import nl.eti1b5.database.DatabaseManager;
 import nl.eti1b5.model.Omschrijving;
 import nl.eti1b5.model.Reparatie;
-import nl.eti1b5.model.Voorraad;
+import nl.eti1b5.model.Materiaal;
 
 /**
  * Data access object wat de reparatie tabel beheert in de database
@@ -65,39 +65,23 @@ public class ReparatieDao {
 				boolean betaalstatus = reparatieSet.getBoolean("Betaalstatus");
 	
 				// Query die alle materiaalnummer uit de koppeltabel haalt
-				String materiaalNummersQuery = "select Materiaalnr from ReparatieVoorraad"
-						+ " where Reparatienr = ?";
+				String materiaalNummersQuery = "select * from ReparatieMateriaal "
+						+ "inner join materiaal "
+						+ "on reparatieMateriaal.Materiaalnr = Materiaal.materiaalnr "
+						+ "where Reparatienr = ?";
 				PreparedStatement materiaalNummersStatement = connection.prepareStatement(materiaalNummersQuery);
 				
 				materiaalNummersStatement.setInt(1, reparatieNummer);
 				ResultSet materiaalNummerSet = materiaalNummersStatement.executeQuery();
 				
-				// Slaat de materiaalnummers van een reparatie op in een lijst
-				ArrayList<Integer> materiaalNummersLijst = new ArrayList<>();
-				while(materiaalNummerSet.next()) {
+				ArrayList<Materiaal> materialenLijst = new ArrayList<>();
+				while(materiaalNummerSet.next()){
 					int materiaalNummer = materiaalNummerSet.getInt("Materiaalnr");
-					materiaalNummersLijst.add(materiaalNummer);
-				}
-				
-				// Query die aan het de hand van het materiaalnummer materialen uit de tabel haalt
-				ArrayList<Voorraad> materialenLijst = new ArrayList<>();
-				for(int materiaalnummer : materiaalNummersLijst) {
-					String materialenQuery = "select * from Voorraad"
-							+ " where Materiaalnr = ?";
-					PreparedStatement materialenStatement = connection.prepareStatement(materialenQuery);
+					int aantalgebruikt = materiaalNummerSet.getInt("Aantalgebruikt");
+					String naam = materiaalNummerSet.getString("Naam");
+					double prijs = materiaalNummerSet.getDouble("Prijs");
 					
-					materialenStatement.setInt(1, materiaalnummer);
-					ResultSet materialenSet = materialenStatement.executeQuery();
-					
-					// Een materiaal wordt toegevoegd aan de lijst
-					while(materialenSet.next()) {
-						int materiaalNummer = materialenSet.getInt("Materiaalnr");
-						String naam = materialenSet.getString("Naam");
-						double prijs = materialenSet.getDouble("Prijs");
-						int aantal = materialenSet.getInt("Aantal");
-						
-						materialenLijst.add(new Voorraad(materiaalNummer, naam, prijs, aantal));
-					}
+					materialenLijst.add(new Materiaal(materiaalNummer, naam, prijs, aantalgebruikt));
 				}
 				
 				reparatieLijst.add(new Reparatie(reparatieNummer, kenteken, new Omschrijving(omschrijving, 0.0), begintijd, eindtijd, reparatiestatus, betaalstatus, materialenLijst));
@@ -124,7 +108,10 @@ public class ReparatieDao {
 		// De te execturen sql querys
 		try {
 			// Query die alle gegevens uit de tabel reparatie haalt
-			String reparatieQuery = "Select * from reparatie Inner Join planning on reparatie.reparatieNr = planning.reparatieNr where werknemernr = "+ werknemerNummer;
+			String reparatieQuery = "Select * from reparatie "
+					+ "Inner Join planning "
+					+ "on reparatie.reparatieNr = planning.reparatieNr "
+					+ "where werknemernr = "+ werknemerNummer;
 			PreparedStatement reparatieStatement = connection.prepareStatement(reparatieQuery);
 			ResultSet reparatieSet = reparatieStatement.executeQuery();
 			
@@ -140,41 +127,24 @@ public class ReparatieDao {
 				boolean betaalstatus = reparatieSet.getBoolean("Betaalstatus");
 	
 				// Query die alle materiaalnummer uit de koppeltabel haalt
-				String materiaalNummersQuery = "select Materiaalnr from ReparatieVoorraad"
-						+ " where Reparatienr = ?";
+				String materiaalNummersQuery = "select * from ReparatieMateriaal "
+						+ "inner join materiaal "
+						+ "on reparatieMateriaal.Materiaalnr = Materiaal.materiaalnr "
+						+ "where Reparatienr = ?";
 				PreparedStatement materiaalNummersStatement = connection.prepareStatement(materiaalNummersQuery);
 				
 				materiaalNummersStatement.setInt(1, reparatieNummer);
 				ResultSet materiaalNummerSet = materiaalNummersStatement.executeQuery();
 				
-				// Slaat de materiaalnummers van een reparatie op in een lijst
-				ArrayList<Integer> materiaalNummersLijst = new ArrayList<>();
-				while(materiaalNummerSet.next()) {
+				ArrayList<Materiaal> materialenLijst = new ArrayList<>();
+				while(materiaalNummerSet.next()){
 					int materiaalNummer = materiaalNummerSet.getInt("Materiaalnr");
-					materiaalNummersLijst.add(materiaalNummer);
-				}
-				
-				// Query die aan het de hand van het materiaalnummer materialen uit de tabel haalt
-				ArrayList<Voorraad> materialenLijst = new ArrayList<>();
-				for(int materiaalnummer : materiaalNummersLijst) {
-					String materialenQuery = "select * from Voorraad"
-							+ " where Materiaalnr = ?";
-					PreparedStatement materialenStatement = connection.prepareStatement(materialenQuery);
+					int aantalgebruikt = materiaalNummerSet.getInt("Aantalgebruikt");
+					String naam = materiaalNummerSet.getString("Naam");
+					double prijs = materiaalNummerSet.getDouble("Prijs");
 					
-					materialenStatement.setInt(1, materiaalnummer);
-					ResultSet materialenSet = materialenStatement.executeQuery();
-					
-					// Een materiaal wordt toegevoegd aan de lijst
-					while(materialenSet.next()) {
-						int materiaalNummer = materialenSet.getInt("Materiaalnr");
-						String naam = materialenSet.getString("Naam");
-						double prijs = materialenSet.getDouble("Prijs");
-						int aantal = materialenSet.getInt("Aantal");
-						
-						materialenLijst.add(new Voorraad(materiaalNummer, naam, prijs, aantal));
-					}
-				}
-				
+					materialenLijst.add(new Materiaal(materiaalNummer, naam, prijs, aantalgebruikt));
+				}				
 				reparatieLijst.add(new Reparatie(reparatieNummer, kenteken, new Omschrijving(omschrijving, 0.0), begintijd, eindtijd, reparatiestatus, betaalstatus, materialenLijst));
 			}
 		} catch (SQLException e) {
@@ -215,7 +185,25 @@ public class ReparatieDao {
 				boolean reparatiestatus = reparatieSet.getBoolean("Reparatiestatus");
 				boolean betaalstatus = reparatieSet.getBoolean("Betaalstatus");
 				
-				ArrayList<Voorraad> materialenLijst = new ArrayList<>();
+				// Query die alle materiaalnummer uit de koppeltabel haalt
+				String materiaalNummersQuery = "select * from ReparatieMateriaal "
+						+ "inner join materiaal "
+						+ "on reparatieMateriaal.Materiaalnr = Materiaal.materiaalnr "
+						+ "where Reparatienr = ?";
+				PreparedStatement materiaalNummersStatement = connection.prepareStatement(materiaalNummersQuery);
+				
+				materiaalNummersStatement.setInt(1, reparatieNummer);
+				ResultSet materiaalNummerSet = materiaalNummersStatement.executeQuery();
+				
+				ArrayList<Materiaal> materialenLijst = new ArrayList<>();
+				while(materiaalNummerSet.next()){
+					int materiaalNummer = materiaalNummerSet.getInt("Materiaalnr");
+					int aantalgebruikt = materiaalNummerSet.getInt("Aantalgebruikt");
+					String naam = materiaalNummerSet.getString("Naam");
+					double prijs = materiaalNummerSet.getDouble("Prijs");
+					
+					materialenLijst.add(new Materiaal(materiaalNummer, naam, prijs, aantalgebruikt));
+				}					
 				
 				reparatie = new Reparatie(reparatieNummer, kenteken, new Omschrijving(omschrijving, 0.0), begintijd, eindtijd, reparatiestatus, betaalstatus, materialenLijst);
 			}
@@ -224,5 +212,125 @@ public class ReparatieDao {
 			e.printStackTrace();
 		}
 		return reparatie;
+	}
+	
+	public ArrayList<Reparatie> getToDoReparaties() {
+		// Lijst met de resultaten van de query
+		ArrayList<Reparatie> reparatieLijst = new ArrayList<>();
+		
+		// De connectie met de database op
+		Connection connection = manager.getConnection();
+		
+		// De te execturen sql querys
+		try {
+			// Query die alle gegevens uit de tabel reparatie haalt
+			String reparatieQuery = "select * from reparatie where reparatiestatus = false";
+			PreparedStatement reparatieStatement = connection.prepareStatement(reparatieQuery);
+			ResultSet reparatieSet = reparatieStatement.executeQuery();
+			
+			// Zolang er nog gegevens in de tabel staan
+			while(reparatieSet.next()) {
+				// De gegevens van een rij
+				int reparatieNummer = reparatieSet.getInt("Reparatienr");
+				String kenteken = reparatieSet.getString("Kenteken");
+				String omschrijving = reparatieSet.getString("Omschrijving"); 
+				Date begintijd = reparatieSet.getDate("Begintijd");
+				Date eindtijd = reparatieSet.getDate("EindTijd");
+				boolean reparatiestatus = reparatieSet.getBoolean("Reparatiestatus");
+				boolean betaalstatus = reparatieSet.getBoolean("Betaalstatus");
+	
+				// Query die alle materiaalnummer uit de koppeltabel haalt
+				String materiaalNummersQuery = "select * from ReparatieMateriaal "
+						+ "inner join materiaal "
+						+ "on reparatieMateriaal.Materiaalnr = Materiaal.materiaalnr "
+						+ "where Reparatienr = ?";
+				PreparedStatement materiaalNummersStatement = connection.prepareStatement(materiaalNummersQuery);
+				
+				materiaalNummersStatement.setInt(1, reparatieNummer);
+				ResultSet materiaalNummerSet = materiaalNummersStatement.executeQuery();
+				
+				ArrayList<Materiaal> materialenLijst = new ArrayList<>();
+				while(materiaalNummerSet.next()){
+					int materiaalNummer = materiaalNummerSet.getInt("Materiaalnr");
+					int aantalgebruikt = materiaalNummerSet.getInt("Aantalgebruikt");
+					String naam = materiaalNummerSet.getString("Naam");
+					double prijs = materiaalNummerSet.getDouble("Prijs");
+					
+					materialenLijst.add(new Materiaal(materiaalNummer, naam, prijs, aantalgebruikt));
+				}
+				
+				reparatieLijst.add(new Reparatie(reparatieNummer, kenteken, new Omschrijving(omschrijving, 0.0), begintijd, eindtijd, reparatiestatus, betaalstatus, materialenLijst));
+			}
+		} catch (SQLException e) {
+			System.err.println("Kan het statement niet uitvoeren");
+			e.printStackTrace();
+		}
+		
+		// Sluit de verbinding met de database
+		manager.closeConnection();
+		
+		// Geeft de lijst met reparaties terug
+		return reparatieLijst;
+		}
+	
+	public ArrayList<Reparatie> eigenToDoReparaties(int werknemerNummer) {
+		// Lijst met de resultaten van de query
+		ArrayList<Reparatie> reparatieLijst = new ArrayList<>();
+		
+		// De connectie met de database op
+		Connection connection = manager.getConnection();
+		
+		// De te execturen sql querys
+		try {
+			// Query die alle gegevens uit de tabel reparatie haalt
+			String reparatieQuery = "Select * from reparatie "
+					+ "Inner Join planning "
+					+ "on reparatie.reparatieNr = planning.reparatieNr "
+					+ "where werknemernr = "+ werknemerNummer;
+			PreparedStatement reparatieStatement = connection.prepareStatement(reparatieQuery);
+			ResultSet reparatieSet = reparatieStatement.executeQuery();
+			
+			// Zolang er nog gegevens in de tabel staan
+			while(reparatieSet.next()) {
+				// De gegevens van een rij
+				int reparatieNummer = reparatieSet.getInt("Reparatienr");
+				String kenteken = reparatieSet.getString("Kenteken");
+				String omschrijving = reparatieSet.getString("Omschrijving"); 
+				Date begintijd = reparatieSet.getDate("Begintijd");
+				Date eindtijd = reparatieSet.getDate("EindTijd");
+				boolean reparatiestatus = reparatieSet.getBoolean("Reparatiestatus");
+				boolean betaalstatus = reparatieSet.getBoolean("Betaalstatus");
+	
+				// Query die alle materiaalnummer uit de koppeltabel haalt
+				String materiaalNummersQuery = "select * from ReparatieMateriaal "
+						+ "inner join materiaal "
+						+ "on reparatieMateriaal.Materiaalnr = Materiaal.materiaalnr "
+						+ "where Reparatienr = ?";
+				PreparedStatement materiaalNummersStatement = connection.prepareStatement(materiaalNummersQuery);
+				
+				materiaalNummersStatement.setInt(1, reparatieNummer);
+				ResultSet materiaalNummerSet = materiaalNummersStatement.executeQuery();
+				
+				ArrayList<Materiaal> materialenLijst = new ArrayList<>();
+				while(materiaalNummerSet.next()){
+					int materiaalNummer = materiaalNummerSet.getInt("Materiaalnr");
+					int aantalgebruikt = materiaalNummerSet.getInt("Aantalgebruikt");
+					String naam = materiaalNummerSet.getString("Naam");
+					double prijs = materiaalNummerSet.getDouble("Prijs");
+					
+					materialenLijst.add(new Materiaal(materiaalNummer, naam, prijs, aantalgebruikt));
+				}				
+				reparatieLijst.add(new Reparatie(reparatieNummer, kenteken, new Omschrijving(omschrijving, 0.0), begintijd, eindtijd, reparatiestatus, betaalstatus, materialenLijst));
+			}
+		} catch (SQLException e) {
+			System.err.println("Kan het statement niet uitvoeren");
+			e.printStackTrace();
+		}
+		
+		// Sluit de verbinding met de database
+		manager.closeConnection();
+		
+		// Geeft de lijst met reparaties terug
+		return reparatieLijst;
 	}
 }

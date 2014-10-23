@@ -6,12 +6,12 @@ import nl.eti1b5.database.dao.AutoDao;
 import nl.eti1b5.database.dao.MonteurDao;
 import nl.eti1b5.database.dao.PlanningDao;
 import nl.eti1b5.database.dao.ReparatieDao;
-import nl.eti1b5.database.dao.VoorraadDao;
+import nl.eti1b5.database.dao.MateriaalDao;
 import nl.eti1b5.model.Auto;
 import nl.eti1b5.model.Monteur;
 import nl.eti1b5.model.Planning;
 import nl.eti1b5.model.Reparatie;
-import nl.eti1b5.model.Voorraad;
+import nl.eti1b5.model.Materiaal;
 import nl.eti1b5.view.MainLoader;
 import nl.eti1b5.view.preloader.InlogPreloader;
 
@@ -46,10 +46,10 @@ public class Garage {
 			System.out.println(auto);
 		}
 		
-		VoorraadDao voorraadDao = new VoorraadDao();
-		ArrayList<Voorraad> voorraadLijst = voorraadDao.getVoorraad();
-		for(Voorraad voorraad : voorraadLijst) {
-			System.out.println(voorraad);
+		MateriaalDao materiaalDao = new MateriaalDao();
+		ArrayList<Materiaal> materiaalLijst = materiaalDao.getMateriaal();
+		for(Materiaal materiaal : materiaalLijst) {
+			System.out.println(materiaal);
 		}
 		
 		MonteurDao monteurDao = new MonteurDao();

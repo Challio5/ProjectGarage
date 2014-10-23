@@ -3,7 +3,7 @@ package nl.eti1b5.view.monteur.reparatiescherm;
 import java.util.ArrayList;
 
 import nl.eti1b5.model.Reparatie;
-import nl.eti1b5.model.Voorraad;
+import nl.eti1b5.model.Materiaal;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -20,11 +20,11 @@ public class ReparatiePopup extends BorderPane{
 	
 	private VBox labels;
 	private VBox textFields;
-	private TableView<Voorraad> materialen;
-	private TableColumn<Voorraad, String> materiaalNaam;
-	private TableColumn<Voorraad, String> aantal;
+	private TableView<Materiaal> materialen;
+	private TableColumn<Materiaal, String> materiaalNaam;
+	private TableColumn<Materiaal, String> aantal;
 	
-	public ReparatiePopup(String r, String k, String o, ObservableList<Voorraad> lijst){
+	public ReparatiePopup(String r, String k, String o, ObservableList<Materiaal> lijst){
 		labels = new VBox();
 		labels.setPadding(new Insets(4));
 		labels.setSpacing(8);
@@ -53,10 +53,10 @@ public class ReparatiePopup extends BorderPane{
 		
 		textFields.getChildren().addAll(repNr, kenteken, omschrijving, beginTijd, eindTijd, reparatieStatus);
 		
-		materialen = new TableView<Voorraad>();
+		materialen = new TableView<Materiaal>();
 		materialen.setEditable(true);
-		materiaalNaam = new TableColumn<Voorraad, String>("Materiaal");
-		materiaalNaam.setCellValueFactory(new PropertyValueFactory<Voorraad,String>("naam"));
+		materiaalNaam = new TableColumn<Materiaal, String>("Materiaal");
+		materiaalNaam.setCellValueFactory(new PropertyValueFactory<Materiaal,String>("naam"));
 		materiaalNaam.setMinWidth(150);
 		
 		aantal = new TableColumn("Aantal");

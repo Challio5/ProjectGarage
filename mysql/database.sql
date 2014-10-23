@@ -69,26 +69,33 @@ CREATE TABLE IF NOT EXISTS Planning(
 );
 
 /* Tabel voor de gegevens van de materialen */
-CREATE TABLE IF NOT EXISTS Voorraad(
+CREATE TABLE IF NOT EXISTS Materiaal(
 	Materiaalnr int not null auto_increment, 
 	Naam varchar(30), 
-	Prijs double not null, 
-	Aantal int not null default 0, 
+	Prijs double not null,
 	PRIMARY KEY (Materiaalnr)
 );
 
-ALTER TABLE Voorraad auto_increment = 1000;
+ALTER TABLE Materiaal auto_increment = 1000;
+
+CREATE TABLE IF NOT EXISTS Voorraad(
+	Materiaalnr int,
+    Aantal int,
+    PRIMARY KEY(Materiaalnr),
+    FOREIGN KEY(Materiaalnr) references Materiaal(Materiaalnr)
+    );
 
 /* 
  * Koppelt meerdere materialen aan een reparatie 
  * Koppelt meerdere reparaties aan een materiaal
  */
-CREATE TABLE IF NOT EXISTS ReparatieVoorraad(
+CREATE TABLE IF NOT EXISTS ReparatieMateriaal(
 	Reparatienr int not null,
 	Materiaalnr int not null, 
+    Aantalgebruikt int,
 	PRIMARY KEY (Reparatienr, Materiaalnr), 
 	FOREIGN KEY (Reparatienr) REFERENCES Reparatie(Reparatienr), 
-	FOREIGN KEY (Materiaalnr) REFERENCES Voorraad(Materiaalnr)
+	FOREIGN KEY (Materiaalnr) REFERENCES Materiaal(Materiaalnr)
 );
 
 /* 
