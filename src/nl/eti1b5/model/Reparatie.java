@@ -178,6 +178,14 @@ public class Reparatie {
 	}
 	
 	/**
+	 * Setter voor de reparatieStatuas van de reparatie
+	 * @param reparatieStatus de nieuwe reparatieStatus
+	 */
+	public void setReparatieStatus(boolean reparatieStatus){
+		this.reparatieStatus.set(reparatieStatus);
+	}
+	
+	/**
 	 * Property die de reparatienummergegevens bevat
 	 * @return Property met de reparatienummergegevens
 	 */

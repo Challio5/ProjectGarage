@@ -1,16 +1,12 @@
 package nl.eti1b5.controller;
 
-import java.util.ArrayList;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import nl.eti1b5.database.dao.MonteurDao;
 import nl.eti1b5.database.dao.ReparatieDao;
@@ -30,6 +26,7 @@ public class MonteurViewControl implements ChangeListener<Boolean>, EventHandler
 	ReparatieDao reparatieDao;
 	MonteurDao monteurDao;
 	Boolean eigenReparaties;
+	MonteurPopupControl popup;
 	
 	public MonteurViewControl(MonteurScherm monteurScherm, MainLoader app){
 		this.monteurScherm = monteurScherm;
@@ -62,24 +59,10 @@ public class MonteurViewControl implements ChangeListener<Boolean>, EventHandler
 	@Override
 	public void handle(MouseEvent arg0) {
 		if(arg0.getClickCount() == 2){
-			MateriaalDao materiaalDao = new MateriaalDao();
-			String nummer = Integer.toString(reparatieNode.getSelectionModel().getSelectedItem().getReparatieNummer());
-			String kenteken = reparatieNode.getSelectionModel().getSelectedItem().getKenteken();
-			String omschrijving = reparatieNode.getSelectionModel().getSelectedItem().getOmschrijving().getNaam();
-			ObservableList<Materiaal> oListVoorraad= FXCollections.observableArrayList(materiaalDao.getMateriaal());
-			showReparatiePopup(nummer, kenteken, omschrijving, oListVoorraad);
+			popup = new MonteurPopupControl(reparatieNode.getSelectionModel().getSelectedItem(), this);
+			popup.showReparatiePopup();
 		}
-	}	
-	
-	public static void showReparatiePopup(String r, String k, String o, ObservableList<Materiaal> lijst){
-		Stage newStage = new Stage();
-		newStage.setTitle("Reparatie: " + r);
-		Scene stageScene = new Scene(new ReparatiePopup(r, k, o, lijst));
-		newStage.setScene(stageScene);
-		newStage.show();
-	}
-	
-	
+	}		
 }
 	
 

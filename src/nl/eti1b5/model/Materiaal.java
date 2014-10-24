@@ -54,6 +54,7 @@ public class Materiaal {
 		this.naam = new SimpleStringProperty(naam);
 		this.materiaalnr = new SimpleIntegerProperty(materiaalnr);
 		this.prijs = new SimpleDoubleProperty(prijs);
+		this.aantalgebruikt = new SimpleIntegerProperty(0);
 	}
 
 	/**
