@@ -1,11 +1,11 @@
 package nl.eti1b5.view.monteur.reparatiescherm;
 
-import nl.eti1b5.view.MenuNode;
 import javafx.beans.value.ChangeListener;
 import javafx.event.EventHandler;
 import javafx.scene.control.CheckBox;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import nl.eti1b5.view.MenuNode;
 
 public class MonteurScherm extends BorderPane{
 	

@@ -23,7 +23,7 @@ values
 ("Henk", "Hoofdstraat 1", "7468CZ", "Enter", "06-12345678", "Henk123", "Banden"),
 ("Sjaak", "Dorpstraat 1", "7423HJ", "Rijssen","06-87654321", "Sjaak45", "Carroserie"),
 ("Jan", "Stationsstraat 1", "7323IK", "Rotterdam", "06-18273645", "JanJan", "Motor"),
-("Tom", "Enterweg 10", "3453JI", "Bornebroek", "06-12387645", "Tom94", "Motor"),
+("Tom", "Enterweg 10", "3453JI", "Bornebroek", "06-12387645", "Tom94", "Grote Beurt"),
 ("Rob", "Rijssenseweg 11", "2393JI", "Nijverdal", "06-09128365", "Moyboy88", "Carroserie");
 
 insert into reparatie
@@ -47,6 +47,16 @@ values
 ("Spruitstuk", 250),
 ("Motorolie", 10),
 ("Banden", 50);
+
+insert into omschrijving
+(naam, duur)
+values
+("Banden", '00:30:00'),
+("Kleine beurt", '01:00:00'),
+("Grote beurt", '01:30:00'),
+("Carrosserie", '00:45:00'),
+("Motor", '02:00:00'),
+("Elektronica", '01:15:00');
 
 insert into reparatiemateriaal
 (reparatienr, materiaalnr, aantalgebruikt)

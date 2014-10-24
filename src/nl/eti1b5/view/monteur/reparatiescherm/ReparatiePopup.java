@@ -1,5 +1,6 @@
 package nl.eti1b5.view.monteur.reparatiescherm;
 
+<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,8 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+=======
+>>>>>>> origin/master
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -29,8 +32,12 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+<<<<<<< HEAD
 import javafx.util.Callback;
 import javafx.beans.property.SimpleIntegerProperty;
+=======
+import nl.eti1b5.model.Materiaal;
+>>>>>>> origin/master
 
 public class ReparatiePopup extends BorderPane{
 	
