@@ -169,13 +169,6 @@ public class Reparatie {
 		this.eindTijd.set(eindTijd);
 	}
 	
-	/**
-	 * Setter voor het aanpassen van de reparatiestatus van de reparatie
-	 * @param eindTijd De reparatiestatus van de reparatie
-	 */
-	public void setReparatieStatus(boolean reparatieStatus) {
-		this.reparatieStatus.set(reparatieStatus);
-	}
 	
 	/**
 	 * Setter voor het aanpassen van de betaalstatus van de reparatie
