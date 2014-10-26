@@ -50,4 +50,25 @@ public class OmschrijvingDao {
 		
 		return omschrijvingenLijst;
 	}
+	
+	public void addOmschrijving(Omschrijving omschrijving) {
+		// De connectie met de database
+		Connection connection = manager.getConnection();
+		
+		try {
+			String omschrijvingString = "insert into omschrijving "
+					+ "(naam, duur) "
+					+ "values "
+					+ "(?, ?)";
+			PreparedStatement omschrijvingStatement = connection.prepareStatement(omschrijvingString);
+			omschrijvingStatement.setString(1, omschrijving.getNaam());
+			omschrijvingStatement.setTime(2, omschrijving.getDuur());
+			omschrijvingStatement.execute();		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		// Sluit de verbinding met de database
+		manager.closeConnection();
+	}
 }
