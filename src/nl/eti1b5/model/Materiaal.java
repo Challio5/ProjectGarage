@@ -162,4 +162,8 @@ public class Materiaal {
 		return "Voorraad [materiaalnr=" + materiaalnr.get() + ", naam=" + naam.get()
 				+ ", prijs=" + prijs.get()+ "]";
 	}
+
+	public void convertAantal(String newValue) {
+		aantalgebruikt.setValue(Integer.parseInt(newValue));
+	}
 }

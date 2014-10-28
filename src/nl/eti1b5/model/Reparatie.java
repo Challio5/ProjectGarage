@@ -1,6 +1,6 @@
 package nl.eti1b5.model;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,8 +28,8 @@ public class Reparatie {
 	private IntegerProperty reparatieNummer;
 	private StringProperty kenteken;
 	private ObjectProperty<Omschrijving> omschrijving;
-	private ObjectProperty<Date> beginTijd;
-	private ObjectProperty<Date> eindTijd;
+	private ObjectProperty<Timestamp> beginTijd;
+	private ObjectProperty<Timestamp> eindTijd;
 	private BooleanProperty reparatieStatus;
 	private BooleanProperty betaalStatus;
 	private List<Materiaal> materialenLijst;
@@ -52,7 +52,7 @@ public class Reparatie {
 	 * @param materialenLijst De lijst met gebruikte materialen van de reparatie
 	 */
 	public Reparatie(int reparatieNummer, String kenteken, 
-			Omschrijving omschrijving, Date beginTijd, Date eindTijd,
+			Omschrijving omschrijving, Timestamp beginTijd, Timestamp eindTijd,
 			boolean reparatieStatus, boolean betaalStatus,
 			ArrayList<Materiaal> materialenLijst) {
 		this.reparatieNummer = new SimpleIntegerProperty(reparatieNummer);
@@ -93,7 +93,7 @@ public class Reparatie {
 	 * Getter voor het opvragen van de begintijd van de reparatie
 	 * @return De begintijd van de reparatie
 	 */
-	public Date getBeginTijd() {
+	public Timestamp getBeginTijd() {
 		return beginTijd.get();
 	}
 	
@@ -101,7 +101,7 @@ public class Reparatie {
 	 * Getter voor het opvragen van de eindtijd van de reparatie
 	 * @return De eindtijd van de reparatie
 	 */
-	public Date getEindTijd() {
+	public Timestamp getEindTijd() {
 		return eindTijd.get();
 	}
 	
@@ -157,7 +157,7 @@ public class Reparatie {
 	 * Setter voor het aanpassen van de begintijd van de reparatie
 	 * @param begintTijd De begintijd van de reparatie
 	 */
-	public void setBeginTijd(Date begintTijd) {
+	public void setBeginTijd(Timestamp begintTijd) {
 		this.beginTijd.set(begintTijd);
 	}
 	
@@ -165,7 +165,7 @@ public class Reparatie {
 	 * Setter voor het aanpassen van de eindtijd van de reparatie
 	 * @param eindTijd De eindtijd van de reparatie
 	 */
-	public void setEindTijd(Date eindTijd) {
+	public void setEindTijd(Timestamp eindTijd) {
 		this.eindTijd.set(eindTijd);
 	}
 	
@@ -222,7 +222,7 @@ public class Reparatie {
 	 * Property die de begintijdgegevens bevat
 	 * @return Property met de begintijdgegevens
 	 */
-	public ObjectProperty<Date> beginTijdProperty() {
+	public ObjectProperty<Timestamp> beginTijdProperty() {
 		return this.beginTijd;
 	}
 	
@@ -230,7 +230,7 @@ public class Reparatie {
 	 * Property die de eindtijdgegevens bevat
 	 * @return Property met de eindtijdgegevens
 	 */
-	public ObjectProperty<Date> eindTijdProperty() {
+	public ObjectProperty<Timestamp> eindTijdProperty() {
 		return this.eindTijd;
 	}
 	

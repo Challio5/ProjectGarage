@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
@@ -61,8 +62,8 @@ public class ReparatieDao {
 				int reparatieNummer = reparatieSet.getInt("Reparatienr");
 				String kenteken = reparatieSet.getString("Kenteken");
 				String omschrijving = reparatieSet.getString("Omschrijving"); 
-				Date begintijd = reparatieSet.getDate("Begintijd");
-				Date eindtijd = reparatieSet.getDate("EindTijd");
+				Timestamp begintijd = reparatieSet.getTimestamp("Begintijd");
+				Timestamp eindtijd = reparatieSet.getTimestamp("EindTijd");
 				boolean reparatiestatus = reparatieSet.getBoolean("Reparatiestatus");
 				boolean betaalstatus = reparatieSet.getBoolean("Betaalstatus");
 	
@@ -123,8 +124,8 @@ public class ReparatieDao {
 				int reparatieNummer = reparatieSet.getInt("Reparatienr");
 				String kenteken = reparatieSet.getString("Kenteken");
 				String omschrijving = reparatieSet.getString("Omschrijving"); 
-				Date begintijd = reparatieSet.getDate("Begintijd");
-				Date eindtijd = reparatieSet.getDate("EindTijd");
+				Timestamp begintijd = reparatieSet.getTimestamp("Begintijd");
+				Timestamp eindtijd = reparatieSet.getTimestamp("EindTijd");
 				boolean reparatiestatus = reparatieSet.getBoolean("Reparatiestatus");
 				boolean betaalstatus = reparatieSet.getBoolean("Betaalstatus");
 	
@@ -183,8 +184,8 @@ public class ReparatieDao {
 				int reparatieNummer = reparatieSet.getInt("Reparatienr");
 				String kenteken = reparatieSet.getString("Kenteken");
 				String omschrijving = reparatieSet.getString("Omschrijving"); 
-				Date begintijd = reparatieSet.getDate("Begintijd");
-				Date eindtijd = reparatieSet.getDate("EindTijd");
+				Timestamp begintijd = reparatieSet.getTimestamp("Begintijd");
+				Timestamp eindtijd = reparatieSet.getTimestamp("EindTijd");
 				boolean reparatiestatus = reparatieSet.getBoolean("Reparatiestatus");
 				boolean betaalstatus = reparatieSet.getBoolean("Betaalstatus");
 				
@@ -270,8 +271,8 @@ public class ReparatieDao {
 				int reparatieNummer = reparatieSet.getInt("Reparatienr");
 				String kenteken = reparatieSet.getString("Kenteken");
 				String omschrijving = reparatieSet.getString("Omschrijving"); 
-				Date begintijd = reparatieSet.getDate("Begintijd");
-				Date eindtijd = reparatieSet.getDate("EindTijd");
+				Timestamp begintijd = reparatieSet.getTimestamp("Begintijd");
+				Timestamp eindtijd = reparatieSet.getTimestamp("EindTijd");
 				boolean reparatiestatus = reparatieSet.getBoolean("Reparatiestatus");
 				boolean betaalstatus = reparatieSet.getBoolean("Betaalstatus");
 	
@@ -333,8 +334,8 @@ public class ReparatieDao {
 				int reparatieNummer = reparatieSet.getInt("Reparatienr");
 				String kenteken = reparatieSet.getString("Kenteken");
 				String omschrijving = reparatieSet.getString("Omschrijving"); 
-				Date begintijd = reparatieSet.getDate("Begintijd");
-				Date eindtijd = reparatieSet.getDate("EindTijd");
+				Timestamp begintijd = reparatieSet.getTimestamp("Begintijd");
+				Timestamp eindtijd = reparatieSet.getTimestamp("EindTijd");
 				boolean reparatiestatus = reparatieSet.getBoolean("Reparatiestatus");
 				boolean betaalstatus = reparatieSet.getBoolean("Betaalstatus");
 	
@@ -378,47 +379,16 @@ public class ReparatieDao {
 		// De te execturen sql querys
 		try {
 			// Query die alle gegevens uit de tabel reparatie haalt
-			String reparatieUpdate = "UPDATE reparatie SET reparatieStatus = ? WHERE kenteken = ?";
+			String reparatieUpdate = "UPDATE reparatie SET reparatieStatus = ?, beginTijd = ?, eindTijd = ? WHERE kenteken = ?";
 			PreparedStatement reparatieStatement = connection.prepareStatement(reparatieUpdate);
 			reparatieStatement.setBoolean(1, reparatie.getReparatieStatus());
-			reparatieStatement.setString(2, reparatie.getKenteken());
+			reparatieStatement.setTimestamp(2, reparatie.getBeginTijd());
+			reparatieStatement.setTimestamp(3, reparatie.getEindTijd());
+			reparatieStatement.setString(4, reparatie.getKenteken());
+			
 			reparatieStatement.executeUpdate();
 			System.out.println(reparatie.getKenteken());
 			
-			/*
-			// Zolang er nog gegevens in de tabel staan
-			while(reparatieSet.next()) {
-				// De gegevens van een rij
-				int reparatieNummer = reparatieSet.getInt("Reparatienr");
-				String kenteken = reparatieSet.getString("Kenteken");
-				String omschrijving = reparatieSet.getString("Omschrijving"); 
-				Date begintijd = reparatieSet.getDate("Begintijd");
-				Date eindtijd = reparatieSet.getDate("EindTijd");
-				boolean reparatiestatus = reparatieSet.getBoolean("Reparatiestatus");
-				boolean betaalstatus = reparatieSet.getBoolean("Betaalstatus");
-	
-				// Query die alle materiaalnummer uit de koppeltabel haalt
-				String materiaalNummersQuery = "select * from ReparatieMateriaal "
-						+ "inner join materiaal "
-						+ "on reparatieMateriaal.Materiaalnr = Materiaal.materiaalnr "
-						+ "where Reparatienr = ?";
-				PreparedStatement materiaalNummersStatement = connection.prepareStatement(materiaalNummersQuery);
-				
-				materiaalNummersStatement.setInt(1, reparatieNummer);
-				ResultSet materiaalNummerSet = materiaalNummersStatement.executeQuery();
-				
-				ArrayList<Materiaal> materialenLijst = new ArrayList<>();
-				while(materiaalNummerSet.next()){
-					int materiaalNummer = materiaalNummerSet.getInt("Materiaalnr");
-					int aantalgebruikt = materiaalNummerSet.getInt("Aantalgebruikt");
-					String naam = materiaalNummerSet.getString("Naam");
-					double prijs = materiaalNummerSet.getDouble("Prijs");
-					
-					materialenLijst.add(new Materiaal(materiaalNummer, naam, prijs, aantalgebruikt));
-				}				
-				reparatieLijst.add(new Reparatie(reparatieNummer, kenteken, new Omschrijving(omschrijving, 0.0), begintijd, eindtijd, reparatiestatus, betaalstatus, materialenLijst));
-			}
-			*/
 		} catch (SQLException e) {
 			System.err.println("Kan het statement niet uitvoeren");
 			e.printStackTrace();

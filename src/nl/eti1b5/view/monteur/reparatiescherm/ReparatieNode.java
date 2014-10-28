@@ -3,6 +3,7 @@ package nl.eti1b5.view.monteur.reparatiescherm;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import nl.eti1b5.model.Omschrijving;
 import nl.eti1b5.model.Reparatie;
 
 
@@ -10,7 +11,7 @@ public class ReparatieNode extends TableView<Reparatie>{
 	
 	private TableColumn<Reparatie, Integer> reparatieNummer;
 	private TableColumn<Reparatie, String> kenteken;
-	private TableColumn<Reparatie, String> omschrijving;
+	private TableColumn<Reparatie, Omschrijving> omschrijving;
 	private TableColumn<Reparatie, Boolean> reparatieStatus;
 	
 	public ReparatieNode(){
@@ -23,8 +24,8 @@ public class ReparatieNode extends TableView<Reparatie>{
 		kenteken.setMinWidth(150);
 		
 		
-		omschrijving = new TableColumn<Reparatie, String>("Omschrijving:");
-		omschrijving.setCellValueFactory(new PropertyValueFactory<Reparatie,String>("omschrijving"));
+		omschrijving = new TableColumn<Reparatie, Omschrijving>("Omschrijving:");
+		omschrijving.setCellValueFactory(new PropertyValueFactory<Reparatie, Omschrijving>("naam"));
 		omschrijving.setMinWidth(150);
 		
 		reparatieStatus = new TableColumn<Reparatie, Boolean>("Reparatie Status:");
