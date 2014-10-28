@@ -66,6 +66,10 @@ public class MonteurPopupControl  implements EventHandler<ActionEvent>, ChangeLi
 		
 		ReparatieDao reparatieDao = new ReparatieDao();
 		reparatieDao.wijzigReparatie(reparatie);
+		
+		MateriaalDao materiaalDao = new MateriaalDao();
+		materiaalDao.wijzigMateriaal(reparatie);
+	
 		monteurViewControl.UpdateTabel();
 		System.out.println(reparatie.toString());
 		newStage.close();

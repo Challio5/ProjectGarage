@@ -387,7 +387,6 @@ public class ReparatieDao {
 			reparatieStatement.setString(4, reparatie.getKenteken());
 			
 			reparatieStatement.executeUpdate();
-			System.out.println(reparatie.getKenteken());
 			
 		} catch (SQLException e) {
 			System.err.println("Kan het statement niet uitvoeren");

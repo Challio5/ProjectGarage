@@ -85,7 +85,7 @@ public class Materiaal {
 	 * Getter voor het opvragen van het aantalgebruikt van het materiaal
 	 * @return Het aantalgebruikt van het materiaal
 	 */
-	public int getaantalgebruikt() {
+	public int getAantalgebruikt() {
 		return aantalgebruikt.get();
 	}
 
@@ -164,6 +164,10 @@ public class Materiaal {
 	}
 
 	public void convertAantal(String newValue) {
-		aantalgebruikt.setValue(Integer.parseInt(newValue));
+		if(newValue == ""){
+			aantalgebruikt.setValue(0);
+		} else {
+			aantalgebruikt.setValue(Integer.parseInt(newValue));
+		}
 	}
 }

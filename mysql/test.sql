@@ -51,9 +51,6 @@ values
 insert into reparatiemateriaal
 (reparatienr, materiaalnr, aantalgebruikt)
 values
-(100, 1000, 0),
-(100, 1002, 0),
-(100, 1003, 0),
 (102, 1001, 2);
 
 

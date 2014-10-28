@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import nl.eti1b5.database.DatabaseManager;
 import nl.eti1b5.model.Materiaal;
+import nl.eti1b5.model.Reparatie;
 
 /**
  * Data access object wat de materiaal tabel beheert in de database
@@ -69,6 +70,38 @@ public class MateriaalDao {
 		
 		// Geeft de lijst met materiaal terug
 		return materiaalLijst;
+	}
+	
+	public void wijzigMateriaal(Reparatie reparatie){
+		ArrayList<Materiaal> lijst = (ArrayList<Materiaal>) reparatie.getMaterialenLijst();
+		
+		// De connectie met de database op
+		Connection connection = manager.getConnection();
+		
+		for(Materiaal materiaal : lijst){
+			// De te execturen sql querys
+			try {
+				// Query die alle gegevens uit de tabel reparatie haalt
+				String gebruiktUpdate = "insert into reparatiemateriaal "
+						+ "(reparatienr, materiaalnr, aantalgebruikt) "
+						+ "values "
+						+ "(?, ?, ?);";
+				PreparedStatement gebruiktStatement = connection.prepareStatement(gebruiktUpdate);
+				System.out.println(materiaal.toString());
+				gebruiktStatement.setInt(1, reparatie.getReparatieNummer());
+				gebruiktStatement.setInt(2, materiaal.getMateriaalnr());
+				gebruiktStatement.setInt(3, materiaal.getAantalgebruikt());
+				
+				gebruiktStatement.executeUpdate();
+				
+			} catch (SQLException e) {
+				System.err.println("Kan het statement niet uitvoeren");
+				e.printStackTrace();
+			}
+		}
+		
+		// Sluit de verbinding met de database
+		manager.closeConnection();
 	}
 }
 
