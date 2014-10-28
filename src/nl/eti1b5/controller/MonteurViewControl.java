@@ -61,6 +61,8 @@ public class MonteurViewControl implements ChangeListener<Boolean>, EventHandler
 		if(arg0.getClickCount() == 2){
 			popup = new MonteurPopupControl(reparatieNode.getSelectionModel().getSelectedItem(), this);
 			popup.showReparatiePopup();
+			arg0.consume();
+			reparatieNode.getSelectionModel().clearSelection();
 		}
 	}		
 }

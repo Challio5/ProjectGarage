@@ -51,5 +51,11 @@ public class MonteurPopupControl  implements EventHandler<ActionEvent>, ChangeLi
 		monteurViewControl.UpdateTabel();
 		System.out.println(checkbox);
 		newStage.close();
+		try {
+			this.finalize();
+		} catch (Throwable e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

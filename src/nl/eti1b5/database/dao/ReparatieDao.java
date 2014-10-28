@@ -322,8 +322,9 @@ public class ReparatieDao {
 			String reparatieQuery = "Select * from reparatie "
 					+ "Inner Join planning "
 					+ "on reparatie.reparatieNr = planning.reparatieNr "
-					+ "where werknemernr = "+ werknemerNummer;
+					+ "where werknemernr = ? AND reparatieStatus = false";
 			PreparedStatement reparatieStatement = connection.prepareStatement(reparatieQuery);
+			reparatieStatement.setInt(1, werknemerNummer);
 			ResultSet reparatieSet = reparatieStatement.executeQuery();
 			
 			// Zolang er nog gegevens in de tabel staan
