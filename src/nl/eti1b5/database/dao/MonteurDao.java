@@ -4,10 +4,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import nl.eti1b5.database.DatabaseManager;
 import nl.eti1b5.model.Monteur;
+import nl.eti1b5.model.Planning;
 
 /**
  * Data access object wat de monteurs tabel beheert in de database
@@ -143,5 +147,117 @@ public class MonteurDao {
 			e.printStackTrace();
 		}
 		return monteur;
+	}
+
+	public ArrayList<Monteur> getMonteurs(LocalDateTime datumTijd) {
+		// De lijst met resultaten
+		ArrayList<Monteur> monteursLijst = new ArrayList<>();
+		
+		// De lijst met ingeplande monteurs voor die datum
+		PlanningDao planningDao = new PlanningDao(manager);
+		ArrayList<Planning> planningsLijst = planningDao.getPlanning(datumTijd);
+		ArrayList<Integer> werknemernummerLijst = new ArrayList<>();
+		for(Planning planning : planningsLijst) {
+			werknemernummerLijst.add(planning.getWerknemer().getWerknemerNr());
+		}
+		
+		// String voor het omrekeken van de datum naar een beschikbaarheidscode
+		String dagcode = "";
+		int dagdeelcode = 0;
+		
+		// Array met ochtend en middag uren
+		int[] ochtend = { 9, 10, 11, 12 };
+		int[] middag = { 13, 14, 15, 16, 17 };
+
+		// Checkt de dag en zet deze om naar een beschikbaarheidscode
+		// Gebruikt de eerste twee letters van de dag in het engels
+		DayOfWeek dag = datumTijd.getDayOfWeek();
+		
+		switch (dag) {
+		case MONDAY:
+			dagcode = "MO";
+			break;
+		case TUESDAY:
+			dagcode = "TU";
+			break;
+		case WEDNESDAY:
+			dagcode = "WE";
+			break;
+		case THURSDAY:
+			dagcode = "TH";
+			break;
+		case FRIDAY:
+			dagcode = "FR";
+			break;
+		case SATURDAY:
+			dagcode = "SA";
+			break;
+		case SUNDAY:
+			dagcode = "SU";
+			break;
+		}
+		
+		// Checkt het uur en kijkt of het match met de ochtend of middag
+		// Bij de ochtend wordt een 1 toegevoegd, bij de middag een 2
+		int uur = datumTijd.getHour();
+
+		for (int ochtenduur : ochtend) {
+			if (uur == ochtenduur) {
+				dagdeelcode = 1;
+			}
+		}
+
+		for (int middaguur : middag) {
+			if (uur == middaguur) {
+				dagdeelcode = 2;
+			}
+		}
+		
+		Connection connection = manager.getConnection();
+
+		try {
+			// Sql statement voor het checken van de beschikbaarheid
+			// Koppelt op basis van de beschikbaarheid er een monteur aan vast
+			String planningsString = "select * from monteurbeschikbaarheid "
+					+ "natural join monteur "
+					+ "where beschikbaarheid = ? or beschikbaarheid = ? ";
+			PreparedStatement planningStatement = connection.prepareStatement(planningsString);
+			planningStatement.setString(1, dagcode + dagdeelcode);
+			planningStatement.setString(2, dagcode + 3);
+			
+			ResultSet monteurSet = planningStatement.executeQuery();
+			while(monteurSet.next()) {
+				// De gegevens van de tuple
+				int werknemerNummer = monteurSet.getInt("Werknemernr");
+				String naam = monteurSet.getString("Naam");
+				String adres = monteurSet.getString("Adres");
+				String postcode = monteurSet.getString("Postcode");
+				String woonplaats = monteurSet.getString("Woonplaats");
+				String telNr = monteurSet.getString("Telnr");
+				String wachtwoord = monteurSet.getString("Wachtwoord");
+				String specialiteit = monteurSet.getString("Specialiteit");
+				
+				// De monteur met de juiste gegevens
+				Monteur monteur = new Monteur();
+				monteur.setWerknemerNr(werknemerNummer);
+				monteur.setNaam(naam);
+				monteur.setAdres(adres);
+				monteur.setPostcode(postcode);
+				monteur.setwoonplaats(woonplaats);
+				monteur.setTelNr(telNr);
+				monteur.setWachtwoord(wachtwoord);
+				monteur.setSpecialiteit(specialiteit);
+				
+				// Er wordt gecheckt of de monteur al op de planning staat
+				// Als dit niet zo is wordt hij aan de lijst toegevoegd
+				if(!werknemernummerLijst.contains(werknemerNummer)) {
+					monteursLijst.add(monteur);
+				}
+			}		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	
+		return monteursLijst;
 	}
 }

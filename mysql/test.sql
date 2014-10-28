@@ -36,9 +36,9 @@ values
 insert into planning
 (begintijd, eindtijd, werknemernr, reparatienr)
 values
-('2014-10-26 12:00:12', '2014-10-03 12:59:11', 100, 100),
-('2014-10-27 12:00:12', '2014-10-03 12:59:11', 101, 101),
-('2014-10-29 12:00:12', '2014-10-03 12:59:11', 103, 102);
+('2014-10-28 11:00:00', '2014-10-28 16:45:00', 100, 100),
+('2014-10-28 15:00:00', '2014-10-28 16:45:00', 101, 102),
+('2014-10-29 13:00:00', '2014-10-29 15:15:00', 103, 101);
 
 insert into materiaal
 (naam, prijs)
@@ -66,14 +66,14 @@ values
 (100, 1003, 1);
 
 insert into voorraad
- (materiaalnr, aantal)
- values
- (1000, 30);
+(materiaalnr, aantal)
+values
+(1000, 30);
 
 insert into monteurbeschikbaarheid
 (werknemernr, beschikbaarheid)
 values
-(100, "MO1"),
+(100, "MO2"),
 (100, "TU3"),
 (100, "TH3"),
 (101, "TU2"),

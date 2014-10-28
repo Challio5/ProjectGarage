@@ -6,6 +6,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.ListIterator;
+
 
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
@@ -15,7 +17,9 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
 import nl.eti1b5.database.dao.KlantDao;
@@ -40,7 +44,7 @@ import nl.eti1b5.model.converter.OmschrijvingConverter;
  * @since 23 okt. 2014
  */
 
-public class AddPlanningScherm extends GridPane{
+public class PlanningPopup extends GridPane{
 	// DAOs voor communicatie met de database
 	private PlanningDao planningDao;
 	private MonteurDao monteurDao;
@@ -83,11 +87,15 @@ public class AddPlanningScherm extends GridPane{
 	// Submitknop voor het wegschrijven van de gegevens naar de database
 	private Button submit;
 	
+	// Console voor weergave informatie
+	private TitledPane console;
+	private TextArea consoleText;
+	
 	/**
 	 * Constructor voor initialiseren van de onderdelen van de GUI
 	 * Voegt listeners toe voor interactieve werking met de gebruiker
 	 */
-	public AddPlanningScherm() {
+	public PlanningPopup() {
 		// Instellingen voor de correcte weergave van het scherm
 		this.setPrefSize(600, 400);
 		this.setPadding(new Insets(10));
@@ -153,24 +161,36 @@ public class AddPlanningScherm extends GridPane{
 		// Datepicker voor het kiezen van een datum voor de reparatie
 		dagLabel = new Label("Datum");
 		datumPicker = new DatePicker();
-		datumPicker.setDayCellFactory(new DatumPickerCallback());
+		datumPicker.setDisable(true);
+		this.setDateListener();
 		
 		// Comboboxes voor het selecteren van de tijd en minuten
 		tijdLabel = new Label("Tijd");
 		urenKiezer = new ComboBox<>();
 		urenKiezer.getItems().addAll(9, 10, 11, 12, 13, 14, 15, 16, 17);
+		urenKiezer.setDisable(true);
 		minutenKiezer = new ComboBox<>();
 		minutenKiezer.getItems().addAll(0, 15, 30, 45);
+		minutenKiezer.setDisable(true);
 		
 		// Combobox voor het selecteren van een monteur
 		monteurLabel = new Label("Monteur");
 		monteurKiezer = new ComboBox<>();
 		monteurKiezer.setConverter(new MonteurConverter());
 		monteurKiezer.setItems(FXCollections.observableArrayList(monteurDao.getMonteurs()));
+		monteurKiezer.setDisable(true);
 		
 		// Submitknop voor het wegschrijven van de gegevens naar de database
 		submit = new Button("Submit");
+		submit.setDisable(true);
 		this.setSubmitListener();
+		
+		// Console voor het weergeven van informatie
+		console = new TitledPane();
+		consoleText = new TextArea();
+		console.setText("Console");
+		console.setExpanded(false);
+		console.setContent(consoleText);
 		
 		// Klant en autokiezer
 		this.add(klantLabel, 0, 0);
@@ -206,6 +226,9 @@ public class AddPlanningScherm extends GridPane{
 		
 		// Submitknop
 		this.add(submit, 0, 7);
+		
+		// Console
+		this.add(console, 0, 8, 4, 1);
 	}
 	
 	public void setOverigeReparatieListener() {
@@ -247,6 +270,9 @@ public class AddPlanningScherm extends GridPane{
 			Omschrijving omschrijving = new Omschrijving(reparatieNaam, reparatieDuur);
 			omschrijvingDao.addOmschrijving(omschrijving);
 			
+			// Geeft de nieuwe toegevoegde omschrijving weer in het console
+			consoleText.setText(omschrijving.toString());
+			
 			// Update de GUI met deze nieuwe omschrijving, vinkt de selectie uit en selecteert de nieuwe omschrijving
 			omschrijvingsKiezer.getItems().add(omschrijving);
 			omschrijvingsKiezer.getSelectionModel().select(omschrijving);
@@ -267,7 +293,7 @@ public class AddPlanningScherm extends GridPane{
 			// Vraagt de lijst met monteurs op en checkt of deze beschikbaar is op de datum
 			// Als de monteur de juiste specialisatie bezit voor de reparatie wordt deze automatisch geselecteerd
 			ArrayList<Monteur> monteursLijst = monteurDao.getMonteurs();
-			for(Monteur monteur : monteursLijst) {
+			/*for(Monteur monteur : monteursLijst) {
 				if(monteur.getSpecialiteit().equals(naam)) {
 					ArrayList<String> beschikbaarheidsLijst = new ArrayList<>(monteur.getBeschikbaarheid());
 					String datumcode = datumPicker.getValue().getDayOfWeek().toString().substring(0, 2);
@@ -279,8 +305,54 @@ public class AddPlanningScherm extends GridPane{
 						}
 					}
 				}
-			}
+			}*/
+			
+			// Maakt het tweede deel van het planningsscherm beschikbaar
+			datumPicker.setDayCellFactory(new DatumPickerCallback());
+			datumPicker.setDisable(false);
+			urenKiezer.setDisable(false);
+			minutenKiezer.setDisable(false);
+			monteurKiezer.setDisable(false);
 		}); 
+	}
+	
+	public void setDateListener() {
+		datumPicker.valueProperty().addListener((date, oldValue, newValue) -> {
+			for(int uur : urenKiezer.getItems()) {
+				for(int minuten : minutenKiezer.getItems()) {
+					// De tijd combinatie die gecheckt wordt
+					LocalTime beginTijd = LocalTime.of(uur, minuten);
+					int extraUren = Integer.parseInt(omschrijvingsDuur.getText().substring(0, 2));
+					int extraMinuten = Integer.parseInt(omschrijvingsDuur.getText().substring(3, 5));
+					LocalTime eindTijd = beginTijd.plusHours(extraUren);
+					eindTijd = eindTijd.plusMinutes(extraMinuten);
+					
+					// Lijst met beschikbare monteurs op de begin- en eindtijd van de reparatie
+					ArrayList<Monteur> monteursLijstBeginTijd = monteurDao.getMonteurs(LocalDateTime.of(newValue, beginTijd));
+					ArrayList<Monteur> monteursLijstEindTijd = monteurDao.getMonteurs(LocalDateTime.of(newValue, eindTijd));
+					
+					// Checkt of de monteur ook in de lijst met eindtijden zit 
+					// Verwijdert de monteur waneer dit niet het geval is
+					ListIterator<Monteur> iterator = monteursLijstBeginTijd.listIterator();
+					while(iterator.hasNext()) {
+						Monteur monteur = iterator.next();
+						if(monteursLijstEindTijd.contains(monteur)) {
+							iterator.remove();
+						}
+					}
+					
+					// Als er geen monteurs beschikbaar zijn voor het tijdstip wordt deze niet beschikbaar gemaakt
+					if(monteursLijstBeginTijd.isEmpty()) {
+						consoleText.appendText("\n Tijd is niet beschikbaar: " + beginTijd);
+					}
+					else {
+						for(Monteur monteur : monteursLijstBeginTijd) {
+							consoleText.appendText("\n Tijd is wel beschikbaar: " + beginTijd + "Monteur " + monteur);
+						}	
+					}
+				}
+			}
+		});
 	}
 	
 	public void setSubmitListener() {
@@ -351,12 +423,10 @@ public class AddPlanningScherm extends GridPane{
 	
 	// Callback handler voor de datumpicker
 	private class DatumPickerCallback implements Callback<DatePicker, DateCell> {
-		// De huidige planning 
-		ArrayList<Planning> planningsLijst;
+		private MonteurDao monteurDao;
 		
-		// Constructor
 		public DatumPickerCallback() {
-			planningsLijst = planningDao.getPlanning();
+			monteurDao = new MonteurDao();
 		}
 		
 		@Override
@@ -366,11 +436,24 @@ public class AddPlanningScherm extends GridPane{
 				@Override
 				public void updateItem(LocalDate item, boolean empty) {
 					super.updateItem(item, empty);
-					for(Planning planning : planningsLijst) {
-						if(item.isBefore(LocalDate.now()) || item.isEqual(planning.getBeginTijd().toLocalDateTime().toLocalDate())) {
-							this.setDisable(true);
-						}
+					
+					// Zet alle data in de verleden tijd op rood
+					if(item.isBefore(LocalDate.now())) {
+						this.setDisable(true);
+						this.setStyle("-fx-background-color:red");
 					}
+					// Zet alle overige data op groen
+					else {
+						this.setStyle("-fx-background-color:green");
+					}
+					
+					/* Zet de data uit de planning op oranje
+
+					if(item.isEqual(begintijd.toLocalDate())) {
+						this.setDisable(true);
+						this.setStyle("-fx-background-color:orange");
+					}
+					*/
 				}
 			};
 			

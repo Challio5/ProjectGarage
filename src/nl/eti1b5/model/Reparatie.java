@@ -38,7 +38,16 @@ public class Reparatie {
 	 * Default constructor voor het meegegeven van de default waarden aan attributen
 	 * Worden later aangepast aan de invoer vanuit de GUI
 	 */
-	public Reparatie() {}
+	public Reparatie() {
+		this.reparatieNummer = new SimpleIntegerProperty();
+		this.kenteken = new SimpleStringProperty();
+		this.omschrijving = new SimpleObjectProperty<>();
+		this.beginTijd = new SimpleObjectProperty<>();
+		this.eindTijd = new SimpleObjectProperty<>();
+		this.reparatieStatus = new SimpleBooleanProperty();
+		this.betaalStatus = new SimpleBooleanProperty();
+		this.materialenLijst = new ArrayList<>();
+	}
 	
 	/**
 	 * Constructor voor initialiseren van de gegevens van een reparatie vanuit de database
@@ -67,7 +76,7 @@ public class Reparatie {
 
 	/**
 	 * Getter voor het opvragen van het nummer van de reparatie
-	 * @return
+	 * @return Het nummer van de reparatie
 	 */
 	public int getReparatieNummer() {
 		return reparatieNummer.get();

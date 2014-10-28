@@ -25,7 +25,12 @@ public class Planning {
 	 * Default constructor voor het meegegeven van de default waarden aan attributen
 	 * Worden later aangepast aan de invoer vanuit de GUI
 	 */
-	public Planning() {}
+	public Planning() {
+		this.beginTijd = new SimpleObjectProperty<>();
+		this.eindTijd = new SimpleObjectProperty<>();
+		this.werknemer = new SimpleObjectProperty<>();
+		this.reparatie = new SimpleObjectProperty<>();
+	}
 	
 	/**
 	 * Constructor voor het initialiseren van de gegevens van een planning vanuit de database

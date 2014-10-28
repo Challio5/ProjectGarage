@@ -27,7 +27,12 @@ public class Monteur extends Gebruiker {
 	 * Default constructor voor het meegegeven van de default waarden aan attributen
 	 * Worden later aangepast aan de invoer vanuit de GUI
 	 */
-	public Monteur() {}
+	public Monteur() {
+		super();
+		this.specialiteit = new SimpleStringProperty();
+		this.beschikbaarheidsLijst = new ArrayList<>();
+		this.reparatieLijst = new ArrayList<>();
+	}
 	
 	/**
 	 * Constructor voor het initialiseren van de gegevens van een monteur vanuit de database

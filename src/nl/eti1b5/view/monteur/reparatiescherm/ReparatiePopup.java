@@ -1,38 +1,24 @@
 package nl.eti1b5.view.monteur.reparatiescherm;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import nl.eti1b5.controller.MonteurPopupControl;
-import nl.eti1b5.database.dao.MateriaalDao;
-import nl.eti1b5.model.Materiaal;
-import nl.eti1b5.model.Reparatie;
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.util.Callback;
-import javafx.beans.property.SimpleIntegerProperty;
+import nl.eti1b5.controller.MonteurPopupControl;
+import nl.eti1b5.database.dao.MateriaalDao;
 import nl.eti1b5.model.Materiaal;
+import nl.eti1b5.model.Reparatie;
 
 
 public class ReparatiePopup extends BorderPane{

@@ -1,5 +1,8 @@
 package nl.eti1b5.controller;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import nl.eti1b5.database.dao.AutoDao;
@@ -54,13 +57,23 @@ public class Garage {
 		
 		MonteurDao monteurDao = new MonteurDao();
 		ArrayList<Monteur> monteurLijst = monteurDao.getMonteurs();
-		for(Monteur monteur : monteurLijst) {
+		//for(Monteur monteur : monteurLijst) {
+		//	System.out.println(monteur);
+		//}
+		
+		ArrayList<Monteur> monteurLijst2 = monteurDao.getMonteurs(LocalDateTime.now());
+		for(Monteur monteur : monteurLijst2) {
 			System.out.println(monteur);
 		}
 		
 		PlanningDao planningDao = new PlanningDao();
 		ArrayList<Planning> planningsLijst = planningDao.getPlanning();
-		for(Planning planning : planningsLijst) {
+		//for(Planning planning : planningsLijst) {
+			//System.out.println(planning);
+		//}
+		
+		ArrayList<Planning> planningsLijst2 = planningDao.getPlanning(LocalDateTime.now());
+		for(Planning planning : planningsLijst2) {
 			System.out.println(planning);
 		}
 		

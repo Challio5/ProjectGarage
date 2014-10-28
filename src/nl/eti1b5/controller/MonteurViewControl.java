@@ -5,18 +5,13 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
-import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
-import nl.eti1b5.database.dao.MateriaalDao;
 import nl.eti1b5.database.dao.MonteurDao;
 import nl.eti1b5.database.dao.ReparatieDao;
-import nl.eti1b5.model.Materiaal;
 import nl.eti1b5.model.Reparatie;
 import nl.eti1b5.view.MainLoader;
 import nl.eti1b5.view.monteur.reparatiescherm.MonteurScherm;
 import nl.eti1b5.view.monteur.reparatiescherm.ReparatieNode;
-import nl.eti1b5.view.monteur.reparatiescherm.ReparatiePopup;
 
 public class MonteurViewControl implements ChangeListener<Boolean>, EventHandler<MouseEvent>{
 	

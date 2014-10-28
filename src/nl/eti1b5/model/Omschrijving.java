@@ -22,7 +22,10 @@ public class Omschrijving {
 	 * Default constructor voor het meegegeven van de default waarden aan attributen
 	 * Worden later aangepast aan de invoer vanuit de GUI
 	 */
-	public Omschrijving() {}
+	public Omschrijving() {
+		this.naam = new SimpleObjectProperty<>();
+		this.duur = new SimpleObjectProperty<>();
+	}
 	
 	/**
 	 * Constructor voor het initialiseren van de gegevens van een omschrijving van een reparatie

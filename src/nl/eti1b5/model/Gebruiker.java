@@ -24,7 +24,11 @@ public class Gebruiker extends Persoon {
 	 * Default constructor voor het meegegeven van de default waarden aan attributen
 	 * Worden later aangepast aan de invoer vanuit de GUI
 	 */
-	public Gebruiker() {}
+	public Gebruiker() {
+		super();
+		this.werknemerNr = new SimpleIntegerProperty();
+		this.wachtwoord = new SimpleStringProperty();
+	}
 	
 	/**
 	 * Constructor voor het initialiseren van de gegevens van een persoon vanuit de database

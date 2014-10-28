@@ -25,7 +25,13 @@ public class Persoon {
 	 * Default constructor voor het meegegeven van de default waarden aan attributen
 	 * Worden later aangepast aan de invoer vanuit de GUI
 	 */
-	public Persoon() {}
+	public Persoon() {
+		this.naam = new SimpleStringProperty();
+		this.woonplaats = new SimpleStringProperty();
+		this.adres = new SimpleStringProperty();
+		this.postcode = new SimpleStringProperty();
+		this.telNr = new SimpleStringProperty();
+	}
 	
 	/**
 	 * Constructor voor het initialiseren van de gegevens van een persoon vanuit de database

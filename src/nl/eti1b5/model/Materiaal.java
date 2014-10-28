@@ -28,7 +28,12 @@ public class Materiaal {
 	 * Default constructor voor het meegegeven van de default waarden aan attributen
 	 * Worden later aangepast aan de invoer vanuit de GUI
 	 */
-	public Materiaal() {}
+	public Materiaal() {
+		this.naam = new SimpleStringProperty();
+		this.materiaalnr = new SimpleIntegerProperty();
+		this.prijs = new SimpleDoubleProperty();
+		this.aantalgebruikt = new SimpleIntegerProperty();
+	}
 	
 	/**
 	 * Constructor voor het initialiseren van de gegevens van de voorraad vanuit de database

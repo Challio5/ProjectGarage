@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import nl.eti1b5.database.DatabaseManager;
@@ -83,15 +85,16 @@ public class PlanningDao {
 	 * @param beginTijd De tijd waarop de reparaties gepland zijn
 	 * @return De volledige planning van de garage
 	 */
-	public ArrayList<Planning> getPlanning(Date beginTijd) {
+	public ArrayList<Planning> getPlanning(LocalDateTime datumTijd) {
 		ArrayList<Planning> planningsLijst = new ArrayList<>();
 		Connection connection = manager.getConnection();
 		
-		String planningsQuery = "select * from planning where begintijd = ?";
+		String planningsQuery = "select * from planning "
+				+ "where ? between begintijd and eindtijd";
 		
 		try {
 			PreparedStatement planningsStatement = connection.prepareStatement(planningsQuery);
-			planningsStatement.setDate(1, beginTijd);
+			planningsStatement.setTimestamp(1, Timestamp.valueOf(datumTijd));
 			ResultSet planningsSet = planningsStatement.executeQuery();
 			
 			while(planningsSet.next()) {
@@ -100,7 +103,49 @@ public class PlanningDao {
 				Timestamp eindtijd = planningsSet.getTimestamp("eindtijd");
 				int werknemernr = planningsSet.getInt("werknemernr");
 				int reparatienr = planningsSet.getInt("reparatienr");
+			
+				// Gebruikt andere daos voor de gegevens
+				MonteurDao monteurDao = new MonteurDao(manager);
+				Monteur monteur = monteurDao.getMonteur(werknemernr);
+				ReparatieDao reparatieDao = new ReparatieDao(manager);
+				Reparatie reparatie = reparatieDao.getReparatie(reparatienr);
 				
+				planningsLijst.add(new Planning(begintijd, eindtijd, monteur, reparatie));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		manager.closeConnection();
+		
+		return planningsLijst;
+	}
+	
+	/**
+	 * Methode voor het opvragen van een geplande reparatie op basis van de tijd
+	 * @param beginTijd De tijd waarop de reparaties gepland zijn
+	 * @return De volledige planning van de garage
+	 */
+	public ArrayList<Planning> getPlanning(LocalDate datum) {
+		ArrayList<Planning> planningsLijst = new ArrayList<>();
+		Connection connection = manager.getConnection();
+		
+		String planningsQuery = "select * from planning "
+				+ "where date(begintijd) = ? or date(eindtijd) = ?";
+		
+		try {
+			PreparedStatement planningsStatement = connection.prepareStatement(planningsQuery);
+			planningsStatement.setDate(1, Date.valueOf(datum));
+			planningsStatement.setDate(2, Date.valueOf(datum));
+			ResultSet planningsSet = planningsStatement.executeQuery();
+			
+			while(planningsSet.next()) {
+				// Gegevens van planning
+				Timestamp begintijd = planningsSet.getTimestamp("begintijd");
+				Timestamp eindtijd = planningsSet.getTimestamp("eindtijd");
+				int werknemernr = planningsSet.getInt("werknemernr");
+				int reparatienr = planningsSet.getInt("reparatienr");
+			
 				// Gebruikt andere daos voor de gegevens
 				MonteurDao monteurDao = new MonteurDao(manager);
 				Monteur monteur = monteurDao.getMonteur(werknemernr);
@@ -151,4 +196,6 @@ public class PlanningDao {
 		// Sluit de verbinding met de database
 		manager.closeConnection();	
 	}
+	
+	
 }

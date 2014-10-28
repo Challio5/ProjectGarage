@@ -27,7 +27,11 @@ public class Klant extends Persoon {
 	 * Default constructor voor het meegegeven van de default waarden aan attributen
 	 * Worden later aangepast aan de invoer vanuit de GUI
 	 */
-	public Klant() {}
+	public Klant() {
+		super();
+		this.klantNr = new SimpleIntegerProperty();
+		this.autoLijst = new ArrayList<>();
+	}
 	
 	/**
 	 * Constructor voor het initialiseren van de gegevens van een klant vanuit de database

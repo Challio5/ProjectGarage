@@ -14,7 +14,8 @@ import nl.eti1b5.view.MainLoader;
 import nl.eti1b5.view.monteur.reparatiescherm.MonteurScherm;
 import nl.eti1b5.view.preloader.InlogPreloader;
 import nl.eti1b5.view.preloader.InlogView;
-import nl.eti1b5.view.secretaresse.planningsscherm.AddPlanningScherm;
+import nl.eti1b5.view.secretaresse.planningsscherm.PlanningPopup;
+import nl.eti1b5.view.secretaresse.planningsscherm.PlanningsOverzicht;
 import nl.eti1b5.view.secretaresse.reparatiescherm.ReparatieView;
 
 
@@ -214,7 +215,7 @@ public class InlogControl {
 	//plan scherm wanneer correct ingelogd
 	public void showPlanning(){
 
-		Scene scene = new Scene(new AddPlanningScherm());
+		Scene scene = new Scene(new PlanningsOverzicht());
 		
 		// Stylesheet
 		String stylesheet = this.getClass().getResource("/menu.css").toString();

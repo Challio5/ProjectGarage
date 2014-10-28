@@ -27,7 +27,13 @@ public class Auto {
 	 * Default constructor voor het meegegeven van de default waarden aan attributen
 	 * Worden later aangepast aan de invoer vanuit de GUI
 	 */
-	public Auto() {}
+	public Auto() {
+		this.merk = new SimpleStringProperty();
+		this.klantnr = new SimpleIntegerProperty();
+		this.model = new SimpleStringProperty();
+		this.kenteken = new SimpleStringProperty();
+		this.verzekeringsnummer = new SimpleIntegerProperty();
+	}
 	
 	/**
 	 * Constructor voor het initialiseren van de gegevens van een auto van uit de database

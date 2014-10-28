@@ -2,15 +2,11 @@ package nl.eti1b5.controller;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import nl.eti1b5.database.dao.MateriaalDao;
 import nl.eti1b5.database.dao.ReparatieDao;
-import nl.eti1b5.model.Materiaal;
 import nl.eti1b5.model.Reparatie;
 import nl.eti1b5.view.monteur.reparatiescherm.ReparatiePopup;
 
