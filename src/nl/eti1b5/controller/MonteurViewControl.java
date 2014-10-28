@@ -21,7 +21,6 @@ public class MonteurViewControl implements ChangeListener<Boolean>, EventHandler
 	ReparatieDao reparatieDao;
 	MonteurDao monteurDao;
 	Boolean eigenReparaties;
-	MonteurPopupControl popup;
 	
 	public MonteurViewControl(MonteurScherm monteurScherm, MainLoader app){
 		this.monteurScherm = monteurScherm;
@@ -54,8 +53,10 @@ public class MonteurViewControl implements ChangeListener<Boolean>, EventHandler
 	@Override
 	public void handle(MouseEvent arg0) {
 		if(arg0.getClickCount() == 2){
-			popup = new MonteurPopupControl(reparatieNode.getSelectionModel().getSelectedItem(), this);
+			MonteurPopupControl popup = new MonteurPopupControl(reparatieNode.getSelectionModel().getSelectedItem(), this);
 			popup.showReparatiePopup();
+			arg0.consume();
+			reparatieNode.getSelectionModel().clearSelection();
 		}
 	}		
 }

@@ -23,22 +23,28 @@ values
 ("Henk", "Hoofdstraat 1", "7468CZ", "Enter", "06-12345678", "Henk123", "Banden"),
 ("Sjaak", "Dorpstraat 1", "7423HJ", "Rijssen","06-87654321", "Sjaak45", "Carroserie"),
 ("Jan", "Stationsstraat 1", "7323IK", "Rotterdam", "06-18273645", "JanJan", "Motor"),
-("Tom", "Enterweg 10", "3453JI", "Bornebroek", "06-12387645", "Tom94", "Grote Beurt"),
+("Tom", "Enterweg 10", "3453JI", "Bornebroek", "06-12387645", "Tom94", "Motor"),
 ("Rob", "Rijssenseweg 11", "2393JI", "Nijverdal", "06-09128365", "Moyboy88", "Carroserie");
 
 insert into reparatie
 (kenteken, omschrijving, begintijd, eindtijd, reparatiestatus, betaalstatus)
 values
 ("12-31-AB", "Banden", '2014-10-30 10:55:12', '2014-10-30 15:05:12', false, false),
-("10-ID-32", "Grote Beurt", '2014-10-03 13:46:44', '2014-10-03 15:23:01', true, false),
+("10-ID-32", "Grote Beurt", '2014-10-03 13:46:44', '2014-10-03 15:23:01', false, false),
 ("12-IKK-2", "Carroserie", '2014-10-01 14:22:38', '2014-10-01 17:00:12', true, true);
 
 insert into planning
 (begintijd, eindtijd, werknemernr, reparatienr)
 values
+<<<<<<< HEAD
 ('2014-10-28 11:00:00', '2014-10-28 16:45:00', 100, 100),
 ('2014-10-28 15:00:00', '2014-10-28 16:45:00', 101, 102),
 ('2014-10-29 13:00:00', '2014-10-29 15:15:00', 103, 101);
+=======
+('2014-10-22 12:00:12', '2014-10-03 12:59:11', 100, 100),
+('2014-10-23 12:00:12', '2014-10-03 12:59:11', 101, 101),
+('2014-10-26 12:00:12', '2014-10-03 12:59:11', 103, 102);
+>>>>>>> FETCH_HEAD
 
 insert into materiaal
 (naam, prijs)
@@ -48,27 +54,26 @@ values
 ("Motorolie", 10),
 ("Banden", 50);
 
-insert into omschrijving
-(naam, duur)
-values
-("Banden", '00:30:00'),
-("Kleine beurt", '01:00:00'),
-("Grote beurt", '01:30:00'),
-("Carrosserie", '00:45:00'),
-("Motor", '02:00:00'),
-("Elektronica", '01:15:00');
-
 insert into reparatiemateriaal
 (reparatienr, materiaalnr, aantalgebruikt)
 values
-(100, 1000, 2),
-(100, 1002, 3),
-(100, 1003, 1);
+(102, 1001, 2);
+
 
 insert into voorraad
+<<<<<<< HEAD
 (materiaalnr, aantal)
 values
 (1000, 30);
+=======
+ (materiaalnr, aantal)
+ values
+ (1000, 30),
+ (1001, 45),
+ (1002, 20),
+ (1003, 50);
+ 
+>>>>>>> FETCH_HEAD
 
 insert into monteurbeschikbaarheid
 (werknemernr, beschikbaarheid)
