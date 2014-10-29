@@ -1,4 +1,4 @@
-package nl.eti1b5.view;
+package nl.eti1b5.view.main;
 
 import javafx.application.Application;
 import javafx.stage.Stage;

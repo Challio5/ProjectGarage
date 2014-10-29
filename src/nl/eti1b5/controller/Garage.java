@@ -15,7 +15,7 @@ import nl.eti1b5.model.Materiaal;
 import nl.eti1b5.model.Monteur;
 import nl.eti1b5.model.Planning;
 import nl.eti1b5.model.Reparatie;
-import nl.eti1b5.view.MainLoader;
+import nl.eti1b5.view.main.MainLoader;
 import nl.eti1b5.view.preloader.InlogPreloader;
 
 import com.sun.javafx.application.LauncherImpl;

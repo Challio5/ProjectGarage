@@ -1,27 +1,22 @@
-package nl.eti1b5.view.monteur.reparatiescherm;
+package nl.eti1b5.view.secretaresse.reparatiescherm;
 
 import javafx.beans.value.ChangeListener;
 import javafx.event.EventHandler;
 import javafx.scene.control.CheckBox;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import nl.eti1b5.view.monteur.menu.MenuNode;
 
-public class MonteurScherm extends BorderPane{
+public class ReparatieOverzicht extends BorderPane{
 	
-	private MenuNode menuNode;
 	private ReparatieNode reparatieNode;
 	private CheckBox checkBox;
 	
-	public MonteurScherm(){
+	public ReparatieOverzicht(){
 		
-		menuNode = new MenuNode();
 		reparatieNode= new ReparatieNode();
 		checkBox = new CheckBox();
 		checkBox.setText("Eigen Reparaties");
 		
-		
-		this.setTop(menuNode);
 		this.setCenter(checkBox);
 		this.setBottom(reparatieNode);
 	}

@@ -4,7 +4,7 @@ import javafx.application.Preloader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import nl.eti1b5.controller.InlogControl;
-import nl.eti1b5.view.MainLoader;
+import nl.eti1b5.view.main.MainLoader;
 
 /**
  * GUI klasse, preloader

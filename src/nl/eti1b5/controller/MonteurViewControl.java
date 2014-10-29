@@ -9,7 +9,7 @@ import javafx.scene.input.MouseEvent;
 import nl.eti1b5.database.dao.MonteurDao;
 import nl.eti1b5.database.dao.ReparatieDao;
 import nl.eti1b5.model.Reparatie;
-import nl.eti1b5.view.MainLoader;
+import nl.eti1b5.view.main.MainLoader;
 import nl.eti1b5.view.monteur.reparatiescherm.MonteurScherm;
 import nl.eti1b5.view.monteur.reparatiescherm.ReparatieNode;
 

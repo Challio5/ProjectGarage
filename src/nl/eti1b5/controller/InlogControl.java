@@ -10,19 +10,16 @@ import javafx.scene.input.KeyEvent;
 import nl.eti1b5.database.dao.MonteurDao;
 import nl.eti1b5.model.Monteur;
 import nl.eti1b5.model.Secretaresse;
-import nl.eti1b5.view.MainLoader;
+import nl.eti1b5.view.main.MainLoader;
 import nl.eti1b5.view.monteur.reparatiescherm.MonteurScherm;
 import nl.eti1b5.view.preloader.InlogPreloader;
 import nl.eti1b5.view.preloader.InlogView;
-import nl.eti1b5.view.secretaresse.planningsscherm.PlanningPopup;
-import nl.eti1b5.view.secretaresse.planningsscherm.PlanningsOverzicht;
-import nl.eti1b5.view.secretaresse.reparatiescherm.ReparatieView;
-
 
 public class InlogControl {
 	
 	private MainLoader app;
 	private InlogPreloader inlogPre;
+	
 	private InlogView inlogView;
 	private int counter;
 	private MonteurDao monteurDao;
@@ -31,6 +28,7 @@ public class InlogControl {
 	public InlogControl(InlogPreloader inlogPre, MainLoader app){
 		this.inlogPre = inlogPre;
 		this.app = app;
+		
 		inlogView = inlogPre.getInlogView();
 		inlogView.setSubmitListener(new SubmitHandler());
 		inlogView.setEnterListener(new EnterHandler());
@@ -91,7 +89,7 @@ public class InlogControl {
 							if(app != null) {
 								// Hide de preloader en showt het hoofdprogramma
 								inlogPre.getStage().hide();
-								showPlanning();
+								showSecretaresseView();
 							}
 							//app.setIngelogd(monteur);
 							gevonden = true;
@@ -152,7 +150,7 @@ public class InlogControl {
 								if(app != null) {
 									// Hide de preloader en showt het hoofdprogramma
 									inlogPre.getStage().hide();
-									showPlanning();
+									showSecretaresseView();
 								}
 								//app.setIngelogd(monteur);
 								gevonden = true;
@@ -198,31 +196,8 @@ public class InlogControl {
 		app.getStage().show();
 	}
 	
-	//reparatie scherm wanneer correct ingelogd
-	public void showReparatie(){
-
-		Scene scene = new Scene(new ReparatieView());
-		
-		// Stylesheet
-		String stylesheet = this.getClass().getResource("/menu.css").toString();
-		scene.getStylesheets().add(stylesheet);
-		
-		app.getStage().setScene(scene);
-		app.getStage().setTitle("Reparatie");
-		app.getStage().show();
-	}
-	
-	//plan scherm wanneer correct ingelogd
-	public void showPlanning(){
-
-		Scene scene = new Scene(new PlanningsOverzicht());
-		
-		// Stylesheet
-		String stylesheet = this.getClass().getResource("/menu.css").toString();
-		scene.getStylesheets().add(stylesheet);
-		
-		app.getStage().setScene(scene);
-		app.getStage().setTitle("Planning");
-		app.getStage().show();
+	// Controller voor de secretaresse schermen
+	public void showSecretaresseView(){
+		new SecretaresseControl(app.getStage());
 	}
 }

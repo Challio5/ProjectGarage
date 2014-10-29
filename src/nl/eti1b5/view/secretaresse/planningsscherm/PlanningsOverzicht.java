@@ -38,8 +38,6 @@ public class PlanningsOverzicht extends VBox{
 	private Button planKnop;
 	
 	public PlanningsOverzicht() {
-		this.setPrefSize(600, 400);
-		
 		planningDao = new PlanningDao();
 		
 		planningPopup = new Stage();
@@ -104,8 +102,10 @@ public class PlanningsOverzicht extends VBox{
 				};
 				
 				cell.setOnMouseClicked(e -> {
-					monteurPopup.setScene(new Scene(new MonteurPopup(cell.getItem())));
-					monteurPopup.show();
+					if(!cell.isEmpty()) {
+						monteurPopup.setScene(new Scene(new MonteurPopup(cell.getItem())));
+						monteurPopup.show();
+					}
 				});
 				
 				return cell;
@@ -136,8 +136,10 @@ public class PlanningsOverzicht extends VBox{
 				};
 				
 				cell.setOnMouseClicked(e -> {
-					reparatiePopup.setScene(new Scene(new ReparatiePopup(cell.getItem())));
-					reparatiePopup.show();
+					if(!cell.isEmpty()) {
+						reparatiePopup.setScene(new Scene(new ReparatiePopup(cell.getItem())));
+						reparatiePopup.show();
+					}
 				});
 				
 				return cell;

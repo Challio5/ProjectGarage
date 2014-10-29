@@ -1,40 +1,37 @@
 package nl.eti1b5.view.secretaresse.reparatiescherm;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import nl.eti1b5.database.dao.AutoDao;
-import nl.eti1b5.model.Auto;
+import nl.eti1b5.model.Omschrijving;
+import nl.eti1b5.model.Reparatie;
 
 
-public class ReparatieNode extends TableView{
+public class ReparatieNode extends TableView<Reparatie>{
 	
-	TableColumn reparatieNummer;
-	TableColumn soort;
-	TableColumn kenteken;
-	TableColumn omschrijving;
-	TableColumn onderdelen;
+	private TableColumn<Reparatie, Integer> reparatieNummer;
+	private TableColumn<Reparatie, String> kenteken;
+	private TableColumn<Reparatie, Omschrijving> omschrijving;
+	private TableColumn<Reparatie, Boolean> reparatieStatus;
 	
 	public ReparatieNode(){
-		reparatieNummer = new TableColumn("Repartie nummer:");
+		reparatieNummer = new TableColumn<Reparatie, Integer>("Reparatie nummer:");
+		reparatieNummer.setCellValueFactory(new PropertyValueFactory<Reparatie, Integer>("reparatieNummer"));
 		reparatieNummer.setMinWidth(150);
-		soort = new TableColumn("Soort:");
-		soort.setMinWidth(150);
-		kenteken = new TableColumn("Kenteken:");
+		
+		kenteken = new TableColumn<Reparatie, String>("Kenteken:");
+		kenteken.setCellValueFactory(new PropertyValueFactory<Reparatie,String>("kenteken"));
 		kenteken.setMinWidth(150);
-		kenteken.setCellValueFactory(new PropertyValueFactory<Auto,String>("kenteken"));
-		omschrijving = new TableColumn("Omschrijving");
+		
+		
+		omschrijving = new TableColumn<Reparatie, Omschrijving>("Omschrijving:");
+		omschrijving.setCellValueFactory(new PropertyValueFactory<Reparatie, Omschrijving>("naam"));
 		omschrijving.setMinWidth(150);
-		onderdelen = new TableColumn("Onderdelen");
-		onderdelen.setMinWidth(150);
 		
-		AutoDao auto = new AutoDao();
-		ObservableList<Auto> oListAuto = FXCollections.observableArrayList(auto.getAutos());
-		this.setItems(oListAuto);
-		getColumns().addAll(reparatieNummer, soort, kenteken, omschrijving, onderdelen);
+		reparatieStatus = new TableColumn<Reparatie, Boolean>("Reparatie Status:");
+		reparatieStatus.setCellValueFactory(new PropertyValueFactory<Reparatie, Boolean>("reparatieStatus"));
+		reparatieStatus.setMinWidth(150);
 		
-
+		getColumns().addAll(reparatieNummer, kenteken, omschrijving, reparatieStatus);
 	}
 }
