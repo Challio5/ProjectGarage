@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -259,5 +258,71 @@ public class MonteurDao {
 		}
 	
 		return monteursLijst;
+	}
+	
+	private void addNewMonteur(Monteur monteur) {
+		// Zet de verbinding op met de database
+		Connection connection = manager.getConnection();
+		
+		// De sql string met de juiste waarden voor de database
+		String insertString = "insert into monteur "
+				+ "(naam, adres, postcode, woonplaats, TelNr, Wachtwoord, specialiteit) "
+				+ "values "
+				+ "(?, ?, ?, ?, ?, ?. ?)";
+		
+		try {
+			// Het statement met de juiste sql string
+			PreparedStatement insertStatement = connection.prepareStatement(insertString);
+			
+			// Meldt de attributen van de planning aan bij het statement
+			insertStatement.setString(1, monteur.getNaam());
+			insertStatement.setString(2, monteur.getAdres());
+			insertStatement.setString(3, monteur.getPostcode());
+			insertStatement.setString(4, monteur.getWoonplaats());
+			insertStatement.setString(4, monteur.getTelNr());
+			insertStatement.setString(5, monteur.getWachtwoord());
+			insertStatement.setString(6, monteur.getSpecialiteit());
+			
+			// Voert het statement uit
+			insertStatement.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		// Sluit de verbinding met de database
+		manager.closeConnection();	
+	}
+	
+	private void addExistingMonteur(Monteur monteur) {
+		// Zet de verbinding op met de database
+		Connection connection = manager.getConnection();
+		
+		// De sql string met de juiste waarden voor de database
+		String insertString = "update monteur "
+				+ "set naam=?, adres=?, postcode=?, woonplaats=?, TelNr=?, Wachtwoord=?, specialiteit=?) "
+				+ "where werknemernr=?";
+		
+		try {
+			// Het statement met de juiste sql string
+			PreparedStatement insertStatement = connection.prepareStatement(insertString);
+			
+			// Meldt de attributen van de planning aan bij het statement
+			insertStatement.setString(1, monteur.getNaam());
+			insertStatement.setString(2, monteur.getAdres());
+			insertStatement.setString(3, monteur.getPostcode());
+			insertStatement.setString(4, monteur.getWoonplaats());
+			insertStatement.setString(4, monteur.getTelNr());
+			insertStatement.setString(5, monteur.getWachtwoord());
+			insertStatement.setString(6, monteur.getSpecialiteit());
+			insertStatement.setInt(7, monteur.getWerknemerNr());
+			
+			// Voert het statement uit
+			insertStatement.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		// Sluit de verbinding met de database
+		manager.closeConnection();	
 	}
 }

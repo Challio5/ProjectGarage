@@ -196,6 +196,4 @@ public class PlanningDao {
 		// Sluit de verbinding met de database
 		manager.closeConnection();	
 	}
-	
-	
 }
