@@ -6,7 +6,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.VBox;
-import javafx.util.converter.IntegerStringConverter;
 import nl.eti1b5.database.dao.KlantDao;
 import nl.eti1b5.database.dao.MonteurDao;
 import nl.eti1b5.model.Klant;
@@ -73,6 +72,7 @@ public class AdministratieOverzicht extends VBox{
 		monteurNaamKolom.setOnEditCommit(e -> {
 			Monteur monteur = e.getRowValue();
 			monteur.setNaam(e.getNewValue());
+			monteurDao.addMonteur(monteur);
 		});
 		
 		monteurAdresKolom = new TableColumn<>("Adres");
@@ -81,6 +81,7 @@ public class AdministratieOverzicht extends VBox{
 		monteurAdresKolom.setOnEditCommit(e -> {
 			Monteur monteur = e.getRowValue();
 			monteur.setAdres(e.getNewValue());
+			monteurDao.addMonteur(monteur);
 		});
 		
 		monteurPostcodeKolom = new TableColumn<>("Postcode");
@@ -89,6 +90,7 @@ public class AdministratieOverzicht extends VBox{
 		monteurPostcodeKolom.setOnEditCommit(e -> {
 			Monteur monteur = e.getRowValue();
 			monteur.setPostcode(e.getNewValue());
+			monteurDao.addMonteur(monteur);
 		});
 		
 		monteurPlaatsKolom = new TableColumn<>("Plaats");
@@ -97,6 +99,7 @@ public class AdministratieOverzicht extends VBox{
 		monteurPlaatsKolom.setOnEditCommit(e -> {
 			Monteur monteur = e.getRowValue();
 			monteur.setwoonplaats(e.getNewValue());
+			monteurDao.addMonteur(monteur);
 		});
 		
 		monteurTelefoonnummerKolom = new TableColumn<>("Telefoonnummer");
@@ -104,6 +107,8 @@ public class AdministratieOverzicht extends VBox{
 		monteurTelefoonnummerKolom.setCellFactory(TextFieldTableCell.<Monteur>forTableColumn());
 		monteurTelefoonnummerKolom.setOnEditCommit(e -> {
 			Monteur monteur = e.getRowValue();
+			monteur.setTelNr(e.getNewValue());
+			monteurDao.addMonteur(monteur);
 		});
 		
 		monteurWachtwoordKolom = new TableColumn<>("Wachtwoord");
@@ -111,6 +116,8 @@ public class AdministratieOverzicht extends VBox{
 		monteurWachtwoordKolom.setCellFactory(TextFieldTableCell.<Monteur>forTableColumn());
 		monteurWachtwoordKolom.setOnEditCommit(e -> {
 			Monteur monteur = e.getRowValue();
+			monteur.setWachtwoord(e.getNewValue());
+			monteurDao.addMonteur(monteur);
 		});
 		
 		monteurSpecialiteitKolom = new TableColumn<>("Specialiteit");
@@ -118,6 +125,8 @@ public class AdministratieOverzicht extends VBox{
 		monteurSpecialiteitKolom.setCellFactory(TextFieldTableCell.<Monteur>forTableColumn());
 		monteurSpecialiteitKolom.setOnEditCommit(e -> {
 			Monteur monteur = e.getRowValue();
+			monteur.setSpecialiteit(e.getNewValue());
+			monteurDao.addMonteur(monteur);
 		});
 		
 		// Tabelkolommen voor het weergeven van de attributen
@@ -131,6 +140,7 @@ public class AdministratieOverzicht extends VBox{
 		klantNaamKolom.setOnEditCommit(e -> {
 			Klant klant = e.getRowValue();
 			klant.setNaam(e.getNewValue());
+			klantDao.addKlant(klant);
 		});
 		
 		klantAdresKolom = new TableColumn<>("Adres");
@@ -139,6 +149,7 @@ public class AdministratieOverzicht extends VBox{
 		klantAdresKolom.setOnEditCommit(e -> {
 			Klant klant = e.getRowValue();
 			klant.setAdres(e.getNewValue());
+			klantDao.addKlant(klant);
 		});
 		
 		klantPostcodeKolom = new TableColumn<>("Postcode");
@@ -147,6 +158,7 @@ public class AdministratieOverzicht extends VBox{
 		klantPostcodeKolom.setOnEditCommit(e -> {
 			Klant klant = e.getRowValue();
 			klant.setPostcode(e.getNewValue());
+			klantDao.addKlant(klant);
 		});
 		
 		klantPlaatsKolom = new TableColumn<>("Plaats");
@@ -155,6 +167,7 @@ public class AdministratieOverzicht extends VBox{
 		klantPlaatsKolom.setOnEditCommit(e -> {
 			Klant klant = e.getRowValue();
 			klant.setwoonplaats(e.getNewValue());
+			klantDao.addKlant(klant);
 		});
 		
 		klantTelefoonnummerKolom = new TableColumn<>("Telefoonnummer");
@@ -163,6 +176,7 @@ public class AdministratieOverzicht extends VBox{
 		klantTelefoonnummerKolom.setOnEditCommit(e -> {
 			Klant klant = e.getRowValue();
 			klant.setTelNr(e.getNewValue());
+			klantDao.addKlant(klant);
 		});
 		
 		// Voegt de kolommen toe aan de klanttabel

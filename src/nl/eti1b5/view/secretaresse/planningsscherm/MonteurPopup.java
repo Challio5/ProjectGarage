@@ -1,9 +1,9 @@
 package nl.eti1b5.view.secretaresse.planningsscherm;
 
-import nl.eti1b5.model.Monteur;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import nl.eti1b5.model.Monteur;
 
 public class MonteurPopup extends GridPane{
 	// De weer te geven reparatie

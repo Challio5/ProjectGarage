@@ -36,15 +36,9 @@ values
 insert into planning
 (begintijd, eindtijd, werknemernr, reparatienr)
 values
-<<<<<<< HEAD
 ('2014-10-28 11:00:00', '2014-10-28 16:45:00', 100, 100),
 ('2014-10-28 15:00:00', '2014-10-28 16:45:00', 101, 102),
 ('2014-10-29 13:00:00', '2014-10-29 15:15:00', 103, 101);
-=======
-('2014-10-22 12:00:12', '2014-10-03 12:59:11', 100, 100),
-('2014-10-23 12:00:12', '2014-10-03 12:59:11', 101, 101),
-('2014-10-26 12:00:12', '2014-10-03 12:59:11', 103, 102);
->>>>>>> FETCH_HEAD
 
 insert into materiaal
 (naam, prijs)
@@ -59,21 +53,13 @@ insert into reparatiemateriaal
 values
 (102, 1001, 2);
 
-
 insert into voorraad
-<<<<<<< HEAD
 (materiaalnr, aantal)
 values
-(1000, 30);
-=======
- (materiaalnr, aantal)
- values
- (1000, 30),
- (1001, 45),
- (1002, 20),
- (1003, 50);
- 
->>>>>>> FETCH_HEAD
+(1000, 30),
+(1001, 45),
+(1002, 20),
+(1003, 50);
 
 insert into monteurbeschikbaarheid
 (werknemernr, beschikbaarheid)

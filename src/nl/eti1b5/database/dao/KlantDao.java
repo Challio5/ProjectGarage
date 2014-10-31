@@ -73,4 +73,77 @@ public class KlantDao {
 		
 		return klantenLijst;
 	}
+	
+	public void addKlant(Klant klant) {
+		// Checkt of de klant al een klantnummer heeft
+		// Als dit zo is dan bestaat hij al in de database en dient hij aangepast te worden
+		if(klant.getKlantnr() != 0) {
+			this.addExistingKlant(klant);
+		}
+		else {
+			this.addNewKlant(klant);
+		}
+	}
+	
+	private void addNewKlant(Klant klant) {
+		// Zet de verbinding op met de database
+		Connection connection = manager.getConnection();
+		
+		// De sql string met de juiste waarden voor de database
+		String insertString = "insert into klant "
+				+ "naam, adres, postcode, woonplaats, telnr "
+				+ "values "
+				+ "(?, ?, ?, ?, ?)";
+		
+		try {
+			// Het statement met de juiste sql string
+			PreparedStatement insertStatement = connection.prepareStatement(insertString);
+			
+			// Meldt de attributen van de planning aan bij het statement
+			insertStatement.setString(1, klant.getNaam());
+			insertStatement.setString(2, klant.getAdres());
+			insertStatement.setString(3, klant.getPostcode());
+			insertStatement.setString(4, klant.getWoonplaats());
+			insertStatement.setString(5, klant.getTelNr());
+			
+			// Voert het statement uit
+			insertStatement.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		// Sluit de verbinding met de database
+		manager.closeConnection();	
+	}
+	
+	private void addExistingKlant(Klant klant) {
+		// Zet de verbinding op met de database
+		Connection connection = manager.getConnection();
+		
+		// De sql string met de juiste waarden voor de database
+		String insertString = "update klant "
+				+ "set naam=?, adres=?, postcode=?, woonplaats=?, TelNr=? "
+				+ "where klantnr=?";
+		
+		try {
+			// Het statement met de juiste sql string
+			PreparedStatement insertStatement = connection.prepareStatement(insertString);
+			
+			// Meldt de attributen van de planning aan bij het statement
+			insertStatement.setString(1, klant.getNaam());
+			insertStatement.setString(2, klant.getAdres());
+			insertStatement.setString(3, klant.getPostcode());
+			insertStatement.setString(4, klant.getWoonplaats());
+			insertStatement.setString(5, klant.getTelNr());
+			insertStatement.setInt(6, klant.getKlantnr());
+			
+			// Voert het statement uit
+			insertStatement.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		// Sluit de verbinding met de database
+		manager.closeConnection();	
+	}
 }

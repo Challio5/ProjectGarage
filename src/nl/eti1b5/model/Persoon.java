@@ -27,9 +27,9 @@ public class Persoon {
 	 */
 	public Persoon() {
 		this.naam = new SimpleStringProperty();
-		this.woonplaats = new SimpleStringProperty();
 		this.adres = new SimpleStringProperty();
 		this.postcode = new SimpleStringProperty();
+		this.woonplaats = new SimpleStringProperty();
 		this.telNr = new SimpleStringProperty();
 	}
 	
@@ -41,11 +41,11 @@ public class Persoon {
 	 * @param postcode De postcode van de persoon
 	 * @param telNr De telefoonnummer van de persoon
 	 */
-	public Persoon(String naam, String woonplaats, String adres, String postcode, String telNr) {
+	public Persoon(String naam, String adres, String postcode, String woonplaats, String telNr) {
 		this.naam = new SimpleStringProperty(naam);
-		this.woonplaats = new SimpleStringProperty(woonplaats);
 		this.adres = new SimpleStringProperty(adres);
 		this.postcode = new SimpleStringProperty(postcode);
+		this.woonplaats = new SimpleStringProperty(woonplaats);
 		this.telNr = new SimpleStringProperty(telNr);
 	}
 

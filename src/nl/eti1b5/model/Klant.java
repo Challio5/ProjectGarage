@@ -99,6 +99,6 @@ public class Klant extends Persoon {
 		.map(Object::toString)
 		.collect(Collectors.joining(", "));
 		for(Auto auto : autoLijst) autoString += auto + ", ";
-		return "Klant [klantNr=" + klantNr.get() + ", autoLijst=" + autoString + "]";
+		return "Klant [klantNr=" + klantNr.get() + " " + super.toString() + ", autoLijst=" + autoString + "]";
 	}
 }

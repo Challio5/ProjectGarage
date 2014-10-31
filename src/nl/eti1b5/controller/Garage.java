@@ -1,16 +1,16 @@
 package nl.eti1b5.controller;
 
-import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import nl.eti1b5.database.dao.AutoDao;
+import nl.eti1b5.database.dao.KlantDao;
 import nl.eti1b5.database.dao.MateriaalDao;
 import nl.eti1b5.database.dao.MonteurDao;
 import nl.eti1b5.database.dao.PlanningDao;
 import nl.eti1b5.database.dao.ReparatieDao;
 import nl.eti1b5.model.Auto;
+import nl.eti1b5.model.Klant;
 import nl.eti1b5.model.Materiaal;
 import nl.eti1b5.model.Monteur;
 import nl.eti1b5.model.Planning;
@@ -41,6 +41,12 @@ public class Garage {
 		ArrayList<Reparatie> lijst = dao.getReparaties();
 		for(Reparatie reparatie : lijst) {
 			System.out.println(reparatie);
+		}
+		
+		KlantDao klantDao = new KlantDao();
+		ArrayList<Klant> klantenLijst = klantDao.getKlanten();
+		for(Klant klant : klantenLijst) {
+			System.out.println(klant);
 		}
 		
 		AutoDao autoDao = new AutoDao();

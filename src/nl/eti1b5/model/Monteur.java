@@ -47,9 +47,9 @@ public class Monteur extends Gebruiker {
 	 * @param beschikbaarheidsLijst De lijst met de beschikbaarheid van de monteur
 	 * @param reparatieLijst De lijst met de reparaties van de monteur
 	 */
-	public Monteur(int werknemerNr, String naam, String woonplaats, String adres, String postcode, String telNr,
+	public Monteur(int werknemerNr, String naam, String adres, String postcode, String woonplaats, String telNr,
 				   String wachtwoord, String specialiteit, ArrayList<String> beschikbaarheidsLijst, ArrayList<Integer> reparatieLijst) {
-		super(werknemerNr, naam, woonplaats, adres, postcode, telNr, wachtwoord);
+		super(werknemerNr, naam, adres, postcode, woonplaats, telNr, wachtwoord);
 		
 		this.specialiteit = new SimpleStringProperty(specialiteit);
 		this.beschikbaarheidsLijst = beschikbaarheidsLijst;

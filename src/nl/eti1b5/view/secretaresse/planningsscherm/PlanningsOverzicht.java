@@ -2,10 +2,6 @@ package nl.eti1b5.view.secretaresse.planningsscherm;
 
 import java.sql.Timestamp;
 
-import nl.eti1b5.database.dao.PlanningDao;
-import nl.eti1b5.model.Monteur;
-import nl.eti1b5.model.Planning;
-import nl.eti1b5.model.Reparatie;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
@@ -15,6 +11,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import nl.eti1b5.database.dao.PlanningDao;
+import nl.eti1b5.model.Monteur;
+import nl.eti1b5.model.Planning;
+import nl.eti1b5.model.Reparatie;
 
 public class PlanningsOverzicht extends VBox{
 	// PlanningsDao voor het ophalen en wegschrijven van planningen

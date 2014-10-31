@@ -93,7 +93,7 @@ public class MonteurDao {
 					ReparatieLijst.add(Reparatie);
 				}
 				
-				monteurLijst.add(new Monteur(werknemerNummer, naam, woonplaats, adres, postcode, telNr,
+				monteurLijst.add(new Monteur(werknemerNummer, naam, adres, postcode, woonplaats, telNr,
 								 wachtwoord, specialiteit, beschikbaarheidsLijst, ReparatieLijst));
 			}
 		} catch (SQLException e) {
@@ -138,7 +138,7 @@ public class MonteurDao {
 				ArrayList<String> beschikbaarheidsLijst = new ArrayList<>();
 				ArrayList<Integer> reparatieLijst = new ArrayList<>();
 				
-				monteur = new Monteur(werknemerNummer, naam, woonplaats, adres, postcode, telNr,
+				monteur = new Monteur(werknemerNummer, naam, adres, postcode, woonplaats, telNr,
 						 wachtwoord, specialiteit, beschikbaarheidsLijst, reparatieLijst);
 			}
 		} catch (SQLException e) {
@@ -260,6 +260,17 @@ public class MonteurDao {
 		return monteursLijst;
 	}
 	
+	public void addMonteur(Monteur monteur) {
+		// Checkt of de monteur al een werknemernummer heeft
+		// Als dit zo is dan bestaat hij al in de database en dient hij aangepast te worden
+		if(monteur.getWerknemerNr() != 0) {
+			this.addExistingMonteur(monteur);
+		}
+		else {
+			this.addNewMonteur(monteur);
+		}
+	}
+	
 	private void addNewMonteur(Monteur monteur) {
 		// Zet de verbinding op met de database
 		Connection connection = manager.getConnection();
@@ -268,7 +279,7 @@ public class MonteurDao {
 		String insertString = "insert into monteur "
 				+ "(naam, adres, postcode, woonplaats, TelNr, Wachtwoord, specialiteit) "
 				+ "values "
-				+ "(?, ?, ?, ?, ?, ?. ?)";
+				+ "(?, ?, ?, ?, ?, ?, ?)";
 		
 		try {
 			// Het statement met de juiste sql string
@@ -279,9 +290,9 @@ public class MonteurDao {
 			insertStatement.setString(2, monteur.getAdres());
 			insertStatement.setString(3, monteur.getPostcode());
 			insertStatement.setString(4, monteur.getWoonplaats());
-			insertStatement.setString(4, monteur.getTelNr());
-			insertStatement.setString(5, monteur.getWachtwoord());
-			insertStatement.setString(6, monteur.getSpecialiteit());
+			insertStatement.setString(5, monteur.getTelNr());
+			insertStatement.setString(6, monteur.getWachtwoord());
+			insertStatement.setString(7, monteur.getSpecialiteit());
 			
 			// Voert het statement uit
 			insertStatement.execute();
@@ -299,7 +310,7 @@ public class MonteurDao {
 		
 		// De sql string met de juiste waarden voor de database
 		String insertString = "update monteur "
-				+ "set naam=?, adres=?, postcode=?, woonplaats=?, TelNr=?, Wachtwoord=?, specialiteit=?) "
+				+ "set naam=?, adres=?, postcode=?, woonplaats=?, TelNr=?, Wachtwoord=?, specialiteit=? "
 				+ "where werknemernr=?";
 		
 		try {
@@ -311,10 +322,10 @@ public class MonteurDao {
 			insertStatement.setString(2, monteur.getAdres());
 			insertStatement.setString(3, monteur.getPostcode());
 			insertStatement.setString(4, monteur.getWoonplaats());
-			insertStatement.setString(4, monteur.getTelNr());
-			insertStatement.setString(5, monteur.getWachtwoord());
-			insertStatement.setString(6, monteur.getSpecialiteit());
-			insertStatement.setInt(7, monteur.getWerknemerNr());
+			insertStatement.setString(5, monteur.getTelNr());
+			insertStatement.setString(6, monteur.getWachtwoord());
+			insertStatement.setString(7, monteur.getSpecialiteit());
+			insertStatement.setInt(8, monteur.getWerknemerNr());
 			
 			// Voert het statement uit
 			insertStatement.execute();

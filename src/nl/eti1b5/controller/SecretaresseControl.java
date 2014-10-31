@@ -1,14 +1,14 @@
 package nl.eti1b5.controller;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import nl.eti1b5.view.secretaresse.administratiescherm.AdministratieOverzicht;
 import nl.eti1b5.view.secretaresse.menu.MenuNode;
 import nl.eti1b5.view.secretaresse.menu.MenuView;
 import nl.eti1b5.view.secretaresse.planningsscherm.PlanningsOverzicht;
 import nl.eti1b5.view.secretaresse.reparatiescherm.ReparatieOverzicht;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 
 public class SecretaresseControl{
 	

@@ -40,9 +40,9 @@ public class Gebruiker extends Persoon {
 	 * @param telNr De telefoonnummer van de persoon
 	 * @param wachtwoord Het wachtwoord van de persoon
 	 */
-	public Gebruiker(int werknemerNr, String naam, String plaats, String adres, String postcode, String telNr,
+	public Gebruiker(int werknemerNr, String naam, String adres, String postcode, String plaats, String telNr,
 					 String wachtwoord) {
-		super(naam, plaats, adres, postcode, telNr);
+		super(naam, adres, postcode, plaats, telNr);
 		this.werknemerNr = new SimpleIntegerProperty(werknemerNr);
 		this.wachtwoord = new SimpleStringProperty(wachtwoord);
 	}
