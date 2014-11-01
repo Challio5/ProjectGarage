@@ -42,6 +42,7 @@ public class InlogView extends VBox{
 		
 		job = new ComboBox<>();
 		job.getItems().addAll("Monteur", "Secretaresse");
+		job.getSelectionModel().selectFirst();
 		
 		inlog = new InlogNode();
 		Reflection reflection = new Reflection();
