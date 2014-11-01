@@ -1,5 +1,8 @@
-package nl.eti1b5.view.monteur.reparatiescherm;
+package nl.eti1b5.view.secretaresse.administratiescherm;
 
+import java.sql.Timestamp;
+
+import javafx.collections.FXCollections;
 import javafx.scene.Scene;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -9,57 +12,70 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.converter.BooleanStringConverter;
-
-import nl.eti1b5.model.Reparatie;
 import nl.eti1b5.database.dao.OmschrijvingDao;
+import nl.eti1b5.database.dao.ReparatieDao;
+import nl.eti1b5.model.Reparatie;
 import nl.eti1b5.view.secretaresse.reparatiescherm.OmschrijvingsPopup;
 
-
-public class ReparatieNode extends TableView<Reparatie>{
-	
+public class FactuurPopup extends TableView<Reparatie>{
+	// Stage voor het weergeven van popups
 	private Stage popupStage;
 	
+	// Kolommen voor het weergeven van de attributen van de reparaties
 	private TableColumn<Reparatie, Integer> reparatieNummerKolom;
 	private TableColumn<Reparatie, String> kentekenKolom;
-	private TableColumn<Reparatie, Integer> omschrijvingKolom;
+	private TableColumn<Reparatie, Integer> omschrijvingsNummerKolom;
+	private TableColumn<Reparatie, Timestamp> begintijdKolom;
+	private TableColumn<Reparatie, Timestamp> eindtijdKolom;	
 	private TableColumn<Reparatie, Boolean> reparatieStatusKolom;
+	private TableColumn<Reparatie, Boolean> betaalStatusKolom;
+	// Materialen ???
 	
-	public ReparatieNode(){
+	public FactuurPopup(int klantnummer){
+		// Zet tabel op bewerkbaar
 		this.setEditable(true);
 		
+		// Stage voor het weergeven van popups
+		popupStage = new Stage();
+		
+		// Kolommen voor het weergeven van de attributen van de reparaties
 		reparatieNummerKolom = new TableColumn<Reparatie, Integer>("Reparatie nummer");
 		reparatieNummerKolom.setCellValueFactory(new PropertyValueFactory<Reparatie, Integer>("reparatieNummer"));
-		reparatieNummerKolom.setMinWidth(150);
-		// Niet editable want is de primary key in de database van reparatie
 		
 		kentekenKolom = new TableColumn<Reparatie, String>("Kenteken");
 		kentekenKolom.setCellValueFactory(new PropertyValueFactory<Reparatie,String>("kenteken"));
-		kentekenKolom.setCellFactory(TextFieldTableCell.<Reparatie>forTableColumn());
-		kentekenKolom.setOnEditCommit(e -> {
-			Reparatie reparatie = e.getRowValue();
-			reparatie.setKenteken(e.getNewValue());
-		});
-		kentekenKolom.setMinWidth(150);
 		
-		omschrijvingKolom = new TableColumn<Reparatie, Integer>("Omschrijving");
-		omschrijvingKolom.setCellValueFactory(new PropertyValueFactory<Reparatie, Integer>("naam"));
-		omschrijvingKolom.setCellFactory(new OmschrijvingsNummerCallback());
-		omschrijvingKolom.setMinWidth(150);
-		// Niet editable want is primary key in de database van omschrijving
+		omschrijvingsNummerKolom = new TableColumn<Reparatie, Integer>("Omschrijving");
+		omschrijvingsNummerKolom.setCellValueFactory(new PropertyValueFactory<Reparatie, Integer>("omschrijvingsNummer"));
+		omschrijvingsNummerKolom.setCellFactory(new OmschrijvingsNummerCallback());
+		
+		begintijdKolom = new TableColumn<Reparatie, Timestamp>("Begintijd");
+		begintijdKolom.setCellValueFactory(new PropertyValueFactory<Reparatie, Timestamp>("beginTijd"));
+		
+		eindtijdKolom = new TableColumn<Reparatie, Timestamp>("Eindtijd");
+		eindtijdKolom.setCellValueFactory(new PropertyValueFactory<Reparatie, Timestamp>("eindTijd"));
 		
 		reparatieStatusKolom = new TableColumn<Reparatie, Boolean>("Reparatie Status");
 		reparatieStatusKolom.setCellValueFactory(new PropertyValueFactory<Reparatie, Boolean>("reparatieStatus"));
-		reparatieStatusKolom.setCellFactory(TextFieldTableCell.<Reparatie, Boolean>forTableColumn(new BooleanStringConverter()));
-		reparatieStatusKolom.setOnEditCommit(e -> {
+		
+		betaalStatusKolom = new TableColumn<Reparatie, Boolean>("Betaal Status");
+		betaalStatusKolom.setCellValueFactory(new PropertyValueFactory<Reparatie, Boolean>("betaalStatus"));
+		betaalStatusKolom.setCellFactory(TextFieldTableCell.<Reparatie, Boolean>forTableColumn(new BooleanStringConverter()));
+		betaalStatusKolom.setOnEditCommit(e -> {
 			Reparatie reparatie = e.getRowValue();
-			reparatie.setReparatieStatus(e.getNewValue());
+			reparatie.setBetaalStatus(e.getNewValue());
 		});
-		reparatieStatusKolom.setMinWidth(150);
 		
 		this.getColumns().add(reparatieNummerKolom);
 		this.getColumns().add(kentekenKolom);
-		this.getColumns().add(omschrijvingKolom);
+		this.getColumns().add(omschrijvingsNummerKolom);
+		this.getColumns().add(begintijdKolom);
+		this.getColumns().add(eindtijdKolom);
 		this.getColumns().add(reparatieStatusKolom);
+		this.getColumns().add(betaalStatusKolom);
+		
+		// Reparaties van klant
+		this.setItems(FXCollections.observableArrayList(new ReparatieDao().getKlantReparaties(klantnummer)));
 	}
 	
 	private class OmschrijvingsNummerCallback implements Callback<TableColumn<Reparatie, Integer>, TableCell<Reparatie, Integer>>{

@@ -1,5 +1,6 @@
 package nl.eti1b5.view.secretaresse.planningsscherm;
 
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -33,6 +34,11 @@ public class ReparatiePopup extends GridPane {
 	private TextField materialenLijst;
 	
 	public ReparatiePopup(Reparatie reparatie) {
+		this.setPadding(new Insets(10));
+		
+		this.setHgap(10);
+		this.setVgap(10);
+		
 		reparatieNummerLabel = new Label("ReparatieNummer");
 		reparatieNummer = new TextField();
 		reparatieNummer.setEditable(false);

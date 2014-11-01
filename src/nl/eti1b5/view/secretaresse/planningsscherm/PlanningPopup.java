@@ -403,11 +403,8 @@ public class PlanningPopup extends GridPane{
 
 				// Voeg omschrijving toe aan database en
 				// omschrijvingDao.addOmschrijving(new Omschrij)
-				reparatie.setOmschrijving(new Omschrijving(overigeReparatie
-						.getText(), sqlTijd));
 			} else {
-				reparatie.setOmschrijving(omschrijvingsKiezer
-						.getSelectionModel().getSelectedItem());
+				
 			}
 
 			// Voegt de reparatie toe aan de database

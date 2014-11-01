@@ -27,7 +27,7 @@ public class Reparatie {
 
 	private IntegerProperty reparatieNummer;
 	private StringProperty kenteken;
-	private ObjectProperty<Omschrijving> omschrijving;
+	private IntegerProperty omschrijvingsNummer;
 	private ObjectProperty<Timestamp> beginTijd;
 	private ObjectProperty<Timestamp> eindTijd;
 	private BooleanProperty reparatieStatus;
@@ -41,7 +41,7 @@ public class Reparatie {
 	public Reparatie() {
 		this.reparatieNummer = new SimpleIntegerProperty();
 		this.kenteken = new SimpleStringProperty();
-		this.omschrijving = new SimpleObjectProperty<>();
+		this.omschrijvingsNummer = new SimpleIntegerProperty();
 		this.beginTijd = new SimpleObjectProperty<>();
 		this.eindTijd = new SimpleObjectProperty<>();
 		this.reparatieStatus = new SimpleBooleanProperty();
@@ -61,12 +61,12 @@ public class Reparatie {
 	 * @param materialenLijst De lijst met gebruikte materialen van de reparatie
 	 */
 	public Reparatie(int reparatieNummer, String kenteken, 
-			Omschrijving omschrijving, Timestamp beginTijd, Timestamp eindTijd,
+			int omschrijvingsNummer, Timestamp beginTijd, Timestamp eindTijd,
 			boolean reparatieStatus, boolean betaalStatus,
 			ArrayList<Materiaal> materialenLijst) {
 		this.reparatieNummer = new SimpleIntegerProperty(reparatieNummer);
 		this.kenteken = new SimpleStringProperty(kenteken);
-		this.omschrijving = new SimpleObjectProperty<>(omschrijving);
+		this.omschrijvingsNummer = new SimpleIntegerProperty(omschrijvingsNummer);
 		this.beginTijd = new SimpleObjectProperty<>(beginTijd);
 		this.eindTijd = new SimpleObjectProperty<>(eindTijd);
 		this.reparatieStatus = new SimpleBooleanProperty(reparatieStatus);
@@ -94,8 +94,8 @@ public class Reparatie {
 	 * Getter voor het opvragen van de omschrijving van de reparatie
 	 * @return De omschrijving van de reparatie
 	 */
-	public Omschrijving getOmschrijving() {
-		return omschrijving.get();
+	public int getOmschrijvingsNummer() {
+		return omschrijvingsNummer.get();
 	}
 	
 	/**
@@ -156,10 +156,10 @@ public class Reparatie {
 	
 	/**
 	 * Setter voor het aanpassen van de omschrijving van de reparatie
-	 * @param omschrijving De omschrijving van de reparati
+	 * @param omschrijvingsNummer De omschrijving van de reparatie
 	 */
-	public void setOmschrijving(Omschrijving omschrijving) {
-		this.omschrijving.set(omschrijving);
+	public void setOmschrijvingsNummer(int omschrijvingsNummer) {
+		this.omschrijvingsNummer.set(omschrijvingsNummer);
 	}
 	
 	/**
@@ -223,8 +223,8 @@ public class Reparatie {
 	 * Property die de omschrijvinggegevens bevat
 	 * @return Property met de omschrijvinggegevens
 	 */
-	public ObjectProperty<Omschrijving> omschrijvingProperty() {
-		return this.omschrijving;
+	public IntegerProperty omschrijvingsNummerProperty() {
+		return this.omschrijvingsNummer;
 	}
 	
 	/**
@@ -268,7 +268,7 @@ public class Reparatie {
 		String materialenString = "";
 		for(Materiaal materiaal : materialenLijst) materialenString += materiaal + ", ";
 		return "Reparatie [reparatieNummer=" + reparatieNummer.get() + ", kenteken="
-				+ kenteken.get() + ", omschrijving=" + omschrijving.get() + ", beginTijd="
+				+ kenteken.get() + ", omschrijving=" + omschrijvingsNummer.get() + ", beginTijd="
 				+ beginTijd.get() + ", eindTijd=" + eindTijd.get() + ", reparatieStatus="
 				+ reparatieStatus.get() + ", betaalStatus=" + betaalStatus.get()
 			    + ", materialenLijst=" + materialenString + "]";

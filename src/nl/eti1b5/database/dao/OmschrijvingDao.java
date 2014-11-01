@@ -20,6 +20,7 @@ public class OmschrijvingDao {
 	}
 	
 	public ArrayList<Omschrijving> getOmschrijvingen() {
+		// Lijst voor de resultaten uit de database
 		ArrayList<Omschrijving> omschrijvingenLijst = new ArrayList<>();
 		
 		// De connectie met de database op
@@ -49,6 +50,40 @@ public class OmschrijvingDao {
 		manager.closeConnection();
 		
 		return omschrijvingenLijst;
+	}
+	
+	public Omschrijving getOmschrijving(int omschrijvingsNummer) {
+		Omschrijving omschrijving = null;
+		
+		// De connectie met de database op
+		Connection connection = manager.getConnection();
+		
+		// De te execturen sql querys
+		try {
+			// Query die alle gegevens uit de tabel monteur haalt
+			String omschrijvingsQuery = "select * from omschrijving "
+					+ "where omschrijvingsnr = ?";
+			PreparedStatement omschrijvingsStatement = connection.prepareStatement(omschrijvingsQuery);
+			omschrijvingsStatement.setInt(omschrijvingsNummer, 1);
+			ResultSet omschrijvingsSet = omschrijvingsStatement.executeQuery();
+			
+			// Zolang er nog gegevens in de tabel staan
+			while(omschrijvingsSet.next()) {
+				// De gegevens van een rij
+				String naam = omschrijvingsSet.getString("Naam");
+				Time duur = omschrijvingsSet.getTime("Duur");
+				
+				omschrijving = new Omschrijving(naam, duur);
+			}
+		} catch (SQLException e) {
+			System.err.println("Kan het statement niet uitvoeren");
+			e.printStackTrace();
+		}
+		
+		// Sluit de verbinding met de database
+		manager.closeConnection();
+		
+		return omschrijving;
 	}
 	
 	public void addOmschrijving(Omschrijving omschrijving) {

@@ -21,6 +21,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import nl.eti1b5.database.dao.MateriaalDao;
+import nl.eti1b5.database.dao.OmschrijvingDao;
 import nl.eti1b5.model.Materiaal;
 import nl.eti1b5.model.Reparatie;
 
@@ -68,7 +69,7 @@ public class ReparatiePopup extends BorderPane{
 		repNr.setEditable(false);
 		TextField kenteken= new TextField(reparatie.getKenteken());
 		kenteken.setEditable(false);
-		TextField omschrijving = new TextField(reparatie.getOmschrijving().toString());
+		TextField omschrijving = new TextField(new OmschrijvingDao().getOmschrijving(reparatie.getOmschrijvingsNummer()).getNaam());
 		omschrijving.setEditable(false);
 		
 		beginDatum =  new DatePicker();

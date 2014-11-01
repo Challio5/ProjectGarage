@@ -26,12 +26,23 @@ values
 ("Tom", "Enterweg 10", "3453JI", "Bornebroek", "06-12387645", "Tom94", "Motor"),
 ("Rob", "Rijssenseweg 11", "2393JI", "Nijverdal", "06-09128365", "Moyboy88", "Carroserie");
 
-insert into reparatie
-(kenteken, omschrijving, begintijd, eindtijd, reparatiestatus, betaalstatus)
+insert into omschrijving
+(naam, duur)
 values
-("12-31-AB", "Banden", '2014-10-30 10:55:12', '2014-10-30 15:05:12', false, false),
-("10-ID-32", "Grote Beurt", '2014-10-03 13:46:44', '2014-10-03 15:23:01', false, false),
-("12-IKK-2", "Carroserie", '2014-10-01 14:22:38', '2014-10-01 17:00:12', true, true);
+("Banden", '00:30:00'),
+("Kleine beurt", '01:00:00'),
+("Grote beurt", '01:30:00'),
+("Carosserie", '00:45:00'),
+("Motor", '02:00:00'),
+("Elektronica", '01:15:00');
+
+insert into reparatie
+(kenteken, omschrijvingsnr, begintijd, eindtijd, reparatiestatus, betaalstatus)
+values
+("12-31-AB", 1, '2014-10-30 10:55:12', '2014-10-30 15:05:12', false, false),
+("34-KB-23", 6, '2014-11-25 14:55:12', '2014-11-23 16:05:12', false, false),
+("10-ID-32", 3, '2014-10-03 13:46:44', '2014-10-03 15:23:01', false, false),
+("12-IKK-2", 4, '2014-10-01 14:22:38', '2014-10-01 17:00:12', true, true);
 
 insert into planning
 (begintijd, eindtijd, werknemernr, reparatienr)

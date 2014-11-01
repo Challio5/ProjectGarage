@@ -20,10 +20,8 @@ public class PlanningsOverzicht extends VBox{
 	// PlanningsDao voor het ophalen en wegschrijven van planningen
 	private PlanningDao planningDao;
 	
-	// Planningspopup stage voor inplannen reparatie en popups voor weergave attributen
-	private Stage planningPopup;
-	private Stage reparatiePopup;
-	private Stage monteurPopup;
+	// Stage voor het weergeven van popups
+	private Stage popupStage;
 	
 	// Tabel die de attributen van de de planning weergeeft
 	private TableView<Planning> planningsTabel;
@@ -40,9 +38,7 @@ public class PlanningsOverzicht extends VBox{
 	public PlanningsOverzicht() {
 		planningDao = new PlanningDao();
 		
-		planningPopup = new Stage();
-		reparatiePopup = new Stage();
-		monteurPopup = new Stage();
+		popupStage = new Stage();
 		
 		planningsTabel = new TableView<>();
 		planningsTabel.getItems().addAll(planningDao.getPlanning());
@@ -75,8 +71,8 @@ public class PlanningsOverzicht extends VBox{
 	
 	public void addPlanKnopActionListener() {
 		planKnop.setOnAction(e -> {
-			planningPopup.setScene(new Scene(new PlanningPopup()));
-			planningPopup.show();
+			popupStage.setScene(new Scene(new PlanningPopup()));
+			popupStage.show();
 		});
 	}
 	
@@ -103,8 +99,8 @@ public class PlanningsOverzicht extends VBox{
 				
 				cell.setOnMouseClicked(e -> {
 					if(!cell.isEmpty()) {
-						monteurPopup.setScene(new Scene(new MonteurPopup(cell.getItem())));
-						monteurPopup.show();
+						popupStage.setScene(new Scene(new MonteurPopup(cell.getItem())));
+						popupStage.show();
 					}
 				});
 				
@@ -137,8 +133,8 @@ public class PlanningsOverzicht extends VBox{
 				
 				cell.setOnMouseClicked(e -> {
 					if(!cell.isEmpty()) {
-						reparatiePopup.setScene(new Scene(new ReparatiePopup(cell.getItem())));
-						reparatiePopup.show();
+						popupStage.setScene(new Scene(new ReparatiePopup(cell.getItem())));
+						popupStage.show();
 					}
 				});
 				

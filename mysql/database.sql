@@ -42,17 +42,26 @@ CREATE TABLE IF NOT EXISTS Monteur(
 
 ALTER TABLE Monteur auto_increment = 100;
 
+/* Tabel voor de gegevens van een reparatieomschrijving */
+CREATE TABLE IF NOT EXISTS Omschrijving(
+	Omschrijvingsnr int not null auto_increment,
+	Naam varchar(30),
+	Duur time,
+	PRIMARY KEY (Omschrijvingsnr)
+);
+
 /* Tabel voor de gegevens van een reparatie */
 CREATE TABLE IF NOT EXISTS Reparatie(
 	Reparatienr int not null auto_increment, 
 	Kenteken varchar(8) not null, 										
-	Omschrijving varchar(30),
+	Omschrijvingsnr int not null,
 	Begintijd datetime,
 	Eindtijd datetime,
 	Reparatiestatus boolean default false,
 	Betaalstatus boolean default false,										
 	PRIMARY KEY (Reparatienr), 
-	FOREIGN KEY (Kenteken) REFERENCES Auto(Kenteken) 				/* Meerdere reparaties voor een auto */
+	FOREIGN KEY (Kenteken) REFERENCES Auto(Kenteken), 				/* Meerdere reparaties voor een auto */
+	FOREIGN KEY (Omschrijvingsnr) REFERENCES Omschrijving(Omschrijvingsnr)
 );
 
 ALTER TABLE Reparatie auto_increment = 100;
@@ -84,14 +93,6 @@ CREATE TABLE IF NOT EXISTS Voorraad(
     PRIMARY KEY(Materiaalnr),
     FOREIGN KEY(Materiaalnr) references Materiaal(Materiaalnr)
     );
-
-/* Tabel voor de gegevens van een reparatieomschrijving */
-CREATE TABLE IF NOT EXISTS Omschrijving(
-	Omschrijvingsnr int not null auto_increment,
-	Naam varchar(30),
-	Duur time,
-	PRIMARY KEY (Omschrijvingsnr)
-);
 
 /* 
  * Koppelt meerdere materialen aan een reparatie 

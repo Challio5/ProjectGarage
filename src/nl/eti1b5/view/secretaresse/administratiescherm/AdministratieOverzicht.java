@@ -1,17 +1,24 @@
 package nl.eti1b5.view.secretaresse.administratiescherm;
 
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import javafx.util.Callback;
 import nl.eti1b5.database.dao.KlantDao;
 import nl.eti1b5.database.dao.MonteurDao;
 import nl.eti1b5.model.Klant;
 import nl.eti1b5.model.Monteur;
 
 public class AdministratieOverzicht extends VBox{
+	
+	// Stage voor het weergeven van popups
+	private Stage popupStage;
 	
 	// Dao voor het ophalen en wegschrijven van de klanten en monteurs
 	private KlantDao klantDao;
@@ -43,6 +50,9 @@ public class AdministratieOverzicht extends VBox{
 	private TableColumn<Monteur, String> monteurSpecialiteitKolom;	
 	
 	public AdministratieOverzicht() {
+		// Stage voor het weergeven van popups
+		popupStage = new Stage();
+		
 		// Dao voor het ophalen en wegschrijven van de klanten
 		klantDao = new KlantDao();
 		monteurDao = new MonteurDao();
@@ -132,6 +142,7 @@ public class AdministratieOverzicht extends VBox{
 		// Tabelkolommen voor het weergeven van de attributen
 		klantnummerKolom = new TableColumn<>("Klantnummer");
 		klantnummerKolom.setCellValueFactory(new PropertyValueFactory<>("klantNr"));
+		klantnummerKolom.setCellFactory(new KlantNummerCallback());
 		// Niet editable aangezien primary key in database
 		
 		klantNaamKolom = new TableColumn<>("Naam");
@@ -221,5 +232,40 @@ public class AdministratieOverzicht extends VBox{
 				break;
 			}
 		});
+	}
+	
+	public class KlantNummerCallback implements Callback<TableColumn<Klant, Integer>, TableCell<Klant, Integer>> {
+
+		@Override
+		public TableCell<Klant, Integer> call(TableColumn<Klant, Integer> column) {
+			
+			TableCell<Klant, Integer> cell = new TableCell<Klant, Integer>() {
+
+				@Override
+				protected void updateItem(Integer klantnummer, boolean empty) {
+					super.updateItem(klantnummer, empty);
+					
+					if(empty) {
+						this.setText(null);
+						this.setGraphic(null);
+					}
+					else {
+						this.setText(String.valueOf(klantnummer));
+						this.setGraphic(null);
+					}
+				}				
+			};
+			
+			cell.setOnMouseClicked(e -> {
+				if(!cell.isEmpty()) {
+					popupStage.setScene(new Scene(new FactuurPopup(cell.getItem())));
+					popupStage.setTitle("Reparaties");
+					popupStage.show();
+				}
+			});
+			
+			return cell;
+		}
+		
 	}
 }
