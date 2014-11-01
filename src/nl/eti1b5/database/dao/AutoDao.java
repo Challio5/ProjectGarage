@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import nl.eti1b5.database.DatabaseManager;
 import nl.eti1b5.model.Auto;
+import nl.eti1b5.model.Klant;
 
 /**
  * Data access object wat de auto tabel beheert in de database
@@ -73,5 +74,36 @@ public class AutoDao {
 
 		// Geeft de lijst met auto's terug
 		return autoLijst;
+	}
+	
+	public void addNewAuto(Auto auto) {
+		// Zet de verbinding op met de database
+		Connection connection = manager.getConnection();
+		
+		// De sql string met de juiste waarden voor de database
+		String insertString = "insert into Auto "
+				+ "(kenteken, klantnr, merk, model, verzekeringsnr)"
+				+ "values "
+				+ "(?, ?, ?, ?, ?)";
+		
+		try {
+			// Het statement met de juiste sql string
+			PreparedStatement insertStatement = connection.prepareStatement(insertString);
+			
+			// Meldt de attributen van de planning aan bij het statement
+			insertStatement.setString(1, auto.getKenteken());
+			insertStatement.setInt(2, auto.getKlantnr());
+			insertStatement.setString(3, auto.getMerk());
+			insertStatement.setString(4, auto.getModel());
+			insertStatement.setInt(5, auto.getVerzekeringsnummer());
+			
+			// Voert het statement uit
+			insertStatement.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		// Sluit de verbinding met de database
+		manager.closeConnection();	
 	}
 }

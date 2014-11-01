@@ -1,17 +1,14 @@
 package nl.eti1b5.view.secretaresse.administratiescherm;
 
+import java.util.ArrayList;
+
 import nl.eti1b5.controller.KlantToevoegControl;
 import nl.eti1b5.model.Auto;
-import nl.eti1b5.model.Materiaal;
-import nl.eti1b5.view.monteur.reparatiescherm.ReparatiePopup;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -28,20 +25,14 @@ public class AddKlantScherm extends BorderPane{
 	private Label postcode;
 	private Label woonplaats;
 	private Label telefoonNummer;
-	private Label auto;
 	
 	private TextField addNaam;
 	private TextField addAdres;
 	private TextField addPostcode;
 	private TextField addWoonplaats;
 	private TextField addTelefoonNummer;
-	private Button addAuto;
 	
-	private TableView<Auto> autos;
-	
-	private TableColumn<Auto, String> autoMerk;
-	private TableColumn<Auto, String> autoKenteken;
-	private TableColumn<Auto, String> autoModel;
+	private AddKlantNode klantNode;
 
 	
 	public AddKlantScherm(){
@@ -54,9 +45,8 @@ public class AddKlantScherm extends BorderPane{
 		postcode = new Label("Postcode: ");
 		woonplaats = new Label("Woonplaats");
 		telefoonNummer = new Label("Telefoonnummer: ");
-		auto = new Label("Auto: ");
 		
-		labels.getChildren().addAll(naam, adres, postcode, woonplaats, telefoonNummer, auto);
+		labels.getChildren().addAll(naam, adres, postcode, woonplaats, telefoonNummer);
 		
 		textFields = new VBox();
 		textFields.setPadding(new Insets(4));
@@ -66,19 +56,10 @@ public class AddKlantScherm extends BorderPane{
 		addPostcode = new TextField();
 		addWoonplaats = new TextField();
 		addTelefoonNummer = new TextField();
-		addAuto = new Button("Toevoegen");
 		
-		textFields.getChildren().addAll(addNaam, addAdres, addPostcode, addWoonplaats, addTelefoonNummer, addAuto);
+		textFields.getChildren().addAll(addNaam, addAdres, addPostcode, addWoonplaats, addTelefoonNummer);
 		
-		autos = new TableView<Auto>();
-		
-		autoKenteken = new TableColumn<Auto, String>("Kenteken");
-		autoKenteken.setMinWidth(150);
-		autoMerk = new TableColumn<Auto, String>("Merk");
-		autoMerk.setMinWidth(150);
-		autoModel = new TableColumn<Auto, String>("Model");
-		autoModel.setMinWidth(150);
-		
+		klantNode = new AddKlantNode();
 		
 		submit = new Button("Toevoegen");
 		submit.setOnAction(new KlantToevoegControl(this));
@@ -86,7 +67,7 @@ public class AddKlantScherm extends BorderPane{
 		this.setTop(submit);
 		this.setLeft(labels);
 		this.setRight(textFields);
-		this.setBottom(autos);
+		this.setBottom(klantNode);
 		init();
 	}
 
@@ -96,5 +77,29 @@ public class AddKlantScherm extends BorderPane{
 		Scene stageScene = new Scene(this);
 		newStage.setScene(stageScene);
 		newStage.show();
+	}
+	
+	public String getNaam(){
+		return addNaam.getText();
+	}
+	
+	public String getAdres(){
+		return addAdres.getText();
+	}
+	
+	public String getPostcode(){
+		return addPostcode.getText();
+	}
+	
+	public String getWoonplaats(){
+		return addWoonplaats.getText();
+	}
+	
+	public String getTelefoonNummer(){
+		return addTelefoonNummer.getText();
+	}
+	
+	public ArrayList<Auto> getAutos(){
+		return klantNode.getAutos();
 	}
 }
