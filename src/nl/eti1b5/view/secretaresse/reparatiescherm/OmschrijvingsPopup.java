@@ -1,10 +1,10 @@
 package nl.eti1b5.view.secretaresse.reparatiescherm;
 
-import nl.eti1b5.model.Omschrijving;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import nl.eti1b5.model.Omschrijving;
 
 public class OmschrijvingsPopup extends GridPane{
 	private Label naamLabel;

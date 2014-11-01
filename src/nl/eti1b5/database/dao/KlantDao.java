@@ -74,6 +74,45 @@ public class KlantDao {
 		return klantenLijst;
 	}
 	
+	public int getKlantNr(Klant klant){
+		int klantNr = 0;
+		// Zet de verbinding op met de database
+		Connection connection = manager.getConnection();
+		
+		// De sql string met de juiste waarden voor de database
+		String queryString = "Select klantnr from Klant where "
+				+ "naam = ?"
+				+ "And adres = ?"
+				+ "And postcode = ?"
+				+ "And woonplaats = ?"
+				+ "And telnr = ?";
+		
+		try {
+			// Het statement met de juiste sql string
+			PreparedStatement klantStatement = connection.prepareStatement(queryString);
+			
+			// Meldt de attributen van de planning aan bij het statement
+			klantStatement.setString(1, klant.getNaam());
+			klantStatement.setString(2, klant.getAdres());
+			klantStatement.setString(3, klant.getPostcode());
+			klantStatement.setString(4, klant.getWoonplaats());
+			klantStatement.setString(5, klant.getTelNr());
+			
+			// Voert het statement uit
+			ResultSet klantSet = klantStatement.executeQuery();
+			while(klantSet.next())
+				klantNr = klantSet.getInt("klantnr");
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		// Sluit de verbinding met de database
+		manager.closeConnection();	
+		
+		return klantNr;
+	}
+	
 	public void addKlant(Klant klant) {
 		// Checkt of de klant al een klantnummer heeft
 		// Als dit zo is dan bestaat hij al in de database en dient hij aangepast te worden
@@ -91,7 +130,7 @@ public class KlantDao {
 		
 		// De sql string met de juiste waarden voor de database
 		String insertString = "insert into klant "
-				+ "naam, adres, postcode, woonplaats, telnr "
+				+ "(naam, adres, postcode, woonplaats, telnr)"
 				+ "values "
 				+ "(?, ?, ?, ?, ?)";
 		
@@ -122,7 +161,7 @@ public class KlantDao {
 		
 		// De sql string met de juiste waarden voor de database
 		String insertString = "update klant "
-				+ "set naam=?, adres=?, postcode=?, woonplaats=?, TelNr=? "
+				+ "set naam=?, adres=?, postcode=?, woonplaats=?, Telnr=? "
 				+ "where klantnr=?";
 		
 		try {

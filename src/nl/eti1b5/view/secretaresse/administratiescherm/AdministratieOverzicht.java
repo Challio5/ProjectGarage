@@ -1,6 +1,7 @@
 package nl.eti1b5.view.secretaresse.administratiescherm;
 
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -26,6 +27,11 @@ public class AdministratieOverzicht extends VBox{
 	
 	// Combobox voor het kiezen van de adminstratie van klanten of monteurs
 	private ComboBox<String> administratieKiezer;
+	
+	// Button voor het toevoegen van een klant of monteur
+	private Button klantToevoegButton;
+	private Button monteurToevoegButton;
+	
 	
 	// Tabel voor het weergeven van de klanten en monteur
 	private TableView<Klant> klantenTabel;
@@ -63,6 +69,13 @@ public class AdministratieOverzicht extends VBox{
 		administratieKiezer.getItems().add("Monteurs");
 		administratieKiezer.getSelectionModel().selectFirst();
 		this.setAdministratieKiezerListener();
+		
+		// Button voor het toevoegen van klanten ofwel monteurs
+		klantToevoegButton = new Button("Klant toevoegen");
+		klantToevoegButton.setOnAction(e -> {
+			new AddKlantScherm();
+		});
+		monteurToevoegButton = new Button("Monteur toevoegen");
 		
 		// Tabellen voor het weergeven van de klanten en monteurs
 		// Maakt ze editable voor bewerken van de weergegeven data
@@ -215,6 +228,7 @@ public class AdministratieOverzicht extends VBox{
 		// Voegt de onderdelen toe aan het klantenoverzicht
 		this.getChildren().add(administratieKiezer);
 		this.getChildren().add(klantenTabel);
+		this.getChildren().add(klantToevoegButton);
 	}
 	
 	// Listener voor het detecteren van een verandering in de administratieKiezer
@@ -224,11 +238,16 @@ public class AdministratieOverzicht extends VBox{
 			switch(newValue) {
 			case "Klanten":
 				this.getChildren().remove(monteurTabel);
+				this.getChildren().remove(monteurToevoegButton);
 				this.getChildren().add(klantenTabel);
+				this.getChildren().add(klantToevoegButton);
+				
 				break;
 			case "Monteurs":
 				this.getChildren().remove(klantenTabel);
+				this.getChildren().remove(klantToevoegButton);
 				this.getChildren().add(monteurTabel);
+				this.getChildren().add(monteurToevoegButton);
 				break;
 			}
 		});

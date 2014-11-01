@@ -5,13 +5,10 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import javafx.util.converter.BooleanStringConverter;
-
-import nl.eti1b5.model.Reparatie;
 import nl.eti1b5.database.dao.OmschrijvingDao;
+import nl.eti1b5.model.Reparatie;
 import nl.eti1b5.view.secretaresse.reparatiescherm.OmschrijvingsPopup;
 
 
@@ -27,33 +24,42 @@ public class ReparatieNode extends TableView<Reparatie>{
 	public ReparatieNode(){
 		this.setEditable(true);
 		
-		reparatieNummerKolom = new TableColumn<Reparatie, Integer>("Reparatie nummer");
+		reparatieNummerKolom = new TableColumn<Reparatie, Integer>("Reparatie nummer:");
 		reparatieNummerKolom.setCellValueFactory(new PropertyValueFactory<Reparatie, Integer>("reparatieNummer"));
+		/*
+		reparatieNummer.setCellFactory(TextFieldTableCell.<Reparatie, Integer>forTableColumn(new IntegerStringConverter()));
+		reparatieNummer.setOnEditCommit(e -> {
+			Reparatie reparatie = e.getRowValue();
+			reparatie.setReparatieNummer(e.getNewValue());
+		});
+		*/
 		reparatieNummerKolom.setMinWidth(150);
-		// Niet editable want is de primary key in de database van reparatie
 		
-		kentekenKolom = new TableColumn<Reparatie, String>("Kenteken");
+		kentekenKolom = new TableColumn<Reparatie, String>("Kenteken:");
 		kentekenKolom.setCellValueFactory(new PropertyValueFactory<Reparatie,String>("kenteken"));
-		kentekenKolom.setCellFactory(TextFieldTableCell.<Reparatie>forTableColumn());
-		kentekenKolom.setOnEditCommit(e -> {
+		/*
+		kenteken.setCellFactory(TextFieldTableCell.<Reparatie>forTableColumn());
+		kenteken.setOnEditCommit(e -> {
 			Reparatie reparatie = e.getRowValue();
 			reparatie.setKenteken(e.getNewValue());
 		});
+		*/
 		kentekenKolom.setMinWidth(150);
-		
+
 		omschrijvingKolom = new TableColumn<Reparatie, Integer>("Omschrijving");
 		omschrijvingKolom.setCellValueFactory(new PropertyValueFactory<Reparatie, Integer>("naam"));
 		omschrijvingKolom.setCellFactory(new OmschrijvingsNummerCallback());
 		omschrijvingKolom.setMinWidth(150);
-		// Niet editable want is primary key in de database van omschrijving
 		
 		reparatieStatusKolom = new TableColumn<Reparatie, Boolean>("Reparatie Status");
 		reparatieStatusKolom.setCellValueFactory(new PropertyValueFactory<Reparatie, Boolean>("reparatieStatus"));
+		/*
 		reparatieStatusKolom.setCellFactory(TextFieldTableCell.<Reparatie, Boolean>forTableColumn(new BooleanStringConverter()));
 		reparatieStatusKolom.setOnEditCommit(e -> {
 			Reparatie reparatie = e.getRowValue();
 			reparatie.setReparatieStatus(e.getNewValue());
 		});
+		*/
 		reparatieStatusKolom.setMinWidth(150);
 		
 		this.getColumns().add(reparatieNummerKolom);

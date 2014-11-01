@@ -12,9 +12,8 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.converter.BooleanStringConverter;
-
-import nl.eti1b5.database.dao.ReparatieDao;
 import nl.eti1b5.database.dao.OmschrijvingDao;
+import nl.eti1b5.database.dao.ReparatieDao;
 import nl.eti1b5.model.Reparatie;
 
 

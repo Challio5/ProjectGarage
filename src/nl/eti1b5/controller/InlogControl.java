@@ -192,7 +192,7 @@ public class InlogControl {
 		scene.getStylesheets().add(stylesheet);
 		
 		app.getStage().setScene(scene);
-		app.getStage().setTitle("Monteur");
+		app.getStage().setTitle("Garage S.J. Oemelaar");
 		app.getStage().show();
 	}
 	

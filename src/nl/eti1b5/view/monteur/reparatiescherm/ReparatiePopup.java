@@ -1,6 +1,8 @@
 package nl.eti1b5.view.monteur.reparatiescherm;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,13 +15,13 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.util.converter.IntegerStringConverter;
 import nl.eti1b5.database.dao.MateriaalDao;
 import nl.eti1b5.database.dao.OmschrijvingDao;
 import nl.eti1b5.model.Materiaal;
@@ -35,7 +37,7 @@ public class ReparatiePopup extends BorderPane{
 	private Button enter;
 	private TableView<Materiaal> materialen;
 	private TableColumn<Materiaal, String> materiaalNaam;
-	private TableColumn aantal;
+	private TableColumn<Materiaal, Integer> aantal;
 	private DatePicker beginDatum;
 	private ComboBox<Integer> beginUur;
 	private ComboBox<Integer> beginKwartier;
@@ -94,23 +96,34 @@ public class ReparatiePopup extends BorderPane{
 		materiaalNaam.setCellValueFactory(new PropertyValueFactory<Materiaal,String>("naam"));
 		materiaalNaam.setMinWidth(150);
 		
-		aantal = new TableColumn("Aantal");
-		aantal.setCellFactory(TextFieldTableCell.forTableColumn());
-		aantal.setOnEditCommit(
-			    new EventHandler<CellEditEvent<Materiaal, String>>() {
-			        @Override
-			        public void handle(CellEditEvent<Materiaal, String> t) {
-			            ((Materiaal) t.getTableView().getItems().get(
-			                t.getTablePosition().getRow())
-			                ).convertAantal(t.getNewValue());
-			        }
-			    }
-			);
+		aantal = new TableColumn<Materiaal, Integer>("Aantal");
+		aantal.setCellValueFactory(new PropertyValueFactory<Materiaal, Integer>("aantal"));
+		aantal.setCellFactory(TextFieldTableCell.<Materiaal, Integer>forTableColumn(new IntegerStringConverter()));
+		aantal.setOnEditCommit(e -> {
+			List<Materiaal> materiaalLijst = reparatie.getMaterialenLijst();
+			Materiaal materiaal = e.getRowValue();
+			materiaal.setaantalgebruikt(e.getNewValue());
+			materiaalLijst.add(materiaal);
+			reparatie.setMaterialenLijst((ArrayList<Materiaal>) materiaalLijst);
+		});
+	
 		aantal.setMinWidth(150);
 		MateriaalDao materiaalDao = new MateriaalDao();
 		ObservableList<Materiaal> oListMateriaal= FXCollections.observableArrayList(materiaalDao.getMateriaal());
+		for(Materiaal materiaal : reparatie.getMaterialenLijst()){
+			boolean gevonden = false;
+			int i = 0;
+			while(!gevonden){
+				if(materiaal.getNaam().equals(oListMateriaal.get(i).getNaam())){
+					gevonden = true;
+					oListMateriaal.get(i).setaantalgebruikt(materiaal.getAantalgebruikt());;
+				}
+				i++;
+			}
+		}
 		materialen.setItems(oListMateriaal);
-		materialen.getColumns().addAll(materiaalNaam, aantal);
+		materialen.getColumns().add(materiaalNaam);
+		materialen.getColumns().add(aantal);
 		
 		enter = new Button("Enter");
 		
