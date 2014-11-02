@@ -8,6 +8,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -25,8 +26,14 @@ public class AdministratieOverzicht extends VBox{
 	private KlantDao klantDao;
 	private MonteurDao monteurDao;
 	
+	// HBox voor de refresh butten en de administratieKiezer
+	private HBox hBox;
+		
 	// Combobox voor het kiezen van de adminstratie van klanten of monteurs
 	private ComboBox<String> administratieKiezer;
+	
+	//Button voor het verversen van de lijst
+	private Button refresh;
 	
 	// Button voor het toevoegen van een klant of monteur
 	private Button klantToevoegButton;
@@ -63,6 +70,8 @@ public class AdministratieOverzicht extends VBox{
 		klantDao = new KlantDao();
 		monteurDao = new MonteurDao();
 		
+		
+		
 		// Combobox voor het kiezen van de adminstratie van klanten of monteurs
 		administratieKiezer = new ComboBox<>();
 		administratieKiezer.getItems().add("Klanten");
@@ -70,12 +79,22 @@ public class AdministratieOverzicht extends VBox{
 		administratieKiezer.getSelectionModel().selectFirst();
 		this.setAdministratieKiezerListener();
 		
+		refresh = new Button("Verversen");
+		refresh.setOnAction(e -> {
+			update();
+		});
+		
+		hBox = new HBox();
+		hBox.getChildren().addAll(administratieKiezer, refresh);
 		// Button voor het toevoegen van klanten ofwel monteurs
 		klantToevoegButton = new Button("Klant toevoegen");
 		klantToevoegButton.setOnAction(e -> {
 			new AddKlantScherm();
 		});
 		monteurToevoegButton = new Button("Monteur toevoegen");
+		monteurToevoegButton.setOnAction(e -> {
+			new AddMonteurScherm();
+		});
 		
 		// Tabellen voor het weergeven van de klanten en monteurs
 		// Maakt ze editable voor bewerken van de weergegeven data
@@ -121,7 +140,7 @@ public class AdministratieOverzicht extends VBox{
 		monteurPlaatsKolom.setCellFactory(TextFieldTableCell.<Monteur>forTableColumn());
 		monteurPlaatsKolom.setOnEditCommit(e -> {
 			Monteur monteur = e.getRowValue();
-			monteur.setwoonplaats(e.getNewValue());
+			monteur.setWoonplaats(e.getNewValue());
 			monteurDao.addMonteur(monteur);
 		});
 		
@@ -190,7 +209,7 @@ public class AdministratieOverzicht extends VBox{
 		klantPlaatsKolom.setCellFactory(TextFieldTableCell.<Klant>forTableColumn());
 		klantPlaatsKolom.setOnEditCommit(e -> {
 			Klant klant = e.getRowValue();
-			klant.setwoonplaats(e.getNewValue());
+			klant.setWoonplaats(e.getNewValue());
 			klantDao.addKlant(klant);
 		});
 		
@@ -221,27 +240,33 @@ public class AdministratieOverzicht extends VBox{
 		monteurTabel.getColumns().add(monteurWachtwoordKolom);
 		monteurTabel.getColumns().add(monteurSpecialiteitKolom);
 		
-		// Voegt de klanten toe aan de tabel
-		klantenTabel.getItems().addAll(klantDao.getKlanten());
-		monteurTabel.getItems().addAll(monteurDao.getMonteurs());
+		update();
 		
 		// Voegt de onderdelen toe aan het klantenoverzicht
-		this.getChildren().add(administratieKiezer);
+		this.getChildren().add(hBox);
 		this.getChildren().add(klantenTabel);
 		this.getChildren().add(klantToevoegButton);
+	}
+	
+	public void update(){
+		// Voegt de klanten toe aan de tabel
+		klantenTabel.getItems().clear();
+		monteurTabel.getItems().clear();
+		klantenTabel.getItems().addAll(klantDao.getKlanten());
+		monteurTabel.getItems().addAll(monteurDao.getMonteurs());
 	}
 	
 	// Listener voor het detecteren van een verandering in de administratieKiezer
 	// Laat op basis van de selectie het juiste overzicht zien
 	public void setAdministratieKiezerListener() {
 		administratieKiezer.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+			update();
 			switch(newValue) {
 			case "Klanten":
 				this.getChildren().remove(monteurTabel);
 				this.getChildren().remove(monteurToevoegButton);
 				this.getChildren().add(klantenTabel);
 				this.getChildren().add(klantToevoegButton);
-				
 				break;
 			case "Monteurs":
 				this.getChildren().remove(klantenTabel);

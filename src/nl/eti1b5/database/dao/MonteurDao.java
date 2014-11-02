@@ -242,7 +242,7 @@ public class MonteurDao {
 				monteur.setNaam(naam);
 				monteur.setAdres(adres);
 				monteur.setPostcode(postcode);
-				monteur.setwoonplaats(woonplaats);
+				monteur.setWoonplaats(woonplaats);
 				monteur.setTelNr(telNr);
 				monteur.setWachtwoord(wachtwoord);
 				monteur.setSpecialiteit(specialiteit);

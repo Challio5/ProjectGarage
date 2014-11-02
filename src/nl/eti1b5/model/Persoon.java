@@ -101,7 +101,7 @@ public class Persoon {
 	 * Setter voor het aanpassen de woonplaats van de persoon
 	 * @param woonplaats De woonplaats van de persoon
 	 */
-	public void setwoonplaats(String woonplaats) {
+	public void setWoonplaats(String woonplaats) {
 		this.woonplaats.set(woonplaats);
 	}
 	

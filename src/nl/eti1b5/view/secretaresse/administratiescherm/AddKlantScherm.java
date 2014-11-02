@@ -102,4 +102,8 @@ public class AddKlantScherm extends BorderPane{
 	public ArrayList<Auto> getAutos(){
 		return klantNode.getAutos();
 	}
+
+	public void close() {
+		newStage.close();
+	}
 }

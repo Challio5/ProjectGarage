@@ -127,4 +127,5 @@ public class Monteur extends Gebruiker {
 						   + ", telNr=" + getTelNr() + ", wachtwoord=" + getWachtwoord() + ", werknemerNr=" + getWerknemerNr()
 						   + ", specialiteit=" + specialiteit.get() + ", beschikbaarheid=" + beschikbaarheidsString + ", Reparaties="+ reparatieString+ "]";
 	}
+
 }
