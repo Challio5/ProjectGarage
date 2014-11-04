@@ -23,7 +23,7 @@ public class KlantToevoegControl implements EventHandler<ActionEvent> {
 		nieuweKlant.setNaam(addKlantScherm.getNaam());
 		nieuweKlant.setAdres(addKlantScherm.getAdres());
 		nieuweKlant.setPostcode(addKlantScherm.getPostcode());
-		nieuweKlant.setwoonplaats(addKlantScherm.getWoonplaats());
+		nieuweKlant.setWoonplaats(addKlantScherm.getWoonplaats());
 		nieuweKlant.setTelNr(addKlantScherm.getTelefoonNummer());
 		nieuweKlant.setAutoLijst(addKlantScherm.getAutos());
 		KlantDao klantDao = new KlantDao();
@@ -36,6 +36,7 @@ public class KlantToevoegControl implements EventHandler<ActionEvent> {
 			System.out.println(auto);
 		}
 		System.out.println(nieuweKlant);
+		addKlantScherm.close();
 	}
 
 }
