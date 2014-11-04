@@ -40,7 +40,7 @@ insert into reparatie
 (kenteken, omschrijvingsnr, begintijd, eindtijd, reparatiestatus, betaalstatus)
 values
 ("12-31-AB", 1, '2014-10-30 10:55:12', '2014-10-30 15:05:12', false, false),
-("34-KB-23", 6, '2014-11-25 14:55:12', '2014-11-23 16:05:12', false, false),
+("34-KB-23", 6, '2014-11-25 14:55:12', '2014-11-25 16:05:12', false, false),
 ("10-ID-32", 3, '2014-10-03 13:46:44', '2014-10-03 15:23:01', false, false),
 ("12-IKK-2", 4, '2014-10-01 14:22:38', '2014-10-01 17:00:12', true, true);
 
@@ -62,6 +62,10 @@ values
 insert into reparatiemateriaal
 (reparatienr, materiaalnr, aantalgebruikt)
 values
+(100, 1000, 1),
+(100, 1003, 3),
+(101, 1001, 1),
+(101, 1002, 2),
 (102, 1001, 2);
 
 insert into voorraad

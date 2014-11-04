@@ -247,7 +247,7 @@ public class Reparatie {
 	 * Property die de reparatiestatusgegeven bevat
 	 * @return Property met de reparatiestatusgegeven
 	 */
-	public BooleanProperty reparatieStatus() {
+	public BooleanProperty reparatieStatusProperty() {
 		return this.reparatieStatus;
 	}
 	
@@ -255,7 +255,7 @@ public class Reparatie {
 	 * Property die de betaalstatusgegevens bevat
 	 * @return Property met de betaalstatusgegevens
 	 */
-	public BooleanProperty betaalStatus() {
+	public BooleanProperty betaalStatusProperty() {
 		return this.betaalStatus;
 	}
 

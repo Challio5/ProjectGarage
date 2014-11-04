@@ -64,7 +64,7 @@ public class OmschrijvingDao {
 			String omschrijvingsQuery = "select * from omschrijving "
 					+ "where omschrijvingsnr = ?";
 			PreparedStatement omschrijvingsStatement = connection.prepareStatement(omschrijvingsQuery);
-			omschrijvingsStatement.setInt(omschrijvingsNummer, 1);
+			omschrijvingsStatement.setInt(1, omschrijvingsNummer);
 			ResultSet omschrijvingsSet = omschrijvingsStatement.executeQuery();
 			
 			// Zolang er nog gegevens in de tabel staan

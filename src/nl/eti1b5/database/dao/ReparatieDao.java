@@ -214,7 +214,7 @@ public class ReparatieDao {
 		return reparatie;
 	}
 	
-	public ArrayList<Reparatie> getKlantReparaties(int klantnr) {
+	public ArrayList<Reparatie> getKlantReparaties(int klantnr, boolean betaald) {
 		ArrayList<Reparatie> reparatieLijst = new ArrayList<>();
 		
 		// De connectie met de database op
@@ -225,9 +225,10 @@ public class ReparatieDao {
 			// Query die alle gegevens uit de tabel reparatie haalt
 			String reparatieQuery = "select * from reparatie "
 					+ "natural join auto "
-					+ "where klantnr = ?";
+					+ "where klantnr = ? and betaalstatus = ?";
 			PreparedStatement reparatieStatement = connection.prepareStatement(reparatieQuery);
 			reparatieStatement.setInt(1, klantnr);
+			reparatieStatement.setBoolean(2, betaald);
 			
 			ResultSet reparatieSet = reparatieStatement.executeQuery();
 			
@@ -319,7 +320,7 @@ public class ReparatieDao {
 	 * Methode voor het wegschrijven van een planningsobject naar de database
 	 * @param reparatie Het weg te schrijven planningsobject
 	 */
-	public void addNewReparatie(Reparatie reparatie) {
+	private void addNewReparatie(Reparatie reparatie) {
 		// Zet de verbinding op met de database
 		Connection connection = manager.getConnection();
 		

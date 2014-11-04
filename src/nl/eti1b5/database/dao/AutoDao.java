@@ -75,6 +75,40 @@ public class AutoDao {
 		return autoLijst;
 	}
 	
+	public ArrayList<String> getKentekens() {
+		// Lijst met de resultaten van de query
+		ArrayList<String> kentekenLijst = new ArrayList<>();
+
+		// De connectie met de database op
+		Connection connection = manager.getConnection();
+
+		// De te execturen sql querys
+		try {
+			// Query die alle gegevens uit de tabel auto haalt
+			String autoQuery = "select kenteken from auto";
+			PreparedStatement autoStatement = connection
+					.prepareStatement(autoQuery);
+			ResultSet autoSet = autoStatement.executeQuery();
+
+			// Zolang er nog gegevens in de tabel staan
+			while (autoSet.next()) {
+				// De gegevens van een rij
+				String kenteken = autoSet.getString("kenteken");
+
+				kentekenLijst.add(kenteken);
+			}
+		} catch (SQLException e) {
+			System.err.println("Kan het statement niet uitvoeren");
+			e.printStackTrace();
+		}
+
+		// Sluit de verbinding met de database
+		manager.closeConnection();
+
+		// Geeft de lijst met auto's terug
+		return kentekenLijst;
+	}
+	
 	public void addNewAuto(Auto auto) {
 		// Zet de verbinding op met de database
 		Connection connection = manager.getConnection();

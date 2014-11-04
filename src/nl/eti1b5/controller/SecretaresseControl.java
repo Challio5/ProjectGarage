@@ -3,48 +3,64 @@ package nl.eti1b5.controller;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import nl.eti1b5.controller.secretaresse.AdministratieSchermControl;
+import nl.eti1b5.controller.secretaresse.PlanningsSchermControl;
+import nl.eti1b5.controller.secretaresse.ReparatieSchermControl;
 import nl.eti1b5.view.secretaresse.administratiescherm.AdministratieOverzicht;
 import nl.eti1b5.view.secretaresse.menu.MenuNode;
-import nl.eti1b5.view.secretaresse.menu.MenuView;
 import nl.eti1b5.view.secretaresse.planningsscherm.PlanningsOverzicht;
 import nl.eti1b5.view.secretaresse.reparatiescherm.ReparatieOverzicht;
 
 public class SecretaresseControl{
 	
+	// De hoofdstage waar het programma mee draait
 	private Stage stage;
 	
-	private MenuNode menu;
-	private MenuView menuView;
+	// Het hoofdscherm
+	private Scene scene;
+	private VBox view;
 	
-	private AdministratieOverzicht adminstratieOverzicht;
+	// Het menu van het hoofdscherm
+	private MenuNode menu;
+	
+	// De verschillende hoofdschermen waartussen geswitcht wordt
+	private AdministratieOverzicht administratieOverzicht;
 	private PlanningsOverzicht planningsOverzicht;
 	private ReparatieOverzicht reparatieOverzicht;
 	
 	public SecretaresseControl(Stage stage){
 		this.stage = stage;
 		
+		view = new VBox();
+		
 		menu = new MenuNode();
 		
 		menu.restartSetOnAction(new RestartControl());
 		menu.exitSetOnAction(new ExitControl());
 		
-		adminstratieOverzicht = new AdministratieOverzicht();
+		administratieOverzicht = new AdministratieOverzicht();
 		menu.adminstratieSetOnAction(new AdministratieOverzichtControl());
+		new AdministratieSchermControl(administratieOverzicht);
 		
 		planningsOverzicht = new PlanningsOverzicht();
 		menu.planningSetOnAction(new PlanningsOverzichtControl());
+		new PlanningsSchermControl(planningsOverzicht);
 		
 		reparatieOverzicht = new ReparatieOverzicht();
 		menu.reparatieSetOnAction(new ReparatieOverzichtControl());
-		
-		menuView = new MenuView(menu, adminstratieOverzicht, planningsOverzicht, reparatieOverzicht);
+		new ReparatieSchermControl(reparatieOverzicht);
 		
 		this.init();
 	}
 	
 	private void init() {
-		Scene scene = new Scene(menuView);
+		view.getChildren().add(menu);
+		view.getChildren().add(planningsOverzicht);
+		view.setPrefSize(600, 400);
+		
+		scene = new Scene(view);
 		
 		// Stylesheet
 		String stylesheet = this.getClass().getResource("/menu.css").toString();
@@ -76,7 +92,7 @@ public class SecretaresseControl{
 
 		@Override
 		public void handle(ActionEvent event) {
-			menuView.showAdministratieOverzicht();
+			view.getChildren().set(1, administratieOverzicht);
 		}
 	
 	}
@@ -85,7 +101,7 @@ public class SecretaresseControl{
 
 		@Override
 		public void handle(ActionEvent event) {
-			menuView.showPlanningOverzicht();
+			view.getChildren().set(1, planningsOverzicht);
 		}
 		
 	}
@@ -94,7 +110,7 @@ public class SecretaresseControl{
 
 		@Override
 		public void handle(ActionEvent event) {
-			menuView.showReparatieOverzicht();
+			view.getChildren().set(1, reparatieOverzicht);
 		}
 		
 	}

@@ -1,37 +1,28 @@
 package nl.eti1b5.view.secretaresse.planningsscherm;
 
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.ListIterator;
 
+import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.GridPane;
-import javafx.util.Callback;
 import nl.eti1b5.database.dao.KlantDao;
 import nl.eti1b5.database.dao.MonteurDao;
 import nl.eti1b5.database.dao.OmschrijvingDao;
-import nl.eti1b5.database.dao.PlanningDao;
-import nl.eti1b5.database.dao.ReparatieDao;
 import nl.eti1b5.model.Auto;
 import nl.eti1b5.model.Klant;
 import nl.eti1b5.model.Monteur;
 import nl.eti1b5.model.Omschrijving;
-import nl.eti1b5.model.Planning;
-import nl.eti1b5.model.Reparatie;
 import nl.eti1b5.model.converter.AutoConverter;
 import nl.eti1b5.model.converter.KlantConverter;
 import nl.eti1b5.model.converter.MonteurConverter;
@@ -45,9 +36,7 @@ import nl.eti1b5.model.converter.OmschrijvingConverter;
 
 public class PlanningPopup extends GridPane{
 	// DAOs voor communicatie met de database
-	private PlanningDao planningDao;
 	private MonteurDao monteurDao;
-	private ReparatieDao reparatieDao;
 	private KlantDao klantDao;
 	private OmschrijvingDao omschrijvingDao;
 	
@@ -102,9 +91,7 @@ public class PlanningPopup extends GridPane{
 		this.setVgap(10);
 		
 		// DAOs voor communicatie met de database
-		planningDao = new PlanningDao();
 		monteurDao = new MonteurDao();
-		reparatieDao = new ReparatieDao();
 		klantDao = new KlantDao();
 		omschrijvingDao = new OmschrijvingDao();
 		
@@ -140,12 +127,6 @@ public class PlanningPopup extends GridPane{
 		overigeReparatieKnop = new Button("Submit");
 		overigeReparatieKnop.setDisable(true);
 		
-		// Listener die schakelt tussen het zelf invoeren van een reparatie of een geselecteerde reparatie
-		this.setOverigeReparatieListener();
-		
-		// Listener die een nieuwe reparatieomschrijving toevoegd
-		this.setOmschrijvingListener();
-		
 		// Combobox voor het kiezen van een reparatieomschrijving
 		omschrijvingsLabel = new Label("Reparatie");
 		omschrijvingsKiezer = new ComboBox<>();
@@ -153,15 +134,11 @@ public class PlanningPopup extends GridPane{
 		omschrijvingsKiezer.setItems(FXCollections.observableArrayList(omschrijvingDao.getOmschrijvingen()));
 		omschrijvingsDuur = new TextField();
 		omschrijvingsDuur.setEditable(false);
-		
-		// Listener die op basis van de ingevoerde gegevens dag en evt. gespecialiseerde monteur kiest
-		this.setPreselectionListener();
 	
 		// Datepicker voor het kiezen van een datum voor de reparatie
 		dagLabel = new Label("Datum");
 		datumPicker = new DatePicker();
 		datumPicker.setDisable(true);
-		this.setDateListener();
 		
 		// Comboboxes voor het selecteren van de tijd en minuten
 		tijdLabel = new Label("Tijd");
@@ -182,7 +159,6 @@ public class PlanningPopup extends GridPane{
 		// Submitknop voor het wegschrijven van de gegevens naar de database
 		submit = new Button("Submit");
 		submit.setDisable(true);
-		this.setSubmitListener();
 		
 		// Console voor het weergeven van informatie
 		console = new TitledPane();
@@ -230,230 +206,105 @@ public class PlanningPopup extends GridPane{
 		this.add(console, 0, 8, 4, 1);
 	}
 	
-	public void setOverigeReparatieListener() {
-		// Listener voor het kiezen of zelf toevoegen van een reparatieomschrijving
-		checkOverigeReparatie.selectedProperty().addListener((check, oldValue, newValue) -> {
-			if(newValue.booleanValue()) {
-				// Zet de nodes in de GUI aan voor het toevoegen van een reparatieomschrijving
-				overigeReparatie.setDisable(false);
-				urenOverigeReparatieKiezer.setDisable(false);
-				minutenOverigeReparatieKiezer.setDisable(false);
-				overigeReparatieKnop.setDisable(false);
-				
-				omschrijvingsKiezer.setDisable(true);
-			}
-			else {
-				// Zet de nodes in de GUI uit voor het toevoegen van een reparatieomschrijving
-				overigeReparatie.setDisable(true);
-				urenOverigeReparatieKiezer.setDisable(true);
-				minutenOverigeReparatieKiezer.setDisable(true);
-				overigeReparatieKnop.setDisable(true);
-				
-				omschrijvingsKiezer.setDisable(false);
-			}
-		});
-	}
-	
-	public void setOmschrijvingListener() {
-		// Listener voor het toevoegen van een overige reparatie
-		overigeReparatieKnop.setOnAction(e -> {
-			// De ingevoerde gegevens uit de GUI
-			String reparatieNaam = overigeReparatie.getText();
-			int reparatieDuurUren = urenOverigeReparatieKiezer.getSelectionModel().getSelectedItem();
-			int reparatieDuurMinuten = minutenOverigeReparatieKiezer.getSelectionModel().getSelectedItem();
-			
-			// Omrekenen van de uren en minuten naar sqlformaat
-			Time reparatieDuur = Time.valueOf(LocalTime.of(reparatieDuurUren, reparatieDuurMinuten));
-			
-			// Maakt met de gegevens een omschrijving aan en voegt deze toe aan de database
-			Omschrijving omschrijving = new Omschrijving(reparatieNaam, reparatieDuur);
-			omschrijvingDao.addOmschrijving(omschrijving);
-			
-			// Geeft de nieuwe toegevoegde omschrijving weer in het console
-			consoleText.setText(omschrijving.toString());
-			
-			// Update de GUI met deze nieuwe omschrijving, vinkt de selectie uit en selecteert de nieuwe omschrijving
-			omschrijvingsKiezer.getItems().add(omschrijving);
-			omschrijvingsKiezer.getSelectionModel().select(omschrijving);
-			checkOverigeReparatie.setSelected(false);
-		});
-	}
-	
-	public void setPreselectionListener() {
-		// Listener voor het selecteren van een reparatie in de combobox
-		omschrijvingsKiezer.getSelectionModel().selectedItemProperty().addListener((omschrijving, oldValue, newValue) -> {
-			// Haalt de gegevens op van de geselecteerde omschrijving
-			String naam = newValue.getNaam();
-			Time tijd = newValue.getDuur();
-			
-			// Geeft de duur weer in de GUI
-			omschrijvingsDuur.setText(tijd.toString());
-			
-			// Vraagt de lijst met monteurs op en checkt of deze beschikbaar is op de datum
-			// Als de monteur de juiste specialisatie bezit voor de reparatie wordt deze automatisch geselecteerd
-			ArrayList<Monteur> monteursLijst = monteurDao.getMonteurs();
-			/*for(Monteur monteur : monteursLijst) {
-				if(monteur.getSpecialiteit().equals(naam)) {
-					ArrayList<String> beschikbaarheidsLijst = new ArrayList<>(monteur.getBeschikbaarheid());
-					String datumcode = datumPicker.getValue().getDayOfWeek().toString().substring(0, 2);
-					for(String beschikbaarheidsCode : beschikbaarheidsLijst) {
-						beschikbaarheidsCode = beschikbaarheidsCode.substring(0, 2);
-						System.out.println(monteur.getNaam() + " beschikbaar op: " + beschikbaarheidsCode + " datumcode vandaag: " + datumcode);
-						if(beschikbaarheidsCode.equals(datumcode)) {
-							monteurKiezer.getSelectionModel().select(monteur);
-						}
-					}
-				}
-			}*/
-			
-			// Maakt het tweede deel van het planningsscherm beschikbaar
-			datumPicker.setDayCellFactory(new DatumPickerCallback());
-			datumPicker.setDisable(false);
-			urenKiezer.setDisable(false);
-			minutenKiezer.setDisable(false);
-			monteurKiezer.setDisable(false);
-		}); 
-	}
-	
-	public void setDateListener() {
-		datumPicker.valueProperty().addListener((date, oldValue, newValue) -> {
-			for(int uur : urenKiezer.getItems()) {
-				for(int minuten : minutenKiezer.getItems()) {
-					// De tijd combinatie die gecheckt wordt
-					LocalTime beginTijd = LocalTime.of(uur, minuten);
-					int extraUren = Integer.parseInt(omschrijvingsDuur.getText().substring(0, 2));
-					int extraMinuten = Integer.parseInt(omschrijvingsDuur.getText().substring(3, 5));
-					LocalTime eindTijd = beginTijd.plusHours(extraUren);
-					eindTijd = eindTijd.plusMinutes(extraMinuten);
-					
-					// Lijst met beschikbare monteurs op de begin- en eindtijd van de reparatie
-					ArrayList<Monteur> monteursLijstBeginTijd = monteurDao.getMonteurs(LocalDateTime.of(newValue, beginTijd));
-					ArrayList<Monteur> monteursLijstEindTijd = monteurDao.getMonteurs(LocalDateTime.of(newValue, eindTijd));
-					
-					// Checkt of de monteur ook in de lijst met eindtijden zit 
-					// Verwijdert de monteur waneer dit niet het geval is
-					ListIterator<Monteur> iterator = monteursLijstBeginTijd.listIterator();
-					while(iterator.hasNext()) {
-						Monteur monteur = iterator.next();
-						if(monteursLijstEindTijd.contains(monteur)) {
-							iterator.remove();
-						}
-					}
-					
-					// Als er geen monteurs beschikbaar zijn voor het tijdstip wordt deze niet beschikbaar gemaakt
-					if(monteursLijstBeginTijd.isEmpty()) {
-						consoleText.appendText("\n Tijd is niet beschikbaar: " + beginTijd);
-					}
-					else {
-						for(Monteur monteur : monteursLijstBeginTijd) {
-							consoleText.appendText("\n Tijd is wel beschikbaar: " + beginTijd + "Monteur " + monteur);
-						}	
-					}
-				}
-			}
-		});
-	}
-	
-	public void setSubmitListener() {
-		// Listener voor een druk op de submit knop
-		submit.setOnAction(click -> {
-			// Vraagt de datum op voor de te plannen reparatie
-			LocalDate datum = datumPicker.getValue();
-
-			// Vraagt de tijd op voor de te plannen reparatie
-			int uren = urenKiezer.getSelectionModel().getSelectedItem();
-			int minuten = minutenKiezer.getSelectionModel().getSelectedItem();
-			
-			// Vraagt de duur op van de reparatie
-			int urenOmschrijving = urenOverigeReparatieKiezer
-					.getSelectionModel().getSelectedItem();
-			int minutenOmschrijving = minutenOverigeReparatieKiezer
-					.getSelectionModel().getSelectedItem();
-			
-			// Berekent de begin- en eindtijd
-			LocalTime begintijd = LocalTime.of(uren, minuten);
-			LocalTime eindtijd = begintijd.plusHours(urenOmschrijving);
-			eindtijd = eindtijd.plusMinutes(minutenOmschrijving);
-
-			// Voegt tijd en datum samen
-			LocalDateTime beginDatumtijd = LocalDateTime.of(datum, begintijd);
-			LocalDateTime eindDatumtijd = LocalDateTime.of(datum, eindtijd);
-
-			// Zet om naar sql de begin- en eindtijd
-			Timestamp sqlbegintijd = Timestamp.valueOf(beginDatumtijd);
-			Timestamp sqleindtijd = Timestamp.valueOf(eindDatumtijd); 
-			
-			// De monteur voor de geplande reparatie
-			Monteur monteur = monteurKiezer.getSelectionModel()
-					.getSelectedItem();
-
-			// De in te plannen reparatie
-			Reparatie reparatie = new Reparatie();
-
-			// Het kenteken van de auto van klant
-			Auto auto = autoKiezer.getSelectionModel().getSelectedItem();
-			reparatie.setKenteken(auto.getKenteken());
-
-			// De omschrijving van de reparatie
-			if (checkOverigeReparatie.isSelected()) {
-
-				LocalTime tijdOmschrijving = LocalTime.of(urenOmschrijving,
-						minutenOmschrijving);
-				Time sqlTijd = Time.valueOf(tijdOmschrijving);
-
-				// Voeg omschrijving toe aan database en
-				// omschrijvingDao.addOmschrijving(new Omschrij)
-			} else {
-				
-			}
-
-			// Voegt de reparatie toe aan de database
-			reparatieDao.addReparatie(reparatie);
-
-			// Voegt de planning toe voor de reparatie aan de database
-			Planning planning = new Planning(sqlbegintijd, sqleindtijd, monteur,
-					reparatie);
-			planningDao.addPlanning(planning);
-		});
-	}
-	
-	// Callback handler voor de datumpicker
-	private class DatumPickerCallback implements Callback<DatePicker, DateCell> {
-		private MonteurDao monteurDao;
+	public void enableOverigeReparatie() {
+		// Zet de nodes in de GUI aan voor het toevoegen van een reparatieomschrijving
+		overigeReparatie.setDisable(false);
+		urenOverigeReparatieKiezer.setDisable(false);
+		minutenOverigeReparatieKiezer.setDisable(false);
+		overigeReparatieKnop.setDisable(false);
 		
-		public DatumPickerCallback() {
-			monteurDao = new MonteurDao();
-		}
+		omschrijvingsKiezer.setDisable(true);
+	}
+	
+	public void disableOverigeReparatie() {
+		// Zet de nodes in de GUI uit voor het toevoegen van een reparatieomschrijving
+		overigeReparatie.setDisable(true);
+		urenOverigeReparatieKiezer.setDisable(true);
+		minutenOverigeReparatieKiezer.setDisable(true);
+		overigeReparatieKnop.setDisable(true);
 		
-		@Override
-		public DateCell call(DatePicker datePicker) {
-			
-			DateCell dateCell = new DateCell() {
-				@Override
-				public void updateItem(LocalDate item, boolean empty) {
-					super.updateItem(item, empty);
-					
-					// Zet alle data in de verleden tijd op rood
-					if(item.isBefore(LocalDate.now())) {
-						this.setDisable(true);
-						this.setStyle("-fx-background-color:red");
-					}
-					// Zet alle overige data op groen
-					else {
-						this.setStyle("-fx-background-color:green");
-					}
-					
-					/* Zet de data uit de planning op oranje
+		omschrijvingsKiezer.setDisable(false);
+	}
+	
+	// Event Handlers
+	public void setCheckOverigeReparatieChangeListener(ChangeListener<Boolean> listener) {
+		checkOverigeReparatie.selectedProperty().addListener(listener);
+	}
+	
+	public void setOverigeReparatieActionEvent(EventHandler<ActionEvent> e) {
+		overigeReparatieKnop.setOnAction(e);
+	}
+	
+	public void setOmschrijvingsKiezerChangeListener(ChangeListener<Omschrijving> listener){
+		omschrijvingsKiezer.getSelectionModel().selectedItemProperty().addListener(listener);
+	}
+	
+	public void setDatumPickerValueListener(ChangeListener<LocalDate> listener) {
+		datumPicker.valueProperty().addListener(listener);
+	}
+	
+	public void setSubmitActionEvent(EventHandler<ActionEvent> e) {
+		submit.setOnAction(e);
+	}
 
-					if(item.isEqual(begintijd.toLocalDate())) {
-						this.setDisable(true);
-						this.setStyle("-fx-background-color:orange");
-					}
-					*/
-				}
-			};
-			
-			return dateCell;
-		}
+	// Getters
+	public ComboBox<Klant> getKlantKiezer() {
+		return klantKiezer;
+	}
+
+	public ComboBox<Auto> getAutoKiezer() {
+		return autoKiezer;
+	}
+
+	public Button getOverigeReparatieKnop() {
+		return overigeReparatieKnop;
+	}
+
+	public CheckBox getCheckOverigeReparatie() {
+		return checkOverigeReparatie;
+	}
+
+	public TextField getOverigeReparatie() {
+		return overigeReparatie;
+	}
+
+	public ComboBox<Integer> getUrenOverigeReparatieKiezer() {
+		return urenOverigeReparatieKiezer;
+	}
+
+	public ComboBox<Integer> getMinutenOverigeReparatieKiezer() {
+		return minutenOverigeReparatieKiezer;
+	}
+
+	public ComboBox<Omschrijving> getOmschrijvingsKiezer() {
+		return omschrijvingsKiezer;
+	}
+
+	public TextField getOmschrijvingsDuur() {
+		return omschrijvingsDuur;
+	}
+
+	public DatePicker getDatumPicker() {
+		return datumPicker;
+	}
+
+	public ComboBox<Integer> getUrenKiezer() {
+		return urenKiezer;
+	}
+
+	public ComboBox<Integer> getMinutenKiezer() {
+		return minutenKiezer;
+	}
+
+	public ComboBox<Monteur> getMonteurKiezer() {
+		return monteurKiezer;
+	}
+
+	public Button getSubmit() {
+		return submit;
+	}
+
+	public TextArea getConsoleText() {
+		return consoleText;
 	}
 }

@@ -3,23 +3,24 @@ package nl.eti1b5.view.secretaresse.administratiescherm;
 import java.sql.Timestamp;
 
 import javafx.collections.FXCollections;
-import javafx.scene.Scene;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.stage.Stage;
+import javafx.scene.layout.VBox;
 import javafx.util.Callback;
-import javafx.util.converter.BooleanStringConverter;
-import nl.eti1b5.database.dao.OmschrijvingDao;
 import nl.eti1b5.database.dao.ReparatieDao;
 import nl.eti1b5.model.Reparatie;
-import nl.eti1b5.view.secretaresse.reparatiescherm.OmschrijvingsPopup;
 
-public class FactuurPopup extends TableView<Reparatie>{
-	// Stage voor het weergeven van popups
-	private Stage popupStage;
+public class FactuurPopup extends VBox{
+	// Dao voor het weergeven en wegschrijven van reparaties naar de database
+	private ReparatieDao reparatieDao;
+	
+	// Tabel voor het weergeven van de reparatie
+	private TableView<Reparatie> reparatieTabel;
 	
 	// Kolommen voor het weergeven van de attributen van de reparaties
 	private TableColumn<Reparatie, Integer> reparatieNummerKolom;
@@ -31,12 +32,16 @@ public class FactuurPopup extends TableView<Reparatie>{
 	private TableColumn<Reparatie, Boolean> betaalStatusKolom;
 	// Materialen ???
 	
+	// Knop voor het printen van een factuur met de gemaakte reparaties
+	private Button printButton;
+	
 	public FactuurPopup(int klantnummer){
-		// Zet tabel op bewerkbaar
-		this.setEditable(true);
+		// Dao voor het weergeven en wegschrijven van reparaties naar de database
+		reparatieDao = new ReparatieDao();
 		
-		// Stage voor het weergeven van popups
-		popupStage = new Stage();
+		// Tabel voor het weergeven van de reparatie
+		reparatieTabel = new TableView<>();
+		reparatieTabel.setEditable(true);
 		
 		// Kolommen voor het weergeven van de attributen van de reparaties
 		reparatieNummerKolom = new TableColumn<Reparatie, Integer>("Reparatie nummer");
@@ -47,7 +52,6 @@ public class FactuurPopup extends TableView<Reparatie>{
 		
 		omschrijvingsNummerKolom = new TableColumn<Reparatie, Integer>("Omschrijving");
 		omschrijvingsNummerKolom.setCellValueFactory(new PropertyValueFactory<Reparatie, Integer>("omschrijvingsNummer"));
-		omschrijvingsNummerKolom.setCellFactory(new OmschrijvingsNummerCallback());
 		
 		begintijdKolom = new TableColumn<Reparatie, Timestamp>("Begintijd");
 		begintijdKolom.setCellValueFactory(new PropertyValueFactory<Reparatie, Timestamp>("beginTijd"));
@@ -60,57 +64,38 @@ public class FactuurPopup extends TableView<Reparatie>{
 		
 		betaalStatusKolom = new TableColumn<Reparatie, Boolean>("Betaal Status");
 		betaalStatusKolom.setCellValueFactory(new PropertyValueFactory<Reparatie, Boolean>("betaalStatus"));
-		betaalStatusKolom.setCellFactory(TextFieldTableCell.<Reparatie, Boolean>forTableColumn(new BooleanStringConverter()));
-		betaalStatusKolom.setOnEditCommit(e -> {
-			Reparatie reparatie = e.getRowValue();
-			reparatie.setBetaalStatus(e.getNewValue());
-		});
 		
-		this.getColumns().add(reparatieNummerKolom);
-		this.getColumns().add(kentekenKolom);
-		this.getColumns().add(omschrijvingsNummerKolom);
-		this.getColumns().add(begintijdKolom);
-		this.getColumns().add(eindtijdKolom);
-		this.getColumns().add(reparatieStatusKolom);
-		this.getColumns().add(betaalStatusKolom);
+		reparatieTabel.getColumns().add(reparatieNummerKolom);
+		reparatieTabel.getColumns().add(kentekenKolom);
+		reparatieTabel.getColumns().add(omschrijvingsNummerKolom);
+		reparatieTabel.getColumns().add(begintijdKolom);
+		reparatieTabel.getColumns().add(eindtijdKolom);
+		reparatieTabel.getColumns().add(reparatieStatusKolom);
+		reparatieTabel.getColumns().add(betaalStatusKolom);
 		
 		// Reparaties van klant
-		this.setItems(FXCollections.observableArrayList(new ReparatieDao().getKlantReparaties(klantnummer)));
+		reparatieTabel.setItems(FXCollections.observableArrayList(reparatieDao.getKlantReparaties(klantnummer, false)));
+		
+		// Knop voor het printen van een factuur met de gemaakte reparaties
+		printButton = new Button("Print");
+		
+		this.getChildren().add(reparatieTabel);
+		this.getChildren().add(printButton);
 	}
 	
-	private class OmschrijvingsNummerCallback implements Callback<TableColumn<Reparatie, Integer>, TableCell<Reparatie, Integer>>{
+	public TableView<Reparatie> getReparatieTabel() {
+		return reparatieTabel;
+	}
 
-		@Override
-		public TableCell<Reparatie, Integer> call(
-				TableColumn<Reparatie, Integer> column) {
-			
-			TableCell<Reparatie, Integer> cell = new TableCell<Reparatie, Integer>() {
-
-				@Override
-				protected void updateItem(Integer omschrijvingsNummer, boolean empty) {
-					super.updateItem(omschrijvingsNummer, empty);
-					
-					if(empty) {
-						this.setText(null);
-						this.setGraphic(null);
-					}
-					else {
-						this.setText(String.valueOf(omschrijvingsNummer));
-						this.setGraphic(null);
-					}
-				}
-				
-			};
-			
-			cell.setOnMouseClicked(e -> {
-				if(!cell.isEmpty()) {
-					popupStage.setScene(new Scene(new OmschrijvingsPopup(new OmschrijvingDao().getOmschrijving(cell.getItem()))));
-					popupStage.setTitle("Reparatie");
-					popupStage.show();
-				}
-			});
-			
-			return cell;
-		}
+	public void setOmschrijvingsNummerKolomCellFactory(Callback<TableColumn<Reparatie, Integer>, TableCell<Reparatie, Integer>> callback) {
+		omschrijvingsNummerKolom.setCellFactory(callback);
+	}
+	
+	public void setBetaalStatusKolomCellFactory(Callback<TableColumn<Reparatie, Boolean>, TableCell<Reparatie, Boolean>> callback) {
+		betaalStatusKolom.setCellFactory(callback);
+	}
+	
+	public void setPrintButtonActionListener(EventHandler<ActionEvent> e) {
+		printButton.setOnAction(e);
 	}
 }

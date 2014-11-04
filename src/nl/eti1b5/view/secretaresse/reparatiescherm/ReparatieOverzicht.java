@@ -2,28 +2,18 @@ package nl.eti1b5.view.secretaresse.reparatiescherm;
 
 import java.sql.Timestamp;
 
-import javafx.collections.FXCollections;
-import javafx.scene.Scene;
+import javafx.event.EventHandler;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.stage.Stage;
 import javafx.util.Callback;
-import javafx.util.converter.BooleanStringConverter;
-import nl.eti1b5.database.dao.OmschrijvingDao;
 import nl.eti1b5.database.dao.ReparatieDao;
 import nl.eti1b5.model.Reparatie;
 
 
 public class ReparatieOverzicht extends TableView<Reparatie>{
-	
-	// Stage voor weergeven van popups
-	private Stage popupStage;
-	
-	// ReparatieDao voor het wegschrijven en ophalen van de data
-	private ReparatieDao reparatieDao;
 	
 	// Alle kolommen voor het weergeven van de attributen van reparatie
 	private TableColumn<Reparatie, Integer> reparatieNummerKolom;
@@ -38,26 +28,15 @@ public class ReparatieOverzicht extends TableView<Reparatie>{
 	public ReparatieOverzicht(){
 		this.setEditable(true);
 		
-		popupStage = new Stage();
-		
-		reparatieDao = new ReparatieDao();
-		
 		reparatieNummerKolom = new TableColumn<Reparatie, Integer>("Reparatie nummer");
 		reparatieNummerKolom.setCellValueFactory(new PropertyValueFactory<Reparatie, Integer>("reparatieNummer"));
 		// Niet editable want primary key in database van reparatie
 		
 		kentekenKolom = new TableColumn<Reparatie, String>("Kenteken");
 		kentekenKolom.setCellValueFactory(new PropertyValueFactory<Reparatie,String>("kenteken"));
-		kentekenKolom.setCellFactory(TextFieldTableCell.<Reparatie>forTableColumn());
-		kentekenKolom.setOnEditCommit(e -> {
-			Reparatie reparatie = e.getRowValue();
-			reparatie.setKenteken(e.getNewValue());
-			reparatieDao.addReparatie(reparatie);
-		});
 		
 		omschrijvingsNummerKolom = new TableColumn<Reparatie, Integer>("Omschrijving");
 		omschrijvingsNummerKolom.setCellValueFactory(new PropertyValueFactory<Reparatie, Integer>("omschrijvingsNummer"));
-		omschrijvingsNummerKolom.setCellFactory(new OmschrijvingsNummerCallback());
 		// Niet editable want primary key in database van omschrijvingsnummer
 		
 		begintijdKolom = new TableColumn<Reparatie, Timestamp>("Begintijd");
@@ -78,21 +57,9 @@ public class ReparatieOverzicht extends TableView<Reparatie>{
 		
 		reparatieStatusKolom = new TableColumn<Reparatie, Boolean>("Reparatie Status");
 		reparatieStatusKolom.setCellValueFactory(new PropertyValueFactory<Reparatie, Boolean>("reparatieStatus"));
-		reparatieStatusKolom.setCellFactory(TextFieldTableCell.<Reparatie, Boolean>forTableColumn(new BooleanStringConverter()));
-		reparatieStatusKolom.setOnEditCommit(e -> {
-			Reparatie reparatie = e.getRowValue();
-			reparatie.setReparatieStatus(e.getNewValue());
-			reparatieDao.addReparatie(reparatie);
-		});
 		
 		betaalStatusKolom = new TableColumn<Reparatie, Boolean>("Betaal Status");
 		betaalStatusKolom.setCellValueFactory(new PropertyValueFactory<Reparatie, Boolean>("betaalStatus"));
-		betaalStatusKolom.setCellFactory(TextFieldTableCell.<Reparatie, Boolean>forTableColumn(new BooleanStringConverter()));
-		betaalStatusKolom.setOnEditCommit(e -> {
-			Reparatie reparatie = e.getRowValue();
-			reparatie.setBetaalStatus(e.getNewValue());
-			reparatieDao.addReparatie(reparatie);
-		});
 		
 		this.getColumns().add(reparatieNummerKolom);
 		this.getColumns().add(kentekenKolom);
@@ -102,42 +69,45 @@ public class ReparatieOverzicht extends TableView<Reparatie>{
 		this.getColumns().add(reparatieStatusKolom);
 		this.getColumns().add(betaalStatusKolom);
 		
-		this.setItems(FXCollections.observableArrayList(reparatieDao.getReparaties()));
+		this.getItems().addAll(new ReparatieDao().getReparaties());
 	}
 	
-	private class OmschrijvingsNummerCallback implements Callback<TableColumn<Reparatie, Integer>, TableCell<Reparatie, Integer>>{
+	// Cell factories voor genereren van een tablecell
+	public void setKentekenKolomCellFactory(Callback<TableColumn<Reparatie, String>, TableCell<Reparatie, String>> callback) {
+		kentekenKolom.setCellFactory(callback);
+	}
+	
+	public void setOmschrijvingsNummerCellFactory(Callback<TableColumn<Reparatie, Integer>, TableCell<Reparatie, Integer>> callback) {
+		omschrijvingsNummerKolom.setCellFactory(callback);
+	}
+	
+	public void setReparatieStatusCellFactory(Callback<TableColumn<Reparatie, Boolean>, TableCell<Reparatie, Boolean>> callback) {
+		reparatieStatusKolom.setCellFactory(callback);
+	}
+	
+	public void setBetaalStatusCellFactory(Callback<TableColumn<Reparatie, Boolean>, TableCell<Reparatie, Boolean>> callback) {
+		betaalStatusKolom.setCellFactory(callback);
+	}
+	
+	// Edit commits voor het afhandelen van aanpassingen in de tabel
+	public void setKentekenOnEditComit(EventHandler<CellEditEvent<Reparatie, String>> e) {
+		kentekenKolom.setOnEditCommit(e);
+	}
+	
+	public void setReparatieStatusOnEditComit(EventHandler<CellEditEvent<Reparatie, Boolean>> e) {
+		reparatieStatusKolom.setOnEditCommit(e);
+	}
+	
+	public void setBetaalStatusOnEditComit(EventHandler<CellEditEvent<Reparatie, Boolean>> e) {
+		betaalStatusKolom.setOnEditCommit(e);
+	}
+	
+	// Getters
+	public TableColumn<Reparatie, Boolean> getReparatieStatusKolom() {
+		return reparatieStatusKolom;
+	}
 
-		@Override
-		public TableCell<Reparatie, Integer> call(
-				TableColumn<Reparatie, Integer> column) {
-			
-			TableCell<Reparatie, Integer> cell = new TableCell<Reparatie, Integer>() {
-
-				@Override
-				protected void updateItem(Integer omschrijvingsNummer, boolean empty) {
-					super.updateItem(omschrijvingsNummer, empty);
-					
-					if(empty) {
-						this.setText(null);
-						this.setGraphic(null);
-					}
-					else {
-						this.setText(String.valueOf(omschrijvingsNummer));
-						this.setGraphic(null);
-					}
-				}
-				
-			};
-			
-			cell.setOnMouseClicked(e -> {
-				if(!cell.isEmpty()) {
-					popupStage.setScene(new Scene(new OmschrijvingsPopup(new OmschrijvingDao().getOmschrijving(cell.getItem()))));
-					popupStage.setTitle("Reparatie");
-					popupStage.show();
-				}
-			});
-			
-			return cell;
-		}
+	public TableColumn<Reparatie, Boolean> getBetaalStatusKolom() {
+		return betaalStatusKolom;
 	}
 }

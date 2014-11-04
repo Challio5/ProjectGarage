@@ -1,20 +1,5 @@
 package nl.eti1b5.controller;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-
-import nl.eti1b5.database.dao.AutoDao;
-import nl.eti1b5.database.dao.KlantDao;
-import nl.eti1b5.database.dao.MateriaalDao;
-import nl.eti1b5.database.dao.MonteurDao;
-import nl.eti1b5.database.dao.PlanningDao;
-import nl.eti1b5.database.dao.ReparatieDao;
-import nl.eti1b5.model.Auto;
-import nl.eti1b5.model.Klant;
-import nl.eti1b5.model.Materiaal;
-import nl.eti1b5.model.Monteur;
-import nl.eti1b5.model.Planning;
-import nl.eti1b5.model.Reparatie;
 import nl.eti1b5.view.main.MainLoader;
 import nl.eti1b5.view.preloader.InlogPreloader;
 
@@ -36,55 +21,7 @@ public class Garage {
 	 * @param args String array met commandline argumenten
 	 */
 	public static void main(String[] args) {
-		/* Database Test */
-		ReparatieDao dao = new ReparatieDao();
-		ArrayList<Reparatie> lijst = dao.getReparaties();
-		for(Reparatie reparatie : lijst) {
-			System.out.println(reparatie);
-		}
-		
-		KlantDao klantDao = new KlantDao();
-		ArrayList<Klant> klantenLijst = klantDao.getKlanten();
-		for(Klant klant : klantenLijst) {
-			System.out.println(klant);
-		}
-		
-		AutoDao autoDao = new AutoDao();
-		ArrayList<Auto> autoLijst = autoDao.getAutos();
-		for(Auto auto : autoLijst) {
-			System.out.println(auto);
-		}
-		
-		MateriaalDao materiaalDao = new MateriaalDao();
-		ArrayList<Materiaal> materiaalLijst = materiaalDao.getMateriaal();
-		for(Materiaal materiaal : materiaalLijst) {
-			System.out.println(materiaal);
-		}
-		
-		MonteurDao monteurDao = new MonteurDao();
-		ArrayList<Monteur> monteurLijst = monteurDao.getMonteurs();
-		//for(Monteur monteur : monteurLijst) {
-		//	System.out.println(monteur);
-		//}
-		
-		ArrayList<Monteur> monteurLijst2 = monteurDao.getMonteurs(LocalDateTime.now());
-		for(Monteur monteur : monteurLijst2) {
-			System.out.println(monteur);
-		}
-		
-		PlanningDao planningDao = new PlanningDao();
-		ArrayList<Planning> planningsLijst = planningDao.getPlanning();
-		//for(Planning planning : planningsLijst) {
-			//System.out.println(planning);
-		//}
-		
-		ArrayList<Planning> planningsLijst2 = planningDao.getPlanning(LocalDateTime.now());
-		for(Planning planning : planningsLijst2) {
-			System.out.println(planning);
-		}
-		
 		// Opent de applicatie
 		LauncherImpl.launchApplication(MainLoader.class, InlogPreloader.class, args);
-		
 	}
 }
