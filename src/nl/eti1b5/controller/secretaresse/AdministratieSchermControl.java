@@ -60,7 +60,7 @@ public class AdministratieSchermControl {
 		
 		view.getMonteursTabel().setMonteurPlaatsKolomCellEditEvent(e -> {
 			Monteur monteur = e.getRowValue();
-			monteur.setwoonplaats(e.getNewValue());
+			monteur.setWoonplaats(e.getNewValue());
 			monteurDao.addMonteur(monteur);
 		});
 		
@@ -105,7 +105,7 @@ public class AdministratieSchermControl {
 		
 		view.getKlantenTabel().setKlantPlaatsKolomCellEditEvent(e -> {
 			Klant klant = e.getRowValue();
-			klant.setwoonplaats(e.getNewValue());
+			klant.setWoonplaats(e.getNewValue());
 			klantDao.addKlant(klant);
 		});
 		
