@@ -8,6 +8,14 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+/**
+ * Gui klasse met tabel en combobox voor het weergeven van alle klanten en monteurs
+ * Aan de hand van de combobox wordt of de tabel met monteurs met die met klanten weergegeven
+ * 
+ * @author ETI2vb3
+ * @since 5 nov. 2014
+ */
+
 public class AdministratieOverzicht extends VBox{
 
 	// De tabellen met het klanten- en monteursoverzicht
@@ -27,6 +35,10 @@ public class AdministratieOverzicht extends VBox{
 	private Button klantToevoegButton;
 	private Button monteurToevoegButton;
 	
+	/**
+	 * Constructor voor het initialiseren van de klanten- en monteurs tabel inclusief kolommen
+	 * Maakt ook een combobox aan voor het selecteren van de juiste tabel
+	 */
 	public AdministratieOverzicht() {
 		
 		// De tabellen met het klanten- en monteursoverzicht
@@ -64,15 +76,25 @@ public class AdministratieOverzicht extends VBox{
 		this.getChildren().add(klantToevoegButton);
 	}
 
-	// Getters voor het opvragen van de nodes
+	/**
+	 * Getter voor het opvragen van de tabel met klanten
+	 * @return De tabel met klanten
+	 */
 	public KlantenTabel getKlantenTabel() {
 		return klantenTabel;
 	}
 
+	/**
+	 * Getter voor het opvragen van de tabel met monteurs
+	 * @return De tabel met monteurs
+	 */
 	public MonteursTabel getMonteursTabel() {
 		return monteursTabel;
 	}
 	
+	/**
+	 * Methode om de data in de tabel mee te updaten
+	 */
 	public void update(){
 		// Voegt de klanten toe aan de tabel
 		klantenTabel.getItems().clear();
@@ -81,15 +103,27 @@ public class AdministratieOverzicht extends VBox{
 		monteursTabel.getItems().addAll(new MonteurDao().getMonteurs());
 	}
 	
+	/**
+	 * Getter voor het opvragen van de klanttoevoegknop
+	 * @return De klanttoevoegknop
+	 */
 	public Button getKlantToevoegButton() {
 		return klantToevoegButton;
 	}
 
+	/**
+	 * Getter voor het opvragen van de monteurtoevoegknop
+	 * @return De monteurtoevoegknop
+	 */
 	public Button getMonteurToevoegButton() {
 		return monteurToevoegButton;
 	}
 
-	// Listener voor de geselecteerde waarde in de combobox
+	/**
+	 * Voegt een Changelistener toe aan de administratiekiezer
+	 * Luistert naar een verandering van de geselecteerde waarde in de combobox
+	 * @param listener De changelistener voor het afhandelen van veranderingen in de geselecteerde waarde
+	 */
 	public void setAdministratieKiezerListener(ChangeListener<String> listener) {
 		administratieKiezer.getSelectionModel().selectedItemProperty().addListener(listener);
 	}

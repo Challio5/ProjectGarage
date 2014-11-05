@@ -11,6 +11,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.Callback;
 
+/**
+ * Gui klasse voor het weergeven van de tabel met klanten
+ * Geeft alle attributen weer van een klant per kolom
+ * 
+ * @author ETI2vb3
+ * @since 5 nov. 2014
+ */
+
 public class KlantenTabel extends TableView<Klant> {
 	
 	// Tabelkolommen voor het weergeven van de attributen van klanten
@@ -21,6 +29,10 @@ public class KlantenTabel extends TableView<Klant> {
 	private TableColumn<Klant, String> klantPlaatsKolom;
 	private TableColumn<Klant, String> klantTelefoonnummerKolom;
 	
+	/**
+	 * Constructor voor het intialiseren van de tabelkolommen en voegt deze toe aan de tabel
+	 * Bevat cellvaluefactorys voor het weergeven van het juiste attribuut
+	 */
 	public KlantenTabel() {
 		// Bewerkbaar voor het aanpassen van de data
 		this.setEditable(true);
@@ -62,28 +74,56 @@ public class KlantenTabel extends TableView<Klant> {
 		this.getItems().addAll(new KlantDao().getKlanten());
 	}
 	
-	// Callback voor factuurpopup
+	/**
+	 * Setter voor het toevoegen van een cellfactory aan de klantnummerkolom
+	 * Cellfactory genereert de tabelcellen voor de kolom
+	 * @param callback De cellfactory die de tabelcellen genereert
+	 */
 	public void setKlantnummerKolomCellFactory(Callback<TableColumn<Klant, Integer>, TableCell<Klant, Integer>> callback) {
 		klantnummerKolom.setCellFactory(callback);
 	}
 	
-	// CellEditEvent handlers voor de klant	
+	/**
+	 * Setter voor het toevoegen van een celleditevent aan de klantnaamkolom
+	 * Event handelt aanpassingen in de celldata af
+	 * @param e Celleditevent voor aanpassingen in de celldata
+	 */
 	public void setKlantNaamKolomCellEditEvent(EventHandler<CellEditEvent<Klant, String>> e) {
 		klantNaamKolom.setOnEditCommit(e);
 	}
 	
+	/**
+	 * Setter voor het toevoegen van een celleditevent aan de klantadreskolom
+	 * Event handelt aanpassingen in de celldata af
+	 * @param e Celleditevent voor aanpassingen in de celldata
+	 */
 	public void setKlantAdresKolomKolomCellEditEvent(EventHandler<CellEditEvent<Klant, String>> e) {
 		klantAdresKolom.setOnEditCommit(e);
 	}
 	
+	/**
+	 * Setter voor het toevoegen van een celleditevent aan de klantpostcodekolom
+	 * Event handelt aanpassingen in de celldata af
+	 * @param e Celleditevent voor aanpassingen in de celldata
+	 */
 	public void setKlantPostcodeKolomCellEditEvent(EventHandler<CellEditEvent<Klant, String>> e) {
 		klantPostcodeKolom.setOnEditCommit(e);
 	}
 	
+	/**
+	 * Setter voor het toevoegen van een celleditevent aan de klantplaatskolom
+	 * Event handelt aanpassingen in de celldata af
+	 * @param e Celleditevent voor aanpassingen in de celldata
+	 */
 	public void setKlantPlaatsKolomCellEditEvent(EventHandler<CellEditEvent<Klant, String>> e) {
 		klantPlaatsKolom.setOnEditCommit(e);
 	}
 	
+	/**
+	 * Setter voor het toevoegen van een celleditevent aan de klanttelefoonnummerkolom
+	 * Event handelt aanpassingen in de celldata af
+	 * @param e Celleditevent voor aanpassingen in de celldata
+	 */
 	public void setKlantTelefoonnummerKolomCellEditEvent(EventHandler<CellEditEvent<Klant, String>> e) {
 		klantTelefoonnummerKolom.setOnEditCommit(e);
 	}

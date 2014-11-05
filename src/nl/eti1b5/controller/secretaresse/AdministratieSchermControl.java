@@ -10,6 +10,13 @@ import nl.eti1b5.model.Klant;
 import nl.eti1b5.model.Monteur;
 import nl.eti1b5.view.secretaresse.administratiescherm.AdministratieOverzicht;
 
+/**
+ * Controller voor het afhandelen van events van het administratiescherm
+ * Maakt het scherm en model en geeft deze mee aan het scherm
+ * 
+ * @author ETI2vb3
+ * @since 5 nov. 2014
+ */
 public class AdministratieSchermControl {
 	
 	// View waar klasse controller van is
@@ -19,6 +26,11 @@ public class AdministratieSchermControl {
 	private MonteurDao monteurDao;
 	private KlantDao klantDao;
 	
+	/**
+	 * Constructor voor het aanmaken van het model en view
+	 * Voegt de juiste events toe aan de view
+	 * @param view Het administratiescherm wat deze controller beheert
+	 */
 	public AdministratieSchermControl(AdministratieOverzicht view) {
 		// View waar klasse controller van is
 		this.view = view;
@@ -38,7 +50,10 @@ public class AdministratieSchermControl {
 		view.getKlantenTabel().setKlantnummerKolomCellFactory(new KlantNummerCallback());
 	}
 	
-	// Handelt de CellEditEvents van de monteurs af
+	/**
+	 * Methode die de celleditevents aan de monteurkolommen toevoegd
+	 * Slaat de wijzigingen op in zowel model als de doa
+	 */
 	private void setMonteurCellEditEvents() {
 		view.getMonteursTabel().setMonteurNaamKolomCellEditEvent(e -> {
 			Monteur monteur = e.getRowValue();
@@ -83,7 +98,10 @@ public class AdministratieSchermControl {
 		});
 	}
 	
-	// Handelt de CellEditEvents van de klanten af
+	/**
+	 * Methode die de celleditevents aan de klantkolommen toevoegd
+	 * Slaat de wijzigingen op in zowel model als de doa
+	 */
 	private void setKlantCellEditEvents() {
 		view.getKlantenTabel().setKlantNaamKolomCellEditEvent(e -> {
 			Klant klant = e.getRowValue();
@@ -116,8 +134,10 @@ public class AdministratieSchermControl {
 		});
 	}
 	
-	// Listener voor het detecteren van een verandering in de administratieKiezer
-	// Laat op basis van de selectie het juiste overzicht zien
+	/**
+	 * Listener voor het detecteren van een verandering in de administratieKiezer
+	 * Laat op basis van de selectie het juiste overzicht zien
+	 */
 	private void setAdministratieKiezerListener() {
 		view.setAdministratieKiezerListener((observable, oldValue, newValue) -> {
 			// Checkt de nieuwe waarde en switcht zo tussen de klant- en monteurstabel
@@ -138,8 +158,12 @@ public class AdministratieSchermControl {
 		});
 	}
 	
-	// Callback voor het aanpassen van het gedrag van de cellen in de klantnummerkolom
-	// Voegt een mouseclick listener toe aan de cellen voor het laten zien van de openstaande reparaties van de aangeklikte klant
+	/**
+	 * Cellfactory voor het genereren van tabelcellen voor de klantnummerkolom
+	 * Voegt een mouseclick listener toe aan de cellen voor het laten zien van de openstaande reparaties van de aangeklikte klant
+	 * @author ETI2vb3
+	 * @since 5 nov. 2014
+	 */
 	private class KlantNummerCallback implements Callback<TableColumn<Klant, Integer>, TableCell<Klant, Integer>> {
 
 		// Methode die wordt aangeroepen door de JRE wanneer het de kolom gaat vullen met cellen

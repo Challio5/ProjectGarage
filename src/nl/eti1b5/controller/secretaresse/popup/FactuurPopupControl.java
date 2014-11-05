@@ -18,6 +18,15 @@ import nl.eti1b5.model.Reparatie;
 import nl.eti1b5.view.secretaresse.administratiescherm.FactuurPopup;
 import nl.eti1b5.view.secretaresse.reparatiescherm.OmschrijvingsPopup;
 
+/**
+ * Controller voor het aansturen van de factuurpopup
+ * Handelt de events af die vanuit de factuurpoup worden getriggerd
+ * Bevat ook cellfactorys voor het genereren van tabelcellen
+ * 
+ * @author ETI2vb3
+ * @since 5 nov. 2014
+ */
+
 public class FactuurPopupControl {
 	
 	// View waar de klasse controller van is
@@ -32,6 +41,11 @@ public class FactuurPopupControl {
 	// Dao's voor het ophalen en wegschrijven van data naar de database
 	private ReparatieDao reparatieDao;
 	
+	/**
+	 * Constructor die de events toevoegd aan de factuurpopup
+	 * Maak het model aan en geeft deze mee aan de view
+	 * @param klantnummer
+	 */
 	public FactuurPopupControl(int klantnummer) {
 		// Het model met de data
 		this.klantnummer = klantnummer;
@@ -54,6 +68,10 @@ public class FactuurPopupControl {
 		this.printKnopActionEvent();
 	}
 	
+	/**
+	 * Methode die een actionlistener toevoegd aan de printknop
+	 * Genereert een factuur en vraagt de gebruiker om een locatie om deze op te slaan
+	 */
 	private void printKnopActionEvent() {
 		factuurPopup.setPrintButtonActionListener(e -> {
 			FileChooser fileChooser = new FileChooser();
@@ -109,6 +127,13 @@ public class FactuurPopupControl {
 		});
 	}
 	
+	/**
+	 * Cellfactory voor het generen van tabelcellen voor de omschrijvingsnummerkolom
+	 * Voegt een actionlistener toe aan de cellen voor het weergeven van een omschrijvingspopup
+	 * 
+	 * @author ETI2vb3
+	 * @since 5 nov. 2014
+	 */
 	private class OmschrijvingsNummerCallback implements Callback<TableColumn<Reparatie, Integer>, TableCell<Reparatie, Integer>>{
 
 		@Override
@@ -145,6 +170,13 @@ public class FactuurPopupControl {
 		}
 	}
 	
+	/**
+	 * Cellfactory voor het genereren van tabelcellen voor de betaalstatuskolom
+	 * Voegt een actionlistener toe die bij een druk op de cell de waarde verandert van true naar false of vice versa
+	 * 
+	 * @author ETI2vb3
+	 * @since 5 nov. 2014
+	 */
 	private class BetaalStatusCallback implements Callback<TableColumn<Reparatie, Boolean>, TableCell<Reparatie, Boolean>>{
 
 		@Override

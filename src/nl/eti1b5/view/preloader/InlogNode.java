@@ -9,7 +9,7 @@ import javafx.scene.layout.GridPane;
  * GUI klasse, inlognode
  * Node met een tekst- en wachtwoordveld voor het invoeren van inloggevens
  * 
- * @author Rob Bonhof
+ * @author ETI2vb3
  * @since 24 sep. 2014
  * @version 1.0
  */
@@ -44,14 +44,25 @@ public class InlogNode extends GridPane {
 		this.add(password, 1, 1);
 	}
 	
+	/**
+	 * Getter voor het opvragen van het tekstveld voor het intypen van de gebruikersnaam
+	 * @return Het tekstveld voor de gebruikersnaam
+	 */
 	public TextField getName(){
 		return name;
 	}
 	
+	/**
+	 * Getter voor het opvragen van het tekst voor het intypen van het wachtwoord
+	 * @return Het tekstveld voor het wachtwoord
+	 */
 	public TextField getPassword(){
 		return password;
 	}
 	
+	/**
+	 * Methode om de tekstvelden voor de gebruikersnaam en wachtwoord uit te schakelen
+	 */
 	public void setLock(){
 		name.setDisable(true);
 		password.setDisable(true);

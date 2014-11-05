@@ -24,6 +24,15 @@ import nl.eti1b5.model.Planning;
 import nl.eti1b5.model.Reparatie;
 import nl.eti1b5.view.secretaresse.planningsscherm.PlanningPopup;
 
+/**
+ * Controller voor het aansturen van de planningpopup
+ * Handelt de events af die vanuit de planningpopup worden getriggerd
+ * Bevat ook cellfactorys voor het genereren van tabelcellen
+ * 
+ * @author ETI2vb3
+ * @since 5 nov. 2014
+ */
+
 public class PlanningPopupControl {
 	
 	// View waar de klasse controller van is
@@ -38,6 +47,10 @@ public class PlanningPopupControl {
 	private ReparatieDao reparatieDao;
 	private PlanningDao planningDao;
 	
+	/**
+	 * Constructor voor het aanmaken van de planningpopup
+	 * Voegt events toe aan deze planningpopup en geeft deze het model mee
+	 */
 	public PlanningPopupControl() {
 		// Stage voor het weergeven van popups
 		popupStage = new Stage();
@@ -62,18 +75,36 @@ public class PlanningPopupControl {
 		this.setSubmitListener();
 	}
 	
+	/**
+	 * Listener voor de checkbox van de planningpopup
+	 * Schakelt het gedeelte voor het toevoegen van een reparatieomschrijving aan of uit
+	 */
 	private void setOverigeReparatieListener() {
 		// Listener voor het kiezen of zelf toevoegen van een reparatieomschrijving
 		planningPopup.setCheckOverigeReparatieChangeListener((check, oldValue, newValue) -> {
 			if(newValue.booleanValue()) {
-				planningPopup.enableOverigeReparatie();
+				planningPopup.getOverigeReparatie().setDisable(false);
+				planningPopup.getUrenOverigeReparatieKiezer().setDisable(false);
+				planningPopup.getMinutenOverigeReparatieKiezer().setDisable(false);
+				planningPopup.getOverigeReparatieKnop().setDisable(false);
+				
+				planningPopup.getOmschrijvingsKiezer().setDisable(true);
 			}
 			else {
-				planningPopup.disableOverigeReparatie();
+				planningPopup.getOverigeReparatie().setDisable(true);
+				planningPopup.getUrenOverigeReparatieKiezer().setDisable(true);
+				planningPopup.getMinutenOverigeReparatieKiezer().setDisable(true);
+				planningPopup.getOverigeReparatieKnop().setDisable(true);
+				
+				planningPopup.getOmschrijvingsKiezer().setDisable(false);
 			}
 		});
 	}
 	
+	/**
+	 * Listener voor toevoegen van een nieuwe reparatieomschrijving
+	 * Vraagt de gegevens van de GUI op en schrijft ze weg in de DAO
+	 */
 	private void setOmschrijvingListener() {
 		// Listener voor het toevoegen van een overige reparatie
 		planningPopup.setOverigeReparatieActionEvent((e -> {
@@ -99,6 +130,9 @@ public class PlanningPopupControl {
 		}));
 	}
 	
+	/**
+	 * Methode die op basis van de ingevoerde gegevens een voorstel doet voor een datum en gespecialiseerde monteur
+	 */
 	private void setPreselectionListener() {
 		// Listener voor het selecteren van een reparatie in de combobox
 		planningPopup.setOmschrijvingsKiezerChangeListener((omschrijving, oldValue, newValue) -> {
@@ -112,19 +146,19 @@ public class PlanningPopupControl {
 			// Vraagt de lijst met monteurs op en checkt of deze beschikbaar is op de datum
 			// Als de monteur de juiste specialisatie bezit voor de reparatie wordt deze automatisch geselecteerd
 			ArrayList<Monteur> monteursLijst = monteurDao.getMonteurs();
-			/*for(Monteur monteur : monteursLijst) {
+			for(Monteur monteur : monteursLijst) {
 				if(monteur.getSpecialiteit().equals(naam)) {
 					ArrayList<String> beschikbaarheidsLijst = new ArrayList<>(monteur.getBeschikbaarheid());
-					String datumcode = datumPicker.getValue().getDayOfWeek().toString().substring(0, 2);
+					String datumcode = planningPopup.getDatumPicker().getValue().getDayOfWeek().toString().substring(0, 2);
 					for(String beschikbaarheidsCode : beschikbaarheidsLijst) {
 						beschikbaarheidsCode = beschikbaarheidsCode.substring(0, 2);
 						System.out.println(monteur.getNaam() + " beschikbaar op: " + beschikbaarheidsCode + " datumcode vandaag: " + datumcode);
 						if(beschikbaarheidsCode.equals(datumcode)) {
-							monteurKiezer.getSelectionModel().select(monteur);
+							planningPopup.getMonteurKiezer().getSelectionModel().select(monteur);
 						}
 					}
 				}
-			}*/
+			}
 			
 			// Maakt het tweede deel van het planningsscherm beschikbaar
 			planningPopup.getDatumPicker().setDayCellFactory(new DatumPickerCallback());
@@ -135,6 +169,10 @@ public class PlanningPopupControl {
 		}); 
 	}
 	
+	/**
+	 * Methode die op basis van de datum en tijd de juiste monteurs in de combobox zet
+	 * Er worden alleen monteurs weergegeven die voor deze reparatie beschikbaar zijn
+	 */
 	private void setDateListener() {
 		planningPopup.setDatumPickerValueListener((date, oldValue, newValue) -> {
 			for(int uur : planningPopup.getUrenKiezer().getItems()) {
@@ -174,6 +212,10 @@ public class PlanningPopupControl {
 		});
 	}
 	
+	/**
+	 * Methode die actionevent toevoegd aan de submitknop in de planningpopup
+	 * Vraagt alle ingevulde gegevens uit de popup weg en schrijft deze weg in de database
+	 */
 	private void setSubmitListener() {
 		// Listener voor een druk op de submit knop
 		planningPopup.setSubmitActionEvent(click -> {
@@ -220,11 +262,9 @@ public class PlanningPopupControl {
 				LocalTime tijdOmschrijving = LocalTime.of(urenOmschrijving,
 						minutenOmschrijving);
 				Time sqlTijd = Time.valueOf(tijdOmschrijving);
-
-				// Voeg omschrijving toe aan database en
-				// omschrijvingDao.addOmschrijving(new Omschrij)
 			} else {
-				
+				// Voeg omschrijving toe aan database en
+				omschrijvingDao.addOmschrijving(new Omschrijving());
 			}
 
 			// Voegt de reparatie toe aan de database
@@ -237,14 +277,15 @@ public class PlanningPopupControl {
 		});
 	}
 	
-	// Callback handler voor de datumpicker
+	/**
+	 * Cellfactory voor het genereren van datecellen voor de datumpicker
+	 * Zet de data uit die niet beschikbaar zijn voor reparatie
+	 * Past de kleur van de cellen aan de beschikbaarheid van de datum
+	 * @author ETI2vb3
+	 * @since 5 nov. 2014
+	 */
 	private class DatumPickerCallback implements Callback<DatePicker, DateCell> {
-		private MonteurDao monteurDao;
-		
-		public DatumPickerCallback() {
-			monteurDao = new MonteurDao();
-		}
-		
+
 		@Override
 		public DateCell call(DatePicker datePicker) {
 			
@@ -263,13 +304,11 @@ public class PlanningPopupControl {
 						this.setStyle("-fx-background-color:green");
 					}
 					
-					/* Zet de data uit de planning op oranje
-
-					if(item.isEqual(begintijd.toLocalDate())) {
+					// Zet de data uit de planning op oranje
+					if(item.isEqual(LocalDate.now())) {
 						this.setDisable(true);
 						this.setStyle("-fx-background-color:orange");
 					}
-					*/
 				}
 			};
 			

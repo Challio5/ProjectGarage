@@ -6,33 +6,54 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import nl.eti1b5.model.Reparatie;
 
+/**
+ * Gui popupklasse die de attributen weergeeft van een reparatie
+ * Wordt aangemaakt op het moment de gebruiker de details wil weten van een reparatie
+ * Verschijnt bovenop het hoofdscherm
+ * 
+ * @author ETI2vb3
+ * @since 5 nov. 2014
+ */
+
 public class ReparatiePopup extends GridPane {
 	
-	// De verschillende attributen met labels
+	// Label en tekstveld voor het weergeven van een reparatienummer
 	private Label reparatieNummerLabel;
 	private TextField reparatieNummer;
 	
+	// Label en tekstveld voor het weergeven van een kenteken
 	private Label kentekenLabel;
 	private TextField kenteken;
 	
+	// Label en tekstveld voor het weergeven van een omschrijving
 	private Label omschrijvingLabel;
 	private TextField omschrijving;
 	
+	// Label en tekstveld voor het weergeven van de begintijd
 	private Label beginTijdLabel;
 	private TextField beginTijd;
 	
+	// Label en tekstveld voor het weergeven van de eindtijd
 	private Label eindTijdLabel;
 	private TextField eindTijd;
 	
+	// Label en tekstveld voor het weergeven van de reparatiestatus
 	private Label reparatieStatusLabel;
 	private TextField reparatieStatus;
 	
+	// Label en tekstveld voor het weergeven van de betaalstatus
 	private Label betaalStatusLabel;
 	private TextField betaalStatus;
 	
+	// Label en tekstveld voor het weergeven van de materialen
 	private Label materialenLijstLabel;
 	private TextField materialenLijst;
 	
+	/**
+	 * Constructor die de labels en tekstvelden voor het weergeven van de attributen van een reparatie intialiseert
+	 * Voegt ze toe aan de gridpane
+	 * @param reparatie De reparatie die de popup moet weergeven
+	 */
 	public ReparatiePopup(Reparatie reparatie) {
 		this.setPadding(new Insets(10));
 		

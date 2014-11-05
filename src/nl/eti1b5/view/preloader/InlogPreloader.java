@@ -11,7 +11,7 @@ import nl.eti1b5.view.main.MainLoader;
  * Inlog preloader, opent voor het hoofdprogramma start
  * Laat het hoofdprogramma pas zin op het moment de juiste inloggevens zijn ingevuld
  * 
- * @author Rob Bonhof
+ * @author ETI2vb3
  * @since 24 sep. 2014
  * @version 1.0
  */
@@ -68,10 +68,18 @@ public class InlogPreloader extends Preloader {
 		}
 	}
 	
+	/**
+	 * Getter voor het opvragen de preloader stage
+	 * @return De stage van de preloader
+	 */
 	public Stage getStage(){
 		return stage;
 	}
 	
+	/**
+	 * Getter voor het opvragen van de inlogview met de inlogvelden
+	 * @return De inlogview met inlogvelden
+	 */
 	public InlogView getInlogView(){
 		return start;
 	}

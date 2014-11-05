@@ -12,6 +12,13 @@ import javafx.util.Callback;
 import nl.eti1b5.database.dao.ReparatieDao;
 import nl.eti1b5.model.Reparatie;
 
+/**
+ * Gui klasse voor het weergeven van alle reparaties
+ * Bestaat uit een tabel met tabelkolommen voor het weergeven van de attributen
+ * 
+ * @author ETI2vb3
+ * @since 5 nov. 2014
+ */
 
 public class ReparatieOverzicht extends TableView<Reparatie>{
 	
@@ -23,8 +30,11 @@ public class ReparatieOverzicht extends TableView<Reparatie>{
 	private TableColumn<Reparatie, Timestamp> eindtijdKolom;	
 	private TableColumn<Reparatie, Boolean> reparatieStatusKolom;
 	private TableColumn<Reparatie, Boolean> betaalStatusKolom;
-	// Materialen ???
 	
+	/**
+	 * Constructor voor het initialiseren van de de tabelkolommen
+	 * Voegt deze toe aan de tabel
+	 */
 	public ReparatieOverzicht(){
 		this.setEditable(true);
 		
@@ -72,41 +82,77 @@ public class ReparatieOverzicht extends TableView<Reparatie>{
 		this.getItems().addAll(new ReparatieDao().getReparaties());
 	}
 	
-	// Cell factories voor genereren van een tablecell
+	/**
+	 * Voegt een cellfactory toe aan de kentekenkolom
+	 * @param callback De cellfactory voor het genereren van tablecells
+	 */
 	public void setKentekenKolomCellFactory(Callback<TableColumn<Reparatie, String>, TableCell<Reparatie, String>> callback) {
 		kentekenKolom.setCellFactory(callback);
 	}
 	
+	/**
+	 * Voegt een cellfactory toe aan de omschrijvingsnummerkolom
+	 * @param callback De cellfactory voor het genereren van tablecells
+	 */
 	public void setOmschrijvingsNummerCellFactory(Callback<TableColumn<Reparatie, Integer>, TableCell<Reparatie, Integer>> callback) {
 		omschrijvingsNummerKolom.setCellFactory(callback);
 	}
 	
+	/**
+	 * Voegt een cellfactory toe aan de de reparatiestatuskolom
+	 * @param callback De cellfactory voor het genereren van tablecells
+	 */
 	public void setReparatieStatusCellFactory(Callback<TableColumn<Reparatie, Boolean>, TableCell<Reparatie, Boolean>> callback) {
 		reparatieStatusKolom.setCellFactory(callback);
 	}
 	
+	/**
+	 * Voegt een cellfactory toe aan de betaalstatuskolom
+	 * @param callback De cellfactory voor het genereren van tablecells
+	 */
 	public void setBetaalStatusCellFactory(Callback<TableColumn<Reparatie, Boolean>, TableCell<Reparatie, Boolean>> callback) {
 		betaalStatusKolom.setCellFactory(callback);
 	}
 	
-	// Edit commits voor het afhandelen van aanpassingen in de tabel
+	/**
+	 * Voegt een celleditevent toe aan de kentekenkolom
+	 * Handelt aanpassingen in de celldata af
+	 * @param e Celleditevent voor een aanpassing in de inhoud van een cel
+	 */
 	public void setKentekenOnEditComit(EventHandler<CellEditEvent<Reparatie, String>> e) {
 		kentekenKolom.setOnEditCommit(e);
 	}
 	
+	/**
+	 * Voegt een celleditevent toe aan de reparatiestatuskolom
+	 * Handelt aanpassingen in de celldata af
+	 * @param e Celleditevent voor een aanpassing in de inhoud van een cel
+	 */
 	public void setReparatieStatusOnEditComit(EventHandler<CellEditEvent<Reparatie, Boolean>> e) {
 		reparatieStatusKolom.setOnEditCommit(e);
 	}
 	
+	/**
+	 * Voegt een celleditevent toe aan de betaalstatuskolom
+	 * Handelt aanpassingen in de celldata af
+	 * @param e Celleditevent voor een aanpassing in de inhoud van een cel
+	 */
 	public void setBetaalStatusOnEditComit(EventHandler<CellEditEvent<Reparatie, Boolean>> e) {
 		betaalStatusKolom.setOnEditCommit(e);
 	}
 	
-	// Getters
+	/**
+	 * Getter voor het opvragen van de reparatiestatuskolom
+	 * @return De reperatiestatuskolom
+	 */
 	public TableColumn<Reparatie, Boolean> getReparatieStatusKolom() {
 		return reparatieStatusKolom;
 	}
 
+	/**
+	 * Getter voor het opvragen van de betaalstatuskolom
+	 * @return De betaalstatuskolom
+	 */
 	public TableColumn<Reparatie, Boolean> getBetaalStatusKolom() {
 		return betaalStatusKolom;
 	}

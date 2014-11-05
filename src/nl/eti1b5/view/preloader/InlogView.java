@@ -13,7 +13,7 @@ import javafx.scene.layout.VBox;
  * GUI klasse, inlogscherm
  * View met de inlognode, knop en functiekiezer, om in te loggen in het programma
  * 
- * @author Rob Bonhof
+ * @author ETI2vb3
  * @since 24 sep. 2014
  * @version 1.0
  */
@@ -64,18 +64,34 @@ public class InlogView extends VBox{
 		submit.setOnAction(event);
 	}
 	
+	/**
+	 * Setter voor het toevoegen van een Keyevent aan de view
+	 * @param event Keyevent voor het afhandelen van een toetsdruk
+	 */
 	public void setEnterListener(EventHandler<KeyEvent> event) {
 		this.setOnKeyPressed(event);
 	}
 	
+	/**
+	 * Getter voor opvragen van de inlognode met de inlogvelden
+	 * @return De inlognode met de inlogvelden
+	 */
 	public InlogNode getInlogNode(){
 		return inlog;
 	}
 	
+	/**
+	 * Getter voor het opvragen van de combobox voor het selecteren van een monteur of secretaresse
+	 * @return De combobox voor het selecteren van monteur of secretaresse
+	 */
 	public ComboBox<String> getJob(){
 		return job;
 	}
 	
+	/**
+	 * Getter voor het opvragen van het label voor het weergeven van foutmeldingen
+	 * @return Label voor foutmeldingen
+	 */
 	public Label getFoutMelding(){
 		return foutMelding;
 	}

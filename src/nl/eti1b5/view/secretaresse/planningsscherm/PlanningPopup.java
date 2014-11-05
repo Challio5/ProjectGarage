@@ -30,6 +30,9 @@ import nl.eti1b5.model.converter.OmschrijvingConverter;
 
 /**
  * GUI klasse met GridPane layout voor het toevoegen van een reparatie met planning
+ * Bevat nodes voor het invullen van de juiste gegevens en doet zo mogelijk voorstellen
+ * Verschijnt bovenop het hoofdscherm
+ * 
  * @author Projectgroep ETI2b3 2014-2015 kwartiel 1
  * @since 23 okt. 2014
  */
@@ -206,104 +209,167 @@ public class PlanningPopup extends GridPane{
 		this.add(console, 0, 8, 4, 1);
 	}
 	
-	public void enableOverigeReparatie() {
-		// Zet de nodes in de GUI aan voor het toevoegen van een reparatieomschrijving
-		overigeReparatie.setDisable(false);
-		urenOverigeReparatieKiezer.setDisable(false);
-		minutenOverigeReparatieKiezer.setDisable(false);
-		overigeReparatieKnop.setDisable(false);
-		
-		omschrijvingsKiezer.setDisable(true);
-	}
-	
-	public void disableOverigeReparatie() {
-		// Zet de nodes in de GUI uit voor het toevoegen van een reparatieomschrijving
-		overigeReparatie.setDisable(true);
-		urenOverigeReparatieKiezer.setDisable(true);
-		minutenOverigeReparatieKiezer.setDisable(true);
-		overigeReparatieKnop.setDisable(true);
-		
-		omschrijvingsKiezer.setDisable(false);
-	}
-	
-	// Event Handlers
+	/**
+	 * Voegt een changelistener toe aan de overige reparatie checkbox
+	 * Luisterd of de checkbox wordt uit- of aangevinkt
+	 * @param listener Changelistener voor het luisteren na veranderingen
+	 */
 	public void setCheckOverigeReparatieChangeListener(ChangeListener<Boolean> listener) {
 		checkOverigeReparatie.selectedProperty().addListener(listener);
 	}
 	
+	/**
+	 * Voegt een actionlistener toe aan de overige reparatie knop
+	 * Reageert op een klik op de knop
+	 * @param e Actionevent die wordt getriggerd bij een muisklik
+	 */
 	public void setOverigeReparatieActionEvent(EventHandler<ActionEvent> e) {
 		overigeReparatieKnop.setOnAction(e);
 	}
 	
+	/**
+	 * Voegt een changelistener toe aan de overige reparatie checkbox
+	 * Luisterd of de geselecteerd waarde van de combobox verandert
+	 * @param listener Changelistener die luistert naar een veranderingen
+	 */
 	public void setOmschrijvingsKiezerChangeListener(ChangeListener<Omschrijving> listener){
 		omschrijvingsKiezer.getSelectionModel().selectedItemProperty().addListener(listener);
 	}
 	
+	/**
+	 * Voegt een changelistener toe aan de datumpicker
+	 * Luisterd na een verandering van de geselecteerde datum
+	 * @param listener Changelistener die luistert naar veranderingen
+	 */
 	public void setDatumPickerValueListener(ChangeListener<LocalDate> listener) {
 		datumPicker.valueProperty().addListener(listener);
 	}
 	
+	/**
+	 * Voegt een actionlistener toe aan de submitknop
+	 * Reageert op een klik op de submitknop
+	 * @param e
+	 */
 	public void setSubmitActionEvent(EventHandler<ActionEvent> e) {
 		submit.setOnAction(e);
 	}
 
-	// Getters
+	/**
+	 * Getter voor het opvragen van de combobox met klanten
+	 * @return De combobox met klanten
+	 */
 	public ComboBox<Klant> getKlantKiezer() {
 		return klantKiezer;
 	}
 
+	/**
+	 * Getter voor het opvragen van de combobox met auto's
+	 * @return De combobox met auto's
+	 */
 	public ComboBox<Auto> getAutoKiezer() {
 		return autoKiezer;
 	}
 
+	/**
+	 * Getter voor het opvragen van de overige reparatie knop
+	 * @return De overige reparatie knop
+	 */
 	public Button getOverigeReparatieKnop() {
 		return overigeReparatieKnop;
 	}
 
+	/**
+	 * Getter voor het opvragen van de overige reparatie checkbox
+	 * @return De overige reparatie checkbox
+	 */
 	public CheckBox getCheckOverigeReparatie() {
 		return checkOverigeReparatie;
 	}
 
+	/**
+	 * Getter voor het opvragen van het overige reparatie tekstveld
+	 * @return De overige reparatie tekstveld
+	 */
 	public TextField getOverigeReparatie() {
 		return overigeReparatie;
 	}
 
+	/**
+	 * Getter voor het opvragen van de combobox met overige reparatie uren
+	 * @return De combobox met overige reparatie uren
+	 */
 	public ComboBox<Integer> getUrenOverigeReparatieKiezer() {
 		return urenOverigeReparatieKiezer;
 	}
 
+	/**
+	 * Getter voor het opvragen van de combobox met overige reparatie minuten
+	 * @return De combobox met overige reparatie minuten
+	 */
 	public ComboBox<Integer> getMinutenOverigeReparatieKiezer() {
 		return minutenOverigeReparatieKiezer;
 	}
 
+	/**
+	 * Getter voor het opvragen van de combobox met reparatie omschrijvingen
+	 * @return De combobox met reparatie omschrijvingen
+	 */
 	public ComboBox<Omschrijving> getOmschrijvingsKiezer() {
 		return omschrijvingsKiezer;
 	}
 
+	/**
+	 * Getter voor het opvragen van het tekstveld met de omschrijvingsduur
+	 * @return Het tekstveld met de omschrijvingsduur
+	 */
 	public TextField getOmschrijvingsDuur() {
 		return omschrijvingsDuur;
 	}
 
+	/**
+	 * Getter voor het opvragen van de datepicker
+	 * @return De datepicker
+	 */
 	public DatePicker getDatumPicker() {
 		return datumPicker;
 	}
 
+	/**
+	 * Getter voor het opvragen van de combobox met de begintijden in uren
+	 * @return De combobox met begintijden in uren
+	 */
 	public ComboBox<Integer> getUrenKiezer() {
 		return urenKiezer;
 	}
 
+	/**
+	 * Getter voor het opvragen van de combobox met de eindtijden in uren
+	 * @return De combobox met eindtijden in uren
+	 */
 	public ComboBox<Integer> getMinutenKiezer() {
 		return minutenKiezer;
 	}
 
+	/**
+	 * Getter voor het opvragen van de combobox met de monteurs
+	 * @return De combobox met de monteurs
+	 */
 	public ComboBox<Monteur> getMonteurKiezer() {
 		return monteurKiezer;
 	}
 
+	/**
+	 * Getter voor het opvragen van de submitknop
+	 * @return De sumbitknoop
+	 */
 	public Button getSubmit() {
 		return submit;
 	}
 
+	/**
+	 * Getter voor het opvragen van het tekstveld in het console
+	 * @return Het tekstveld in het console
+	 */
 	public TextArea getConsoleText() {
 		return consoleText;
 	}

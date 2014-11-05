@@ -6,38 +6,62 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import nl.eti1b5.model.Monteur;
 
+/**
+ * GUI Popup klasse voor het weergeven van de details van een monteur
+ * Wordt aangemaakt op het moment de gebruiker de details wil weten
+ * Attributen van een bepaalde monteur worden dan weergegeven
+ * Verschijnt bovenop het hoofdscherm
+ * 
+ * @author ETI2vb3
+ * @since 5 nov. 2014
+ */
+
 public class MonteurPopup extends GridPane{
-	// De weer te geven reparatie
+	// Label en tekstveld voor het werknemernummer van de monteur
 	private Label werknemerNrLabel;
 	private TextField werknemerNr;
 	
+	// Label en tekstveld voor de naam van de monteur
 	private Label naamLabel;
 	private TextField naam;
 	
+	// Label en tekstveld voor het adres van de monteur
 	private Label adresLabel;
 	private TextField adres;
-	
+
+	// Label en tekstveld voor de postcode van de monteur
 	private Label postcodeLabel;
 	private TextField postcode;
 	
+	// Label en tekstveld voor de woonplaats van de monteur
 	private Label woonplaatsLabel;
 	private TextField woonplaats;
 	
+	// Label en tekstveld voor het telefoonnummer van de monteur
 	private Label telNrLabel;
 	private TextField telNr;
 	
+	// Label en tekstveld voor het wachtwoord van de monteur
 	private Label wachtwoordLabel;
 	private TextField wachtwoord;
 	
+	// Label en tekstveld voor de specialiteit van de monteur
 	private Label specialiteitLabel;
 	private TextField specialiteit;
 	
+	// Label en tekstveld voor de beschikbaarheid van de monteur
 	private Label beschikbaarheidsLijstLabel;
 	private TextField beschikbaarheidsLijst;
 	
+	// Label en tekstveld voor de reparaties van de monteur
 	private Label reparatieLijstLabel;
 	private TextField reparatieLijst;
 	
+	/**
+	 * Constructor voor het initialiseren van de labels en tekstvelden
+	 * Labels en tekstvelden komen overeen met
+	 * @param monteur De weer te geven monteur
+	 */
 	public MonteurPopup(Monteur monteur) {
 		this.setPadding(new Insets(10));
 		
