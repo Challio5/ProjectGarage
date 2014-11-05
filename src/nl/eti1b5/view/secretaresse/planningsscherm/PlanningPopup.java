@@ -248,7 +248,7 @@ public class PlanningPopup extends GridPane{
 	/**
 	 * Voegt een actionlistener toe aan de submitknop
 	 * Reageert op een klik op de submitknop
-	 * @param e
+	 * @param e Actionevent die de klik op de submitknop afhandelt
 	 */
 	public void setSubmitActionEvent(EventHandler<ActionEvent> e) {
 		submit.setOnAction(e);

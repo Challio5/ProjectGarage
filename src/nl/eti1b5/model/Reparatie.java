@@ -53,7 +53,7 @@ public class Reparatie {
 	 * Constructor voor initialiseren van de gegevens van een reparatie vanuit de database
 	 * @param reparatieNummer Het nummer van de reparatie
 	 * @param kenteken Het kenteken van de auto voor de reparatie
-	 * @param omschrijving De omschrijving van de reparatie
+	 * @param omschrijvingsNummer Het omschrijvingsnummer van de reparatie
 	 * @param beginTijd De begintijd van de reparatie
 	 * @param eindTijd De eindtijd van de reparatie
 	 * @param reparatieStatus De reparatiestatus van de reparatie
@@ -181,7 +181,7 @@ public class Reparatie {
 	
 	/**
 	 * Setter voor het aanpassen van de betaalstatus van de reparatie
-	 * @param eindTijd De betaalstatus van de reparatie
+	 * @param betaalStatus De betaalstatus van de reparatie
 	 */
 	public void setBetaalStatus(boolean betaalStatus) {
 		this.betaalStatus.set(betaalStatus);

@@ -103,6 +103,7 @@ public class ReparatieDao {
 	
 	/**
 	 * Methode voor het opvragen van alle reparaties die verbonden zijn aan een werknemer.
+	 * @param werknemerNummer Het nummer van de werknemer waarvan de reparaties moeten worden opgevraagd
 	 * @return een lijst met alle reparaties van de werknemer
 	 */
 	public ArrayList<Reparatie> eigenReparaties(int werknemerNummer) {
@@ -169,6 +170,7 @@ public class ReparatieDao {
 
 	/**
 	 * Methode voor het opvragen van een reparatie aan de hand van het reparatienummer
+	 * @param reparatienr Het nummer van de reparatie die moet worden opgevraagd
 	 * @return de reparaties
 	 */
 	public Reparatie getReparatie(int reparatienr) {
@@ -228,6 +230,8 @@ public class ReparatieDao {
 	
 	/**
 	 * Methode voor het opvragen van de reparaties horende bij een klant
+	 * @param klantnr Het nummer van de klant waarvan de reparaties moeten worden opgehaald
+	 * @param betaald Boolean of de op te halen reparatie wel of niet betaald moeten zijn
 	 * @return een lijst met de reparaties horende bij een klant.
 	 */
 	public ArrayList<Reparatie> getKlantReparaties(int klantnr, boolean betaald) {

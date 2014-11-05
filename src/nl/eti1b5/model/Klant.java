@@ -41,6 +41,7 @@ public class Klant extends Persoon {
 	 * @param postcode De postcode van de klant
 	 * @param plaats De woonplaats van de klant
 	 * @param telNr Het telefoonnummer van de klant
+	 * @param autoLijst De lijst met auto's van de klant
 	 */
 	public Klant(int klantNr, String naam, String adres, String postcode, String plaats, String telNr, ArrayList<Auto> autoLijst) {
 		super(naam, adres, postcode, plaats, telNr);

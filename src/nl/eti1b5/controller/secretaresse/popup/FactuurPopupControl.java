@@ -44,7 +44,7 @@ public class FactuurPopupControl {
 	/**
 	 * Constructor die de events toevoegd aan de factuurpopup
 	 * Maak het model aan en geeft deze mee aan de view
-	 * @param klantnummer
+	 * @param klantnummer Het nummer van de klant waarvan de openstaande reparaties weergegeven moet worden
 	 */
 	public FactuurPopupControl(int klantnummer) {
 		// Het model met de data

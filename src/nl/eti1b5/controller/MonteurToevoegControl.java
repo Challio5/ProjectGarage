@@ -20,7 +20,7 @@ public class MonteurToevoegControl implements EventHandler<ActionEvent> {
 	/**
 	 * Constructor die een addMonteurScherm mee krijgt en deze aan de variabele toevoegd.
 	 * Ook wordt er een lege monteur gemaakt.
-	 * @param addMonteurScherm 
+	 * @param addMonteurScherm Het scherm wat deze controller beheert
 	 */
 	public MonteurToevoegControl(AddMonteurScherm addMonteurScherm) {
 		this.addMonteurScherm = addMonteurScherm;

@@ -63,7 +63,7 @@ public class Omschrijving {
 
 	/**
 	 * Setter voor het aanpassen van de duur van de reparatie
-	 * @param tijd De duur van de reparatie
+	 * @param duur De duur van de reparatie
 	 */
 	public void setTijd(Time duur) {
 		this.duur.set(duur);

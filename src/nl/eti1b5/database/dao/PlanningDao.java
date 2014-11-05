@@ -82,7 +82,7 @@ public class PlanningDao {
 	
 	/**
 	 * Methode voor het opvragen van een geplande reparatie op basis van de tijd
-	 * @param beginTijd De tijd waarop de reparaties gepland zijn
+	 * @param datumTijd De tijd waarop de reparaties gepland zijn
 	 * @return De volledige planning van de garage
 	 */
 	public ArrayList<Planning> getPlanning(LocalDateTime datumTijd) {
@@ -123,7 +123,7 @@ public class PlanningDao {
 	
 	/**
 	 * Methode voor het opvragen van een geplande reparatie op basis van de tijd
-	 * @param beginTijd De tijd waarop de reparaties gepland zijn
+	 * @param datum De tijd waarop de reparaties gepland zijn
 	 * @return De volledige planning van de garage
 	 */
 	public ArrayList<Planning> getPlanning(LocalDate datum) {

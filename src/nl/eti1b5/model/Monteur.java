@@ -90,7 +90,7 @@ public class Monteur extends Gebruiker {
 	
 	/**
 	 * Setter voor het aanpassen van de lijst met beschikbaarheidscodes van de monteur
-	 * @param beschikbaarheid De lijst met beschikbaarheidscodes van de monteur
+	 * @param beschikbaarheidsLijst De lijst met beschikbaarheidscodes van de monteur
 	 */
 	public void setBeschikbaarheid(ArrayList<String> beschikbaarheidsLijst) {
 		this.beschikbaarheidsLijst = beschikbaarheidsLijst;
@@ -98,7 +98,7 @@ public class Monteur extends Gebruiker {
 
 	/**
 	 * Setter voor het aanpassen van de lijst met reparaties van de monteur
-	 * @param beschikbaarheid De lijst met reparaties van de monteur
+	 * @param reparatieLijst De lijst met reparaties van de monteur
 	 */
 	public void setReparaties(ArrayList<Integer> reparatieLijst) {
 		this.reparatieLijst = reparatieLijst;
