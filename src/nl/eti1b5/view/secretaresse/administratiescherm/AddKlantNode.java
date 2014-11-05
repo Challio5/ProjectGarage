@@ -13,6 +13,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import nl.eti1b5.model.Auto;
 
+/**
+ * Deze klasse geeft een Node in het popup scherm van de addklant weer. 
+ * Hier kunnen de auto's worden toegevoegd aan de klant.
+ * @author Groep 5
+ * @version 1.0
+ */
 public class AddKlantNode extends BorderPane{
 
 	private Button add;
@@ -32,6 +38,11 @@ public class AddKlantNode extends BorderPane{
 
 	private ObservableList<Auto> oListAuto;
 	
+	/**
+	 * Dit is de constructor van deze klasse, de klasse bestaat uit een tableView van een aantal auto's
+	 * Een knop om een auto toe te voegen, een veld om het kenteken in the vullen, een veld om het merk in te vullen
+	 * een veld om het model in te vullen en een veld om the verzekeringsnummer in te vullen.
+	 */
 	public AddKlantNode(){
 		autos = new TableView<Auto>();
 		
@@ -78,6 +89,10 @@ public class AddKlantNode extends BorderPane{
 		this.setBottom(addAuto);
 	}
 	
+	/**
+	 * Getter voor het opvragen van de toegevoegde auto's
+	 * @return de lijst met auto's 
+	 */
 	public ArrayList<Auto> getAutos(){
 		return autoLijst;
 	}

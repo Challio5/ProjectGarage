@@ -10,15 +10,30 @@ import nl.eti1b5.database.DatabaseManager;
 import nl.eti1b5.model.Auto;
 import nl.eti1b5.model.Klant;
 
+/**
+ * Data access object wat de klanten tabel beheert in de database
+ * Haalt de gegevens van een klant op en schrijft ze weg naar de database
+ * 
+ * @author Projectgroep ETI2b3 2014-2015 kwartiel 1
+ * @since 22 okt. 2014
+ */
+
 public class KlantDao {
 	
 	// De databaseManager die de connectie naar de database beheert
 	private DatabaseManager manager;
 	
+	/**
+	 * De constructor
+	 */
 	public KlantDao() {
 		manager = DatabaseManager.getInstance();
 	}
 	
+	/** 
+	 * Methode voor het opvragen van een lijst met alle klanten
+	 * @return de lijst met klanten.
+	 */
 	public ArrayList<Klant> getKlanten() {
 		// De lijst waar de klanten uit de database in komen
 		ArrayList<Klant> klantenLijst = new ArrayList<>();
@@ -74,6 +89,11 @@ public class KlantDao {
 		return klantenLijst;
 	}
 	
+	/**
+	 * Methode voor het opvragen van een klantnummer uit de database
+	 * @param klant de klant waarvan je het nummer wilt hebben
+	 * @return een integer met het klantnummer
+	 */
 	public int getKlantNr(Klant klant){
 		int klantNr = 0;
 		// Zet de verbinding op met de database
@@ -113,6 +133,11 @@ public class KlantDao {
 		return klantNr;
 	}
 	
+	/**
+	 * Methode voor het toevoegeven van een bestaande of nog niet bestaande klant aan de database.
+	 * Deze methode gebruikt hiervoor addExistingKlant of addNewKlant
+	 * @param klant de klant die je wilt toevoegen of veranderen.
+	 */
 	public void addKlant(Klant klant) {
 		// Checkt of de klant al een klantnummer heeft
 		// Als dit zo is dan bestaat hij al in de database en dient hij aangepast te worden
@@ -124,6 +149,10 @@ public class KlantDao {
 		}
 	}
 	
+	/**
+	 * Het toevoegen van een nieuwe klant aan de database.
+	 * @param klant
+	 */
 	private void addNewKlant(Klant klant) {
 		// Zet de verbinding op met de database
 		Connection connection = manager.getConnection();
@@ -155,6 +184,10 @@ public class KlantDao {
 		manager.closeConnection();	
 	}
 	
+	/**
+	 * Methode om een bestaande klant te veranderen in de database
+	 * @param klant
+	 */
 	private void addExistingKlant(Klant klant) {
 		// Zet de verbinding op met de database
 		Connection connection = manager.getConnection();

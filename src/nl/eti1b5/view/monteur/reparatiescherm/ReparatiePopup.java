@@ -27,8 +27,11 @@ import nl.eti1b5.database.dao.OmschrijvingDao;
 import nl.eti1b5.model.Materiaal;
 import nl.eti1b5.model.Reparatie;
 
-
-
+/**
+ * De klasse voor het scherm van de reparatiepopup.
+ * @author groep 5
+ * @version 1.0
+ */
 public class ReparatiePopup extends BorderPane{
 	
 	private VBox labels;
@@ -45,6 +48,10 @@ public class ReparatiePopup extends BorderPane{
 	private ComboBox<Integer> eindUur;
 	private ComboBox<Integer> eindKwartier;
 	
+	/**
+	 * De constructor voor deze klasse, deze klasse krijgt de reparatie waarop geklikt is mee.
+	 * @param reparatie de reparatie 
+	 */
 	public ReparatiePopup(Reparatie reparatie){
 
 		labels = new VBox();

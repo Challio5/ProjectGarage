@@ -5,7 +5,12 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-
+/**
+ * Dit is de klasse die de menubar voor het monteursscherm weergeeft.
+ * @author Groep 5
+ * @version 1.0
+ *
+ */
 public class MenuNode extends MenuBar {
 	
 	private Menu file;

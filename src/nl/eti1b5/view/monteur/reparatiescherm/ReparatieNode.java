@@ -13,6 +13,11 @@ import nl.eti1b5.database.dao.ReparatieDao;
 import nl.eti1b5.model.Reparatie;
 import nl.eti1b5.view.secretaresse.reparatiescherm.OmschrijvingsPopup;
 
+/**
+ * Klasse voor de Node van een monteurscherm, 
+ * @author Groep 5
+ * @version 1.0
+ */
 // Begin en eindtijden opgeven?
 public class ReparatieNode extends TableView<Reparatie>{
 	
@@ -25,6 +30,9 @@ public class ReparatieNode extends TableView<Reparatie>{
 	private TableColumn<Reparatie, Integer> omschrijvingKolom;
 	private TableColumn<Reparatie, Boolean> reparatieStatusKolom;
 	
+	/**
+	 * De constructor voor deze klasse,
+	 */
 	public ReparatieNode(){
 		this.setEditable(true);
 		

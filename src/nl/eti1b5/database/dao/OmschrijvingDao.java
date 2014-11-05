@@ -6,19 +6,32 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.util.ArrayList;
-
 import nl.eti1b5.database.DatabaseManager;
 import nl.eti1b5.model.Omschrijving;
+/**
+ * Data access object wat de omschrijving tabel beheert in de database
+ * Haalt de gegevens van een omschrijving op en schrijft ze weg naar de database
+ * 
+ * @author Projectgroep ETI2b3 2014-2015 kwartiel 1
+ * @since 22 okt. 2014
+ */
 
 public class OmschrijvingDao {
 	
 	// De databaseManager die de connectie naar de database beheert
 	private DatabaseManager manager;
 	
+	/**
+	 * de constructor
+	 */
 	public OmschrijvingDao() {
 		manager = DatabaseManager.getInstance();
 	}
 	
+	/**
+	 * Methode voor het opvragen van alle omschrijvingen.
+	 * @return een lijst met omschrijvingen.
+	 */
 	public ArrayList<Omschrijving> getOmschrijvingen() {
 		// Lijst voor de resultaten uit de database
 		ArrayList<Omschrijving> omschrijvingenLijst = new ArrayList<>();
@@ -52,6 +65,11 @@ public class OmschrijvingDao {
 		return omschrijvingenLijst;
 	}
 	
+	/**
+	 * Methode om een bepaalde omschrijving op te vragen.
+	 * @param omschrijvingsNummer het nummer van de omschrijving.
+	 * @return de omschrijving.
+	 */
 	public Omschrijving getOmschrijving(int omschrijvingsNummer) {
 		Omschrijving omschrijving = null;
 		
@@ -85,7 +103,10 @@ public class OmschrijvingDao {
 		
 		return omschrijving;
 	}
-	
+	/**
+	 * Methode voor het toevoegen van een omschrijving,
+	 * @param omschrijving de omschrijving die je wilt toevoegen.
+	 */
 	public void addOmschrijving(Omschrijving omschrijving) {
 		// De connectie met de database
 		Connection connection = manager.getConnection();

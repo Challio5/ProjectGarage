@@ -12,7 +12,11 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import nl.eti1b5.controller.KlantToevoegControl;
 import nl.eti1b5.model.Auto;
-
+/**
+ * Klasse die de popup weergeeft om een klant toe te voegen of aan een bestaande klant een auto toe te voegen.
+ * @author Groep 5
+ * @version 1.0
+ */
 public class AddKlantScherm extends BorderPane{
 	
 	private Stage newStage;
@@ -34,7 +38,10 @@ public class AddKlantScherm extends BorderPane{
 	
 	private AddKlantNode klantNode;
 
-	
+	/**
+	 * De constructor van deze klasse,
+	 * De klasse bestaat uit een aantal labels en fields en een Node voor de auto's
+	 */
 	public AddKlantScherm(){
 		labels = new VBox();
 		labels.setPadding(new Insets(4));
@@ -70,7 +77,9 @@ public class AddKlantScherm extends BorderPane{
 		this.setBottom(klantNode);
 		init();
 	}
-
+	/**
+	 * Methode voor het initialiseren van een nieuwe Stage
+	 */
 	public void init(){
 		newStage = new Stage();
 		newStage.setTitle("Klant toevoegen");
@@ -78,31 +87,58 @@ public class AddKlantScherm extends BorderPane{
 		newStage.setScene(stageScene);
 		newStage.show();
 	}
-	
+
+	/**
+	 * Methode voor het opvragen van de naam
+	 * @return De naam
+	 */
 	public String getNaam(){
 		return addNaam.getText();
 	}
 	
+	/**
+	 * Methode voor het opvragen van het adres
+	 * @return het adres
+	 */
 	public String getAdres(){
 		return addAdres.getText();
 	}
 	
+	/**
+	 * Methode voor het opvragen van de postcode
+	 * @return de postcode
+	 */
 	public String getPostcode(){
 		return addPostcode.getText();
 	}
 	
+	/**
+	 * Methode voor het opvragen van de woonplaats
+	 * @return de woonplaats
+	 */
 	public String getWoonplaats(){
 		return addWoonplaats.getText();
 	}
 	
+	/**
+	 * Methode voor het opvragen van het telefoonnummer 
+	 * @return de telefoon
+	 */
 	public String getTelefoonNummer(){
 		return addTelefoonNummer.getText();
 	}
 	
+	/**
+	 * Methode voor het opvragen van de lijst met auto's
+	 * @return de lijst met auto's
+	 */
 	public ArrayList<Auto> getAutos(){
 		return klantNode.getAutos();
 	}
 
+	/**
+	 * Methode voor het sluiten van de stage
+	 */
 	public void close() {
 		newStage.close();
 	}

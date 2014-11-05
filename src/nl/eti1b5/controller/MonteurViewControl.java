@@ -12,7 +12,14 @@ import nl.eti1b5.model.Reparatie;
 import nl.eti1b5.view.main.MainLoader;
 import nl.eti1b5.view.monteur.reparatiescherm.MonteurScherm;
 import nl.eti1b5.view.monteur.reparatiescherm.ReparatieNode;
-
+/**
+ * De klasse MonteurViewControl,
+ * Deze klasse dient als controller voor het monteursscherm,
+ * Hij zorgt er voor de dat de tabel geupdate wordt en de popup geopend wordt.
+ * @author Groep 3
+ * @version 1.0
+ *
+ */
 public class MonteurViewControl implements ChangeListener<Boolean>, EventHandler<MouseEvent>{
 	
 	MainLoader app;
@@ -22,6 +29,11 @@ public class MonteurViewControl implements ChangeListener<Boolean>, EventHandler
 	MonteurDao monteurDao;
 	Boolean eigenReparaties;
 	
+	/**
+	 * De constructor, De constructor geeft meteen de listeners mee aan het reparatiescherm.
+	 * @param monteurScherm Scherm van de monteur
+	 * @param app de applicatie
+	 */
 	public MonteurViewControl(MonteurScherm monteurScherm, MainLoader app){
 		this.monteurScherm = monteurScherm;
 		reparatieNode = monteurScherm.getReparatieNode();
@@ -33,6 +45,10 @@ public class MonteurViewControl implements ChangeListener<Boolean>, EventHandler
 		UpdateTabel();
 	}
 	
+	/**
+	 * Methode voor het updaten van de tabel
+	 * Hij controleert eerst of de eigenreparaties staat aangevinkt ja of nee.
+	 */
 	public void UpdateTabel(){
 		if(eigenReparaties){
 			ObservableList<Reparatie> oListEigenReparatie = FXCollections.observableArrayList(reparatieDao.eigenToDoReparaties(app.getIngelogd().getWerknemerNr()));
@@ -42,14 +58,20 @@ public class MonteurViewControl implements ChangeListener<Boolean>, EventHandler
 			reparatieNode.setItems(oListReparatie);
 		}
 	}
-
+	
+	/**
+	 * kijkt of de eigenReparaties is aangevinkt
+	 */
 	@Override
 	public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1,
 			Boolean arg2) {
 		eigenReparaties = !eigenReparaties;
 		UpdateTabel();		
 	}
-
+	
+	/**
+	 * Kijkt of er wordt dubbelgeklikt op een reparatie om vervolgens de popup te openen.
+	 */
 	@Override
 	public void handle(MouseEvent arg0) {
 		if(arg0.getClickCount() == 2){

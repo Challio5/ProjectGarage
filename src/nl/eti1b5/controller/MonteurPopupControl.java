@@ -15,7 +15,13 @@ import nl.eti1b5.database.dao.MateriaalDao;
 import nl.eti1b5.database.dao.ReparatieDao;
 import nl.eti1b5.model.Reparatie;
 import nl.eti1b5.view.monteur.reparatiescherm.ReparatiePopup;
-
+/**
+ * De klasse MonterPopupControl dient als controller voor het popup scherm wanneer een monteur dubbelklikt op een reparatie.
+ * De klasse zorgt voor een goeie afhandeling, van de popup.
+ * @author Groep 3
+ * @version 1.0
+ *
+ */
 public class MonteurPopupControl  implements EventHandler<ActionEvent>, ChangeListener<Boolean>{
 	
 	private boolean checkbox;
@@ -24,11 +30,19 @@ public class MonteurPopupControl  implements EventHandler<ActionEvent>, ChangeLi
 	private MonteurViewControl monteurViewControl;
 	private ReparatiePopup popup;
 	
+	/**
+	 * De constructor, de reparatie en de monteurview worden toegevoegd aan de variabelen.
+	 * @param reparatie de reparatie die aangepast moet worden
+	 * @param monteurViewControl de monteurViewControl 
+	 */
 	public MonteurPopupControl(Reparatie reparatie, MonteurViewControl monteurViewControl){
 		this.reparatie = reparatie;
 		this.monteurViewControl = monteurViewControl;
 	}
 	
+	/**
+	 * De methode die de reparatiePopup weergeeft.
+	 */
 	public void showReparatiePopup(){
 		this.popup = new ReparatiePopup(reparatie);
 		popup.addButtonListener(this);
@@ -39,13 +53,19 @@ public class MonteurPopupControl  implements EventHandler<ActionEvent>, ChangeLi
 		newStage.setScene(stageScene);
 		newStage.show();
 	}
-
+	
+	/**
+	 * de methode die de verandering van de checkbox bijhoudt.
+	 */
 	@Override
 	public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1,
 			Boolean arg2) {
 		checkbox = !checkbox;
 	}
-
+	
+	/**
+	 * De methode die wanneer de knop wordt ingedrukt, de reparatie wegschrijft naar de database.
+	 */
 	@Override
 	public void handle(ActionEvent arg0) {
 		reparatie.setReparatieStatus(popup.getReparatieStatus().isSelected());

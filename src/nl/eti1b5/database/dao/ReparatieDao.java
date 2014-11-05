@@ -38,6 +38,10 @@ public class ReparatieDao {
 		this.manager = manager;
 	}
 	
+	/**
+	 * Methode voor het opvragen van alle reparaties uit de database
+	 * @return een lijst met alle reparaties
+	 */
 	public ArrayList<Reparatie> getReparaties() {
 		// Lijst met de resultaten van de query
 		ArrayList<Reparatie> reparatieLijst = new ArrayList<>();
@@ -97,6 +101,10 @@ public class ReparatieDao {
 		return reparatieLijst;
 	}
 	
+	/**
+	 * Methode voor het opvragen van alle reparaties die verbonden zijn aan een werknemer.
+	 * @return een lijst met alle reparaties van de werknemer
+	 */
 	public ArrayList<Reparatie> eigenReparaties(int werknemerNummer) {
 		// Lijst met de resultaten van de query
 		ArrayList<Reparatie> reparatieLijst = new ArrayList<>();
@@ -159,6 +167,10 @@ public class ReparatieDao {
 		return reparatieLijst;
 	}
 
+	/**
+	 * Methode voor het opvragen van een reparatie aan de hand van het reparatienummer
+	 * @return de reparaties
+	 */
 	public Reparatie getReparatie(int reparatienr) {
 		Reparatie reparatie = null;
 		
@@ -214,6 +226,10 @@ public class ReparatieDao {
 		return reparatie;
 	}
 	
+	/**
+	 * Methode voor het opvragen van de reparaties horende bij een klant
+	 * @return een lijst met de reparaties horende bij een klant.
+	 */
 	public ArrayList<Reparatie> getKlantReparaties(int klantnr, boolean betaald) {
 		ArrayList<Reparatie> reparatieLijst = new ArrayList<>();
 		
@@ -272,6 +288,10 @@ public class ReparatieDao {
 		return reparatieLijst;
 	}
 	
+	/**
+	 * Methode voor het toevoegen van een reparatie
+	 * @param reparatie de reparatie.
+	 */
 	public void addReparatie(Reparatie reparatie) {
 		// Checkt of de monteur al een werknemernummer heeft
 		// Als dit zo is dan bestaat hij al in de database en dient hij aangepast te worden
@@ -284,6 +304,10 @@ public class ReparatieDao {
 		}
 	}
 	
+	/**
+	 * Methode voor het veranderen van een reparatie
+	 * @param reparatie de reparatie
+	 */
 	private void addExistingReparatie(Reparatie reparatie) {
 		// Zet de verbinding op met de database
 		Connection connection = manager.getConnection();
@@ -351,7 +375,11 @@ public class ReparatieDao {
 		// Sluit de verbinding met de database
 		manager.closeConnection();
 	}
-
+	
+	/**
+	 * Methode voor het opvragen van de reparaties die nog gedaan moeten worden.
+	 * @return de lijst met reparaties die nog moeten gebeuren.
+	 */
 	public ArrayList<Reparatie> getToDoReparaties() {
 		// Lijst met de resultaten van de query
 		ArrayList<Reparatie> reparatieLijst = new ArrayList<>();
@@ -412,6 +440,11 @@ public class ReparatieDao {
 		return reparatieLijst;
 		}
 	
+	/**
+	 * Methode voor het opvragen van de reparaties voor een bepaalde werknemer die hij nog moet doen.
+	 * @param werknemerNummer het werknemernummer van de monteur
+	 * @return een lijst met reparaties die de monteur nog moet doen.
+	 */
 	public ArrayList<Reparatie> eigenToDoReparaties(int werknemerNummer) {
 		// Lijst met de resultaten van de query
 		ArrayList<Reparatie> reparatieLijst = new ArrayList<>();
@@ -473,6 +506,10 @@ public class ReparatieDao {
 		return reparatieLijst;
 	}
 	
+	/**
+	 * Het veranderen van een reparatie
+	 * @param reparatie de reparatie die veranderd moet worden.
+	 */
 	public void wijzigReparatie(Reparatie reparatie) {
 		
 		// De connectie met de database op

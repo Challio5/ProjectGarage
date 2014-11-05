@@ -15,6 +15,13 @@ import nl.eti1b5.view.monteur.reparatiescherm.MonteurScherm;
 import nl.eti1b5.view.preloader.InlogPreloader;
 import nl.eti1b5.view.preloader.InlogView;
 
+/**
+ * De klasse InlogControl
+ * Deze klasse dient als controller voor het inloggen in het systeem.
+ * @author Groep 3
+ * @version 1.0
+ *
+ */
 public class InlogControl {
 	
 	private MainLoader app;
@@ -24,7 +31,11 @@ public class InlogControl {
 	private int counter;
 	private MonteurDao monteurDao;
 	private Secretaresse secretaresse;
-	
+	/**
+	 * De constructor, hierin worden de listeners aan de view gegeven en wordt een secretaresse aangemaakt.
+	 * @param inlogPre de Preloader
+	 * @param app de Mainloader
+	 */
 	public InlogControl(InlogPreloader inlogPre, MainLoader app){
 		this.inlogPre = inlogPre;
 		this.app = app;
@@ -107,6 +118,12 @@ public class InlogControl {
 		}
 	}
 	
+	/**
+	 * Methode EnterHandler
+	 * Kijkt wanneer er wordt geprobeerd in te loggen.
+	 * Kijkt op welke job er wordt geprobeerd in te loggen 
+	 * en kijkt of de wachtwoord bij de gebruikersnaam hoort.
+	 **/
 	public class EnterHandler implements EventHandler<KeyEvent>{
 		@Override
 		public void handle(KeyEvent e) {
@@ -169,18 +186,25 @@ public class InlogControl {
 		}
 	}
 	
+	/**
+	 * functie die de fout lat zien als er geen job is gezien
+	 */
 	//foutmelding wanneer er geen job gekozen is
 	public void showJobFout() {
 		inlogView.getFoutMelding().setText("U heeft geen job gekozen");
 	}
-	
+	/**
+	 * Methode die de fout laat zijn wanneer de username en wachtwoord niet overeen komen.
+	 */
 	//foutmelding wanneer verkeerde inlog gegevens worden ingevuld
 	public void showPassNaam(){
 		inlogView.getFoutMelding().setText("U heeft een incorrecte \nusername/password combinatie ingevuld!\nu heeft nog " + (3-counter) + " kansen!");
 		//counter voor het aantal kansen van inloggen
 		counter++;
 	}
-	
+	/**
+	 * Methode die het monteursscherm opent
+	 */
 	//monteur scherm wanneer als monteur correct ingelogd
 	public void showMonteur() {
 		MonteurScherm monteurScherm = new MonteurScherm();
@@ -196,6 +220,9 @@ public class InlogControl {
 		app.getStage().show();
 	}
 	
+	/**
+	 * Methode die het secretaressescherm laat zien.
+	 */
 	// Controller voor de secretaresse schermen
 	public void showSecretaresseView(){
 		new SecretaresseControl(app.getStage());

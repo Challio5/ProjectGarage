@@ -11,7 +11,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
+/**
+ * Klasse die de popup weergeeft om een monteur toe te voegen.
+ * @author Groep 5
+ * @version 1.0
+ */
 public class AddMonteurScherm extends VBox{
 	
 	private Stage newStage;
@@ -40,6 +44,10 @@ public class AddMonteurScherm extends VBox{
 	private ComboBox<String> specialiteitCombo;
 	private Button submit;
 		
+	/**
+	 * De constructor van deze klasse,
+	 * De klasse bestaat uit een aantal horizontale boxen waar bij elk een bepaalde waarde ingevuld kan worden.
+	 */
 	public AddMonteurScherm(){
 		naamBox = new HBox();
 		naamLabel = new Label("Naam: ");
@@ -101,6 +109,9 @@ public class AddMonteurScherm extends VBox{
 		init();
 	}
 	
+	/**
+	 * Methode voor het initialiseren van een nieuwe Stage
+	 */
 	public void init(){
 		newStage = new Stage();
 		newStage.setTitle("Klant toevoegen");
@@ -109,6 +120,9 @@ public class AddMonteurScherm extends VBox{
 		newStage.show();
 	}
 	
+	/**
+	 * Zetter voor de listener van de combobox
+	 */
 	public void setSpecialiteitListener() {
 		specialiteitCombo.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 			if(newValue.equals("Overig")){
@@ -119,30 +133,58 @@ public class AddMonteurScherm extends VBox{
 		});
 	}
 
+	/**
+	 * Methode voor het opvragen van de naam
+	 * @return De naam
+	 */
 	public String getNaam() {
 		return naamField.getText();
 	}
 	
+	/**
+	 * Methode voor het opvragen van het adres
+	 * @return het adres
+	 */
 	public String getAdres(){
 		return adresField.getText();
 	}
 	
+	/**
+	 * Methode voor het opvragen van de postcode
+	 * @return De postcode
+	 */
 	public String getPostcode(){
 		return postcodeField.getText();
 	}
 	
+	/**
+	 * Methode voor het opvragen van de woonplaats
+	 * @return De woonplaats
+	 */	
 	public String getWoonplaats(){
 		return woonplaatsField.getText();
 	}
 	
+	/**
+	 * Methode voor het opvragen van het telefoonnummer
+	 * @return Het telefoonnummer
+	 */
 	public String getTelefoonNummer(){
 		return telnrField.getText();
 	}
 	
+	/**
+	 * Methode voor het opvragen van het wachtwoord
+	 * @return Het wachtwoord
+	 */
 	public String getWachtwoord(){
 		return wwField.getText();
 	}
 	
+	/**
+	 * Methode voor het opvragen van de  specialiteit
+	 * @return De specialiteit
+	 */
 	public String getSpecialiteit(){
 		String result = "";
 		if(specialiteitCombo.getValue().equals("Overig")){
@@ -152,7 +194,10 @@ public class AddMonteurScherm extends VBox{
 		}
 		return result;
 	}
-
+	
+	/**
+	 * Methode voor het sluiten van de stage
+	 */
 	public void close() {
 		newStage.close();		
 	}
