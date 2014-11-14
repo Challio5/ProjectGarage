@@ -1,6 +1,9 @@
 package nl.eti1b5.controller.secretaresse;
 
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -27,6 +30,9 @@ public class ReparatieSchermControl {
 	// View waar de klasse controller van is
 	private ReparatieOverzicht view;
 	
+	// Model met de data voor de view
+	private ObservableList<Reparatie> reparatieLijst;
+	
 	// Stage voor weergeven van popups
 	private Stage popupStage;
 	
@@ -44,17 +50,36 @@ public class ReparatieSchermControl {
 		popupStage = new Stage();
 		
 		reparatieDao = new ReparatieDao();
+		reparatieLijst = FXCollections.observableList(reparatieDao.getReparaties(), new ReparatieLijstCallback());
+		this.reparatieLijstChangeListener();
+		
+		view.getItems().addAll(reparatieLijst);
 		
 		this.kentekenCallback();
 		this.kentekenEditCommit();
 		
 		this.reparatieStatusCallback();
-		this.reparatieStatusEditCommit();
-		
 		this.betaalStatusCallback();
-		this.betaalStatusEditCommit();
 		
 		view.setOmschrijvingsNummerCellFactory(new OmschrijvingsNummerCallback());
+	}
+	
+	/**
+	 * ListChangeListener voor het luisteren van veranderingen aan en in de reparatielijst
+	 * Schrijft de veranderingen weg naar de database
+	 */
+	private void reparatieLijstChangeListener() {
+		reparatieLijst.addListener(new ListChangeListener<Reparatie>() {
+
+			@Override
+			public void onChanged(javafx.collections.ListChangeListener.Change<? extends Reparatie> change) {
+				ObservableList<? extends Reparatie> reparatieLijst = change.getList();
+				for(Reparatie reparatie : reparatieLijst) {
+					reparatieDao.addReparatie(reparatie);
+				}
+			}
+			
+		});
 	}
 	
 	/**
@@ -73,7 +98,6 @@ public class ReparatieSchermControl {
 		view.setKentekenOnEditComit(e -> {
 			Reparatie reparatie = e.getRowValue();
 			reparatie.setKenteken(e.getNewValue());
-			reparatieDao.addReparatie(reparatie);
 		});
 	}
 	
@@ -84,37 +108,13 @@ public class ReparatieSchermControl {
 	private void betaalStatusCallback() {
 		view.setBetaalStatusCellFactory(CheckBoxTableCell.<Reparatie>forTableColumn(view.getBetaalStatusKolom()));
 	}
-	
-	/**
-	 * Handelt de celleditevents af van het betaalstatuskolom
-	 * Wordt getriggerd als de cel wordt aangepast en schrijft de aanpassing weg in de database
-	 */
-	private void betaalStatusEditCommit() {
-		view.setBetaalStatusOnEditComit(e -> {
-			Reparatie reparatie = e.getRowValue();
-			reparatie.setBetaalStatus(e.getNewValue());
-			reparatieDao.addReparatie(reparatie);
-		});
-	}
-	
+
 	/**
 	 * Voegt een checkboxcellfactory toe aan de reparatiestatuskolom
 	 * Vult de reparatiestatuskolom met checkboxes
 	 */
 	private void reparatieStatusCallback() {
 		view.setReparatieStatusCellFactory(CheckBoxTableCell.<Reparatie>forTableColumn(view.getReparatieStatusKolom()));
-	}
-	
-	/**
-	 * Handelt de celleditevents af van het reparatiestatuskolom
-	 * Wordt getriggerd als de cel wordt aangepast en schrijft de aanpassing weg in de database
-	 */
-	private void reparatieStatusEditCommit() {
-		view.setReparatieStatusOnEditComit(e -> {
-			Reparatie reparatie = e.getRowValue();
-			reparatie.setReparatieStatus(e.getNewValue());
-			reparatieDao.addReparatie(reparatie);
-		});
 	}
 	
 	/**
@@ -159,4 +159,28 @@ public class ReparatieSchermControl {
 		}
 	}
 
+	/**
+	 * Factory voor het genereren van een extractor wat elk element in de lijst observable maakt
+	 * Als er aanpassingen aan de lijst plaats vinden wordt de listchangelistener aangeroepen
+	 * 
+	 * @author ETI2vb3
+	 * @since 12 nov. 2014
+	 */
+	private class ReparatieLijstCallback implements Callback<Reparatie, Observable[]> {
+        
+		@Override
+        public Observable[] call(Reparatie reparatie) {
+            Observable[] observables = new Observable[7];
+            
+            observables[0] = reparatie.reparatieNummerProperty();
+            observables[1] = reparatie.kentekenProperty();
+            observables[2] = reparatie.omschrijvingsNummerProperty();
+            observables[3] = reparatie.beginTijdProperty();
+            observables[4] = reparatie.eindTijdProperty();
+            observables[5] = reparatie.reparatieStatusProperty();
+            observables[6] = reparatie.betaalStatusProperty();
+            
+            return observables;
+        }
+	}
 }

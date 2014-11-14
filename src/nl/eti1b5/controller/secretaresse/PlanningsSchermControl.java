@@ -6,6 +6,7 @@ import javafx.scene.control.TableColumn;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import nl.eti1b5.controller.secretaresse.popup.PlanningPopupControl;
+import nl.eti1b5.database.dao.PlanningDao;
 import nl.eti1b5.model.Monteur;
 import nl.eti1b5.model.Planning;
 import nl.eti1b5.model.Reparatie;
@@ -40,6 +41,13 @@ public class PlanningsSchermControl {
 		view.setMonteurKolomCallback(new MonteurKolomCallback());
 		view.setReparatieKolomCallback(new ReparatieKolomCallback());
 		this.addPlanKnopActionListener();
+		this.update();
+	}
+	
+	private void update() {
+		view.setVervers(e -> {
+			view.getPlanningTabel().getItems().setAll(new PlanningDao().getPlanning());
+		});
 	}
 	
 	/**

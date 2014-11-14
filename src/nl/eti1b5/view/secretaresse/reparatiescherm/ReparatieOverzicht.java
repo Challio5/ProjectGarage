@@ -2,6 +2,7 @@ package nl.eti1b5.view.secretaresse.reparatiescherm;
 
 import java.sql.Timestamp;
 
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -9,7 +10,6 @@ import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
-import nl.eti1b5.database.dao.ReparatieDao;
 import nl.eti1b5.model.Reparatie;
 
 /**
@@ -40,30 +40,18 @@ public class ReparatieOverzicht extends TableView<Reparatie>{
 		
 		reparatieNummerKolom = new TableColumn<Reparatie, Integer>("Reparatie nummer");
 		reparatieNummerKolom.setCellValueFactory(new PropertyValueFactory<Reparatie, Integer>("reparatieNummer"));
-		// Niet editable want primary key in database van reparatie
 		
 		kentekenKolom = new TableColumn<Reparatie, String>("Kenteken");
 		kentekenKolom.setCellValueFactory(new PropertyValueFactory<Reparatie,String>("kenteken"));
 		
 		omschrijvingsNummerKolom = new TableColumn<Reparatie, Integer>("Omschrijving");
 		omschrijvingsNummerKolom.setCellValueFactory(new PropertyValueFactory<Reparatie, Integer>("omschrijvingsNummer"));
-		// Niet editable want primary key in database van omschrijvingsnummer
 		
 		begintijdKolom = new TableColumn<Reparatie, Timestamp>("Begintijd");
 		begintijdKolom.setCellValueFactory(new PropertyValueFactory<Reparatie, Timestamp>("beginTijd"));
-		/*begintijdKolom.setCellFactory(TextFieldTableCell.<Reparatie>forTableColumn(new Timestampconveter()));
-		begintijdKolom.setOnEditCommit(e -> {
-			Reparatie reparatie = e.getRowValue();
-			reparatie.setBeginTijd(e.getNewValue());
-		});*/
 		
 		eindtijdKolom = new TableColumn<Reparatie, Timestamp>("Eindtijd");
 		eindtijdKolom.setCellValueFactory(new PropertyValueFactory<Reparatie, Timestamp>("eindTijd"));
-		/*eindtijdKolom.setCellFactory(TextFieldTableCell.<Reparatie>forTableColumn(new Timestampconveter()));
-		eindtijdKolom.setOnEditCommit(e -> {
-			Reparatie reparatie = e.getRowValue();
-			reparatie.setEindTijd(e.getNewValue());
-		});*/
 		
 		reparatieStatusKolom = new TableColumn<Reparatie, Boolean>("Reparatie Status");
 		reparatieStatusKolom.setCellValueFactory(new PropertyValueFactory<Reparatie, Boolean>("reparatieStatus"));
@@ -78,8 +66,6 @@ public class ReparatieOverzicht extends TableView<Reparatie>{
 		this.getColumns().add(eindtijdKolom);
 		this.getColumns().add(reparatieStatusKolom);
 		this.getColumns().add(betaalStatusKolom);
-		
-		this.getItems().addAll(new ReparatieDao().getReparaties());
 	}
 	
 	/**
@@ -121,24 +107,6 @@ public class ReparatieOverzicht extends TableView<Reparatie>{
 	 */
 	public void setKentekenOnEditComit(EventHandler<CellEditEvent<Reparatie, String>> e) {
 		kentekenKolom.setOnEditCommit(e);
-	}
-	
-	/**
-	 * Voegt een celleditevent toe aan de reparatiestatuskolom
-	 * Handelt aanpassingen in de celldata af
-	 * @param e Celleditevent voor een aanpassing in de inhoud van een cel
-	 */
-	public void setReparatieStatusOnEditComit(EventHandler<CellEditEvent<Reparatie, Boolean>> e) {
-		reparatieStatusKolom.setOnEditCommit(e);
-	}
-	
-	/**
-	 * Voegt een celleditevent toe aan de betaalstatuskolom
-	 * Handelt aanpassingen in de celldata af
-	 * @param e Celleditevent voor een aanpassing in de inhoud van een cel
-	 */
-	public void setBetaalStatusOnEditComit(EventHandler<CellEditEvent<Reparatie, Boolean>> e) {
-		betaalStatusKolom.setOnEditCommit(e);
 	}
 	
 	/**

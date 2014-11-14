@@ -26,6 +26,9 @@ import nl.eti1b5.model.Reparatie;
 
 public class PlanningsOverzicht extends VBox{
 
+	// Knop
+	private Button ververs;
+	
 	// Tabel die de attributen van de de planning weergeeft
 	private TableView<Planning> planningsTabel;
 	
@@ -44,6 +47,8 @@ public class PlanningsOverzicht extends VBox{
 	 * Maakt ook een planningsknop aan voor het weergeven van een popup voor het toevoegen van een planning
 	 */
 	public PlanningsOverzicht() {
+		ververs = new Button("ververs");
+		
 		planningsTabel = new TableView<>();
 		
 		beginTijdKolom = new TableColumn<>("Begintijd");
@@ -67,8 +72,17 @@ public class PlanningsOverzicht extends VBox{
 		
 		planKnop = new Button("plan");
 		
+		this.getChildren().add(ververs);
 		this.getChildren().add(planningsTabel);
 		this.getChildren().add(planKnop);
+	}
+	
+	public void setVervers(EventHandler<ActionEvent> e) {
+		ververs.setOnAction(e);
+	}
+	
+	public TableView<Planning> getPlanningTabel() {
+		return planningsTabel;
 	}
 	
 	/**

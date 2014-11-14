@@ -5,8 +5,10 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.ListIterator;
+
 
 import javafx.scene.Scene;
 import javafx.scene.control.DateCell;
@@ -145,7 +147,7 @@ public class PlanningPopupControl {
 			
 			// Vraagt de lijst met monteurs op en checkt of deze beschikbaar is op de datum
 			// Als de monteur de juiste specialisatie bezit voor de reparatie wordt deze automatisch geselecteerd
-			ArrayList<Monteur> monteursLijst = monteurDao.getMonteurs();
+			/*ArrayList<Monteur> monteursLijst = monteurDao.getMonteurs();
 			for(Monteur monteur : monteursLijst) {
 				if(monteur.getSpecialiteit().equals(naam)) {
 					ArrayList<String> beschikbaarheidsLijst = new ArrayList<>(monteur.getBeschikbaarheid());
@@ -158,7 +160,7 @@ public class PlanningPopupControl {
 						}
 					}
 				}
-			}
+			}*/
 			
 			// Maakt het tweede deel van het planningsscherm beschikbaar
 			planningPopup.getDatumPicker().setDayCellFactory(new DatumPickerCallback());
@@ -166,6 +168,7 @@ public class PlanningPopupControl {
 			planningPopup.getUrenKiezer().setDisable(false);
 			planningPopup.getMinutenKiezer().setDisable(false);
 			planningPopup.getMonteurKiezer().setDisable(false);
+			planningPopup.getSubmit().setDisable(false);
 		}); 
 	}
 	
@@ -227,15 +230,12 @@ public class PlanningPopupControl {
 			int minuten = planningPopup.getMinutenKiezer().getSelectionModel().getSelectedItem();
 			
 			// Vraagt de duur op van de reparatie
-			int urenOmschrijving = planningPopup.getUrenOverigeReparatieKiezer()
-					.getSelectionModel().getSelectedItem();
-			int minutenOmschrijving = planningPopup.getMinutenOverigeReparatieKiezer()
-					.getSelectionModel().getSelectedItem();
+			String duur = planningPopup.getOmschrijvingsDuur().getText();
 			
 			// Berekent de begin- en eindtijd
 			LocalTime begintijd = LocalTime.of(uren, minuten);
-			LocalTime eindtijd = begintijd.plusHours(urenOmschrijving);
-			eindtijd = eindtijd.plusMinutes(minutenOmschrijving);
+			LocalTime eindtijd = begintijd.plusHours(1);
+			eindtijd = eindtijd.plusMinutes(0);
 
 			// Voegt tijd en datum samen
 			LocalDateTime beginDatumtijd = LocalDateTime.of(datum, begintijd);
@@ -251,29 +251,26 @@ public class PlanningPopupControl {
 
 			// De in te plannen reparatie
 			Reparatie reparatie = new Reparatie();
+			reparatie.setOmschrijvingsNummer(2);
+			reparatie.setKenteken("34-KB-23");
+			reparatie.setReparatieStatus(false);
+			reparatie.setBetaalStatus(false);
 
 			// Het kenteken van de auto van klant
 			Auto auto = planningPopup.getAutoKiezer().getSelectionModel().getSelectedItem();
 			reparatie.setKenteken(auto.getKenteken());
 
-			// De omschrijving van de reparatie
-			if (planningPopup.getCheckOverigeReparatie().isSelected()) {
-
-				LocalTime tijdOmschrijving = LocalTime.of(urenOmschrijving,
-						minutenOmschrijving);
-				Time sqlTijd = Time.valueOf(tijdOmschrijving);
-			} else {
-				// Voeg omschrijving toe aan database en
-				omschrijvingDao.addOmschrijving(new Omschrijving());
-			}
-
 			// Voegt de reparatie toe aan de database
 			reparatieDao.addReparatie(reparatie);
-
+			reparatie.setReparatieNummer(104);
+			
 			// Voegt de planning toe voor de reparatie aan de database
 			Planning planning = new Planning(sqlbegintijd, sqleindtijd, monteur,
 					reparatie);
 			planningDao.addPlanning(planning);
+			
+			// Sluit de popup
+			popupStage.close();
 		});
 	}
 	

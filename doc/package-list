@@ -1,0 +1,15 @@
+nl.eti1b5.controller
+nl.eti1b5.controller.secretaresse
+nl.eti1b5.controller.secretaresse.popup
+nl.eti1b5.database
+nl.eti1b5.database.dao
+nl.eti1b5.model
+nl.eti1b5.model.converter
+nl.eti1b5.view.main
+nl.eti1b5.view.monteur.menu
+nl.eti1b5.view.monteur.reparatiescherm
+nl.eti1b5.view.preloader
+nl.eti1b5.view.secretaresse.administratiescherm
+nl.eti1b5.view.secretaresse.menu
+nl.eti1b5.view.secretaresse.planningsscherm
+nl.eti1b5.view.secretaresse.reparatiescherm

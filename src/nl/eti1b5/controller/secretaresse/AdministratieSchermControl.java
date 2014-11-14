@@ -1,5 +1,9 @@
 package nl.eti1b5.controller.secretaresse;
 
+import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.util.Callback;
@@ -26,6 +30,10 @@ public class AdministratieSchermControl {
 	private MonteurDao monteurDao;
 	private KlantDao klantDao;
 	
+	// Lijst met monteurs en klanten voor de tabellen
+	private ObservableList<Monteur> monteursLijst;
+	private ObservableList<Klant> klantenLijst;
+	
 	/**
 	 * Constructor voor het aanmaken van het model en view
 	 * Voegt de juiste events toe aan de view
@@ -39,6 +47,18 @@ public class AdministratieSchermControl {
 		monteurDao = new MonteurDao();
 		klantDao = new KlantDao();
 		
+		// Lijst met monteurs en klanten voor de tabellen
+		monteursLijst = FXCollections.observableList(monteurDao.getMonteurs(), new MonteursLijstCallback());
+		klantenLijst = FXCollections.observableList(klantDao.getKlanten(), new KlantenLijstCallback());
+		
+		// Voegt changelisteners toe aan de lijsten voor detecteren van veranderingen
+		this.monteursLijstChangeListener();
+		this.klantenLijstChangeListener();
+		
+		// Voegt de lijst met monteurs aan klanten toe aan de view
+		view.getMonteursTabel().setItems(monteursLijst);
+		view.getKlantenTabel().setItems(klantenLijst);
+		
 		// Handelt de CellEditEvents van de monteurs en klanten af
 		this.setMonteurCellEditEvents();
 		this.setKlantCellEditEvents();
@@ -51,6 +71,42 @@ public class AdministratieSchermControl {
 	}
 	
 	/**
+	 * ListChangeListener voor het luisteren van veranderingen aan en in de monteurlijst
+	 * Schrijft de veranderingen weg naar de database
+	 */
+	private void monteursLijstChangeListener() {
+		monteursLijst.addListener(new ListChangeListener<Monteur>() {
+
+			@Override
+			public void onChanged(
+					javafx.collections.ListChangeListener.Change<? extends Monteur> change) {
+				for(Monteur monteur : change.getList()) {
+					monteurDao.addMonteur(monteur);
+				}
+			}
+			
+		});
+	}
+	
+	/**
+	 * ListChangeListener voor het luisteren van veranderingen aan en in de klantenlijst
+	 * Schrijft de veranderingen weg naar de database
+	 */
+	private void klantenLijstChangeListener() {
+		klantenLijst.addListener(new ListChangeListener<Klant>() {
+
+			@Override
+			public void onChanged(
+					javafx.collections.ListChangeListener.Change<? extends Klant> change) {
+				for(Klant klant : change.getList()) {
+					klantDao.addKlant(klant);
+				}
+			}
+			
+		});
+	}
+	
+	/**
 	 * Methode die de celleditevents aan de monteurkolommen toevoegd
 	 * Slaat de wijzigingen op in zowel model als de doa
 	 */
@@ -58,43 +114,36 @@ public class AdministratieSchermControl {
 		view.getMonteursTabel().setMonteurNaamKolomCellEditEvent(e -> {
 			Monteur monteur = e.getRowValue();
 			monteur.setNaam(e.getNewValue());
-			monteurDao.addMonteur(monteur);
 		});
 		
 		view.getMonteursTabel().setMonteurAdresKolomCellEditEvent(e -> {
 			Monteur monteur = e.getRowValue();
 			monteur.setAdres(e.getNewValue());
-			monteurDao.addMonteur(monteur);
 		});
 		
 		view.getMonteursTabel().setMonteurPostcodeKolomCellEditEvent(e -> {
 			Monteur monteur = e.getRowValue();
 			monteur.setPostcode(e.getNewValue());
-			monteurDao.addMonteur(monteur);
 		});
 		
 		view.getMonteursTabel().setMonteurPlaatsKolomCellEditEvent(e -> {
 			Monteur monteur = e.getRowValue();
 			monteur.setWoonplaats(e.getNewValue());
-			monteurDao.addMonteur(monteur);
 		});
 		
 		view.getMonteursTabel().setMonteurTelefoonnummerKolomCellEditEvent(e -> {
 			Monteur monteur = e.getRowValue();
 			monteur.setTelNr(e.getNewValue());
-			monteurDao.addMonteur(monteur);
 		});
 		
 		view.getMonteursTabel().setMonteurWachtwoordKolom(e -> {
 			Monteur monteur = e.getRowValue();
 			monteur.setWachtwoord(e.getNewValue());
-			monteurDao.addMonteur(monteur);
 		});
 		
 		view.getMonteursTabel().setMonteurSpecialiteitKolomCellEditEvent(e -> {
 			Monteur monteur = e.getRowValue();
 			monteur.setSpecialiteit(e.getNewValue());
-			monteurDao.addMonteur(monteur);
 		});
 	}
 	
@@ -106,31 +155,26 @@ public class AdministratieSchermControl {
 		view.getKlantenTabel().setKlantNaamKolomCellEditEvent(e -> {
 			Klant klant = e.getRowValue();
 			klant.setNaam(e.getNewValue());
-			klantDao.addKlant(klant);
 		});
 		
 		view.getKlantenTabel().setKlantAdresKolomKolomCellEditEvent(e -> {
 			Klant klant = e.getRowValue();
 			klant.setAdres(e.getNewValue());
-			klantDao.addKlant(klant);
 		});
 		
 		view.getKlantenTabel().setKlantPostcodeKolomCellEditEvent(e -> {
 			Klant klant = e.getRowValue();
 			klant.setPostcode(e.getNewValue());
-			klantDao.addKlant(klant);
 		});
 		
 		view.getKlantenTabel().setKlantPlaatsKolomCellEditEvent(e -> {
 			Klant klant = e.getRowValue();
 			klant.setWoonplaats(e.getNewValue());
-			klantDao.addKlant(klant);
 		});
 		
 		view.getKlantenTabel().setKlantTelefoonnummerKolomCellEditEvent(e -> {
 			Klant klant = e.getRowValue();
 			klant.setTelNr(e.getNewValue());
-			klantDao.addKlant(klant);
 		});
 	}
 	
@@ -200,5 +244,55 @@ public class AdministratieSchermControl {
 			
 			return cell;
 		}
+	}
+	
+	/**
+	 * Factory voor het genereren van een extractor wat elk element in de lijst observable maakt
+	 * Als er aanpassingen aan de lijst plaats vinden wordt de listchangelistener aangeroepen
+	 * 
+	 * @author ETI2vb3
+	 * @since 12 nov. 2014
+	 */
+	private class MonteursLijstCallback implements Callback<Monteur, Observable[]> {
+        
+		@Override
+        public Observable[] call(Monteur monteur) {
+            Observable[] observables = new Observable[8];
+            
+            observables[0] = monteur.werknemerNrProperty();
+            observables[1] = monteur.naamProperty();
+            observables[2] = monteur.adresProperty();
+            observables[3] = monteur.postcodeProperty();
+            observables[4] = monteur.woonplaatsProperty();
+            observables[5] = monteur.telNrProperty();
+            observables[6] = monteur.wachtwoordProperty();
+            observables[7] = monteur.specialiteitProperty();
+            
+            return observables;
+        }
+	}
+	
+	/**
+	 * Factory voor het genereren van een extractor wat elk element in de lijst observable maakt
+	 * Als er aanpassingen aan de lijst plaats vinden wordt de listchangelistener aangeroepen
+	 * 
+	 * @author ETI2vb3
+	 * @since 12 nov. 2014
+	 */
+	private class KlantenLijstCallback implements Callback<Klant, Observable[]> {
+        
+		@Override
+        public Observable[] call(Klant klant) {
+            Observable[] observables = new Observable[6];
+            
+            observables[0] = klant.klantNrProperty();
+            observables[1] = klant.naamProperty();
+            observables[2] = klant.adresProperty();
+            observables[3] = klant.postcodeProperty();
+            observables[4] = klant.woonplaatsProperty();
+            observables[5] = klant.telNrProperty();
+            
+            return observables;
+        }
 	}
 }
