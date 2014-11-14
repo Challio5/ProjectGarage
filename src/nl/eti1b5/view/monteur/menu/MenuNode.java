@@ -31,11 +31,15 @@ public class MenuNode extends MenuBar {
 	}
 	
 	public void restartSetOnAction(EventHandler<ActionEvent> event) {
-		restart.setOnAction(event);
+		restart.setOnAction(e -> { 
+			System.exit(0);
+		});
 	}
 	
 	public void exitSetOnAction(EventHandler<ActionEvent> event) {
-		exit.setOnAction(event);
+		exit.setOnAction(e -> { 
+			System.exit(0);
+		});
 	}
 	
 }

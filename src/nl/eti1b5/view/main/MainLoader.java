@@ -20,7 +20,6 @@ public class MainLoader extends Application {
 	// De stage
 	private Stage stage;
 	private Monteur ingelogdeWerknemer;
-	private MonteurViewControl viewControl;
 	
 	/**
 	 * Start methode wordt aangeroepen door de mainmethode voor het starten van het hoofdprogramma
