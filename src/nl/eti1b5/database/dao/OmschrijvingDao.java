@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.util.ArrayList;
+
 import nl.eti1b5.database.DatabaseManager;
 import nl.eti1b5.model.Omschrijving;
 /**

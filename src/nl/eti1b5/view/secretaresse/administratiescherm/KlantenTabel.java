@@ -1,15 +1,15 @@
 package nl.eti1b5.view.secretaresse.administratiescherm;
 
-import nl.eti1b5.database.dao.KlantDao;
-import nl.eti1b5.model.Klant;
 import javafx.event.EventHandler;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn.CellEditEvent;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.Callback;
+import nl.eti1b5.database.dao.KlantDao;
+import nl.eti1b5.model.Klant;
 
 /**
  * Gui klasse voor het weergeven van de tabel met klanten

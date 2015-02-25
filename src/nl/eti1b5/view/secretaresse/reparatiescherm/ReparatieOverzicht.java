@@ -2,7 +2,6 @@ package nl.eti1b5.view.secretaresse.reparatiescherm;
 
 import java.sql.Timestamp;
 
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;

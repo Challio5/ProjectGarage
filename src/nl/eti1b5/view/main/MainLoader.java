@@ -2,7 +2,6 @@ package nl.eti1b5.view.main;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import nl.eti1b5.controller.MonteurViewControl;
 import nl.eti1b5.model.Monteur;
 
 /**

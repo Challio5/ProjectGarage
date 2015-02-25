@@ -1,16 +1,15 @@
 package nl.eti1b5.view.secretaresse.administratiescherm;
 
-import nl.eti1b5.controller.MonteurToevoegControl;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import nl.eti1b5.controller.MonteurToevoegControl;
 /**
  * Klasse die de popup weergeeft om een monteur toe te voegen.
  * @author Groep 5

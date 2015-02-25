@@ -1,12 +1,12 @@
 package nl.eti1b5.view.secretaresse.administratiescherm;
 
-import nl.eti1b5.database.dao.KlantDao;
-import nl.eti1b5.database.dao.MonteurDao;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import nl.eti1b5.database.dao.KlantDao;
+import nl.eti1b5.database.dao.MonteurDao;
 
 /**
  * Gui klasse met tabel en combobox voor het weergeven van alle klanten en monteurs

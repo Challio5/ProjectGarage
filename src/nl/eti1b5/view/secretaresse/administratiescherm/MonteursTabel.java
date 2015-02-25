@@ -1,13 +1,13 @@
 package nl.eti1b5.view.secretaresse.administratiescherm;
 
-import nl.eti1b5.database.dao.MonteurDao;
-import nl.eti1b5.model.Monteur;
 import javafx.event.EventHandler;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn.CellEditEvent;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import nl.eti1b5.database.dao.MonteurDao;
+import nl.eti1b5.model.Monteur;
 
 public class MonteursTabel extends TableView<Monteur> {
 	
