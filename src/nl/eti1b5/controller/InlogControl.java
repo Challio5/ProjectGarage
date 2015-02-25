@@ -208,7 +208,7 @@ public class InlogControl {
 	//monteur scherm wanneer als monteur correct ingelogd
 	public void showMonteur() {
 		MonteurScherm monteurScherm = new MonteurScherm();
-		MonteurViewControl view = new MonteurViewControl(monteurScherm, app);
+		new MonteurViewControl(monteurScherm, app);
 		Scene scene = new Scene(monteurScherm);
 		
 		// Stylesheet

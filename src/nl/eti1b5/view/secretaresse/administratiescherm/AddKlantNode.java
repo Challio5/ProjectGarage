@@ -26,7 +26,7 @@ public class AddKlantNode extends BorderPane{
 	private TableView<Auto> autos;
 	private TableColumn<Auto, String> autoMerk;
 	private TableColumn<Auto, String> autoModel;
-	private TableColumn<Auto,String> autoKenteken;
+	private TableColumn<Auto, String> autoKenteken;
 	
 	private HBox addAuto;
 	private TextField autoKentekenField;
@@ -46,17 +46,21 @@ public class AddKlantNode extends BorderPane{
 	public AddKlantNode(){
 		autos = new TableView<Auto>();
 		
-		autoKenteken = new TableColumn<Auto, String>("Kenteken");
+		autoKenteken = new TableColumn<>("Kenteken");
 		autoKenteken.setCellValueFactory(new PropertyValueFactory<Auto, String>("kenteken"));
 		autoKenteken.setMinWidth(150);
-		autoMerk = new TableColumn<Auto, String>("Merk");
+		
+		autoMerk = new TableColumn<>("Merk");
 		autoMerk.setCellValueFactory(new PropertyValueFactory<Auto, String>("merk"));
 		autoMerk.setMinWidth(150);
-		autoModel = new TableColumn<Auto, String>("Model");
+		
+		autoModel = new TableColumn<>("Model");
 		autoModel.setCellValueFactory(new PropertyValueFactory<Auto, String>("model"));
 		autoModel.setMinWidth(150);
 		
-		autos.getColumns().addAll(autoKenteken, autoMerk, autoModel);
+		autos.getColumns().add(autoKenteken); 
+		autos.getColumns().add(autoMerk); 
+		autos.getColumns().add(autoModel);
 		
 		addAuto = new HBox();
 		autoKentekenField = new TextField("Kenteken");

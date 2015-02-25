@@ -137,7 +137,6 @@ public class PlanningPopupControl {
 		// Listener voor het selecteren van een reparatie in de combobox
 		planningPopup.setOmschrijvingsKiezerChangeListener((omschrijving, oldValue, newValue) -> {
 			// Haalt de gegevens op van de geselecteerde omschrijving
-			String naam = newValue.getNaam();
 			Time tijd = newValue.getDuur();
 			
 			// Geeft de duur weer in de GUI
@@ -226,9 +225,6 @@ public class PlanningPopupControl {
 			// Vraagt de tijd op voor de te plannen reparatie
 			int uren = planningPopup.getUrenKiezer().getSelectionModel().getSelectedItem();
 			int minuten = planningPopup.getMinutenKiezer().getSelectionModel().getSelectedItem();
-			
-			// Vraagt de duur op van de reparatie
-			String duur = planningPopup.getOmschrijvingsDuur().getText();
 			
 			// Berekent de begin- en eindtijd
 			LocalTime begintijd = LocalTime.of(uren, minuten);

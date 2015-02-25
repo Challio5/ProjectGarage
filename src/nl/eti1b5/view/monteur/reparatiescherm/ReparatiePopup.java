@@ -144,11 +144,11 @@ public class ReparatiePopup extends BorderPane{
 		return beginDatum;
 	}
 	
-	public ComboBox getBeginUur(){
+	public ComboBox<Integer> getBeginUur(){
 		return beginUur;
 	}
 	
-	public ComboBox getBeginKwartier(){
+	public ComboBox<Integer> getBeginKwartier(){
 		return beginKwartier;
 	}
 	
@@ -156,11 +156,11 @@ public class ReparatiePopup extends BorderPane{
 		return eindDatum;
 	}
 	
-	public ComboBox getEindUur(){
+	public ComboBox<Integer> getEindUur(){
 		return beginUur;
 	}
 	
-	public ComboBox getEindKwartier(){
+	public ComboBox<Integer> getEindKwartier(){
 		return beginKwartier;
 	}
 	
